@@ -260,7 +260,8 @@ function runTests(root) {
     ['google apps script web app sheet cache quota', 'GAS_WEBAPP_ARCHITECT'],
     ['mosa graph token shield project startup', 'MOSA_GRAPH_BUILDER'],
     ['build an mcp server tool integration', 'MCP_BUILDER'],
-    ['frontend ux component layout', 'UI_SUITE']
+    ['frontend ux component layout', 'UI_SUITE'],
+    ['mosa maintenance dag framework contract', 'MOSA_HARMONIZER']
   ];
   const results = cases.map(([intent, expected]) => {
     const result = route(root, intent);
@@ -276,6 +277,208 @@ function runTests(root) {
     status: results.every(item => item.pass) ? 'ok' : 'fail',
     results
   };
+}
+
+function loadSkillIndex(root) {
+  const active = readJson(path.join(root, '02_Output/active_skill_index.json'), null);
+  if (Array.isArray(active?.skills)) return { source: '02_Output/active_skill_index.json', skills: active.skills };
+  const light = readJson(path.join(root, '02_Output/routing_index_light.json'), null);
+  if (Array.isArray(light?.skills)) return { source: '02_Output/routing_index_light.json', skills: light.skills };
+  return { source: null, skills: [] };
+}
+
+function loadReferenceMap(root) {
+  return readJson(path.join(root, '02_Output/reference_map_light.json'), { references: {} }).references || {};
+}
+
+function dependencyList(skill) {
+  if (Array.isArray(skill.requires)) return skill.requires;
+  if (Array.isArray(skill.dependencies)) return skill.dependencies;
+  if (Array.isArray(skill.dependencies?.requires)) return skill.dependencies.requires;
+  return [];
+}
+
+function detectSkillRoots(args) {
+  const roots = [];
+  if (args.skill_root) roots.push(args.skill_root);
+  if (process.env.MOSA_SKILL_ROOT) roots.push(process.env.MOSA_SKILL_ROOT);
+  const home = process.env.HOME || process.env.USERPROFILE;
+  if (home) {
+    roots.push(path.join(home, '.codex', 'skills'));
+    roots.push(path.join(home, '.gemini', 'antigravity', 'skills'));
+    roots.push(path.join(home, '.gemini', 'config', 'skills'));
+  }
+  return [...new Set(roots.map(item => path.resolve(item)))].filter(item => fs.existsSync(item));
+}
+
+function skillFolderFromPath(filepath) {
+  if (!filepath || typeof filepath !== 'string') return null;
+  const normalized = filepath.replace(/\\/g, '/');
+  const parts = normalized.split('/').filter(Boolean);
+  const skillIndex = parts.lastIndexOf('skills');
+  if (skillIndex >= 0 && parts[skillIndex + 1]) return parts[skillIndex + 1];
+  if (parts.length >= 2 && parts[parts.length - 1].toLowerCase() === 'skill.md') return parts[parts.length - 2];
+  return null;
+}
+
+function checkExternalOrphans(skillRoots, skills) {
+  const registeredFolders = new Set(
+    skills
+      .map(skill => skillFolderFromPath(skill.filepath))
+      .filter(Boolean)
+  );
+  const orphans = [];
+  for (const rootDir of skillRoots) {
+    const ignore = new Set(['.system', 'archive', 'registry']);
+    const folders = fs.readdirSync(rootDir, { withFileTypes: true })
+      .filter(entry => entry.isDirectory() && !ignore.has(entry.name))
+      .map(entry => entry.name);
+    for (const folder of folders) {
+      const skillFile = path.join(rootDir, folder, 'SKILL.md');
+      if (fs.existsSync(skillFile) && registeredFolders.size && !registeredFolders.has(folder)) {
+        orphans.push({ skill_root: rootDir, folder });
+      }
+    }
+  }
+  return orphans;
+}
+
+function runDag(root, args = {}) {
+  const index = loadSkillIndex(root);
+  const skills = index.skills;
+  const issues = [];
+  const warnings = [];
+  const skillIds = new Set();
+  const duplicates = new Set();
+
+  for (const skill of skills) {
+    if (!skill.skill_id) {
+      issues.push({ type: 'missing_skill_id', skill });
+      continue;
+    }
+    if (skillIds.has(skill.skill_id)) duplicates.add(skill.skill_id);
+    skillIds.add(skill.skill_id);
+  }
+
+  for (const skillId of duplicates) {
+    issues.push({ type: 'duplicate_skill_id', skill_id: skillId });
+  }
+
+  const adj = {};
+  for (const skill of skills) {
+    if (!skill.skill_id) continue;
+    adj[skill.skill_id] = dependencyList(skill);
+    for (const dep of adj[skill.skill_id]) {
+      if (!skillIds.has(dep)) issues.push({ type: 'missing_dependency', skill_id: skill.skill_id, dependency: dep });
+    }
+  }
+
+  const visited = new Set();
+  const stack = new Set();
+  const cycles = [];
+  function visit(node, trail = []) {
+    if (stack.has(node)) {
+      cycles.push([...trail, node]);
+      return;
+    }
+    if (visited.has(node)) return;
+    visited.add(node);
+    stack.add(node);
+    for (const next of adj[node] || []) {
+      if (skillIds.has(next)) visit(next, [...trail, node]);
+    }
+    stack.delete(node);
+  }
+
+  for (const skillId of skillIds) visit(skillId);
+  for (const cycle of cycles) {
+    issues.push({ type: 'dependency_cycle', path: cycle });
+  }
+
+  const references = loadReferenceMap(root);
+  for (const [reference, master] of Object.entries(references)) {
+    if (!skillIds.has(master)) warnings.push({ type: 'reference_master_not_in_active_index', reference, master });
+  }
+
+  const graph = readText(path.join(root, 'graphify-out/GRAPH_REPORT.md'));
+  for (const required of ['orchestrator-agent', 'router-agent', 'routing_index_light.json', 'mosa_cli.js']) {
+    if (!graph.includes(required)) warnings.push({ type: 'graph_contract_missing_pointer', pointer: required });
+  }
+  if (graph.includes('router_support_light.json')) {
+    issues.push({ type: 'stale_graph_pointer', pointer: 'router_support_light.json' });
+  }
+
+  const skillRoots = detectSkillRoots(args);
+  const orphans = args.external ? checkExternalOrphans(skillRoots, skills) : [];
+  for (const orphan of orphans) warnings.push({ type: 'external_orphan_skill_folder', ...orphan });
+
+  return {
+    status: issues.length ? 'fail' : 'ok',
+    source: index.source,
+    skill_count: skills.length,
+    skill_roots_checked: args.external ? skillRoots : [],
+    issues,
+    warnings
+  };
+}
+
+function checkTokenBudget(root) {
+  const budget = readJson(path.join(root, '02_Output/token_budget_report.json'), {});
+  const files = Array.isArray(budget.files) ? budget.files : [];
+  const issues = files
+    .filter(item => item.status && !['ok', 'cold-only'].includes(item.status))
+    .map(item => ({ type: 'token_budget_status', file: item.file, status: item.status }));
+  return {
+    status: issues.length ? 'fail' : 'ok',
+    files_checked: files.length,
+    issues
+  };
+}
+
+function checkFrameworkContract(root) {
+  const manifest = readJson(path.join(root, '02_Output/startup_manifest.json'), {});
+  const startupOrder = manifest.startup_order || [];
+  const issues = [];
+  const warnings = [];
+  if (!startupOrder.includes('00_System/mosa_cli.js')) issues.push('startup_manifest missing mosa_cli.js');
+  if (!startupOrder.includes('02_Output/routing_index_light.json')) issues.push('startup_manifest missing routing_index_light.json');
+  if ((manifest.forbidden_startup_reads || []).some(item => item.includes('registry_distiller_report')) === false) {
+    warnings.push('startup_manifest should forbid cold registry report during startup');
+  }
+  return {
+    status: issues.length ? 'fail' : 'ok',
+    issues,
+    warnings
+  };
+}
+
+function runMaintain(root, args = {}) {
+  const report = {
+    generated_at: new Date().toISOString(),
+    policy: {
+      mode: 'read-only by default',
+      write_behavior: args.write ? 'wrote maintenance_report.json only' : 'no files changed',
+      registry_mutation: false
+    },
+    check: validate(root),
+    tests: runTests(root),
+    dag: runDag(root, args),
+    token_budget: checkTokenBudget(root),
+    framework_contract: checkFrameworkContract(root)
+  };
+  const failed = [
+    report.check,
+    report.tests,
+    report.dag,
+    report.token_budget,
+    report.framework_contract
+  ].some(item => item.status !== 'ok');
+  report.status = failed ? 'fail' : 'ok';
+
+  if (args.write) {
+    writeJsonAtomic(path.join(root, '02_Output/maintenance_report.json'), report);
+  }
+  return report;
 }
 
 function updateContext(root, args) {
@@ -306,6 +509,8 @@ function main() {
   else if (command === 'start') print(safeStart(root, args));
   else if (command === 'route') print(route(root, args.intent || args._.slice(1).join(' '), { write: args.write, top: args.top }));
   else if (command === 'test') print(runTests(root));
+  else if (command === 'dag') print(runDag(root, args));
+  else if (command === 'maintain') print(runMaintain(root, args));
   else if (command === 'context') print(updateContext(root, args));
   else {
     print({
@@ -314,6 +519,8 @@ function main() {
         'node 00_System/mosa_cli.js start --mode ask --intent "..."',
         'node 00_System/mosa_cli.js route --intent "..." --write',
         'node 00_System/mosa_cli.js test',
+        'node 00_System/mosa_cli.js dag',
+        'node 00_System/mosa_cli.js maintain --write',
         'node 00_System/mosa_cli.js context --fact key --value value'
       ]
     });

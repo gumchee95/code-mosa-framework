@@ -11,6 +11,7 @@ When querying architecture, relationships, or tracing logic:
 7. Use `02_Output/routing_index_light.json` before full skill indexes.
 8. Never read `02_Output/registry_distiller_report.json` during normal startup.
 9. Use `01_Work/context_bus.json` only for current-task cross-agent handoff.
+10. Use `node 00_System/mosa_cli.js maintain` for read-only framework health checks.
 
 When starting a new project:
 
@@ -20,3 +21,4 @@ When starting a new project:
 4. For Google Apps Script projects, use `02_Output/gas_task_template.md`.
 5. Use `01_Work/context_bus.json` for shared working facts.
 6. Record durable project decisions in `00_System/prompt_stack.md`.
+7. Run `node 00_System/mosa_cli.js dag` before changing skill relationships.

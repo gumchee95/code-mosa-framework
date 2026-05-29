@@ -1,1 +1,24 @@
-﻿{"generated_at":"PUBLIC_TEMPLATE","summary":{"active_skills":12,"total_registered":12,"missing_files":0,"collisions":0,"orphans":0},"skills":[{"skill_id":"ORCHESTRATOR_AGENT","category":"Workflow","tags":["intent","task-decomposition","state"]},{"skill_id":"ROUTER_AGENT","category":"Workflow","tags":["router","skill-retrieval","confidence"]},{"skill_id":"BASE_DISTILLER","category":"Utility","tags":["distill","registry","maintenance"]},{"skill_id":"MOSA_GRAPH_BUILDER","category":"Core","tags":["topology","graph","token-shield","project-startup"]},{"skill_id":"MOSA_HARMONIZER","category":"Core","tags":["harmonizer","alignment","efficiency","memory"]},{"skill_id":"GAS_WEBAPP_ARCHITECT","category":"Framework","tags":["google-apps-script","google-sheets","quota-safe"]},{"skill_id":"GOOGLE_AGENT","category":"Workflow","tags":["google-workspace","apps-script-support"]},{"skill_id":"UTAR_OPS","category":"Framework","tags":["operations-workflow","scanner","quota-email-batching"]},{"skill_id":"FRONTEND_DESIGN","category":"Design","tags":["frontend","ui","responsive"]},{"skill_id":"UI_SUITE","category":"Design","tags":["ui","ux","component","layout"]},{"skill_id":"DATA_ANALYTICS_CORE","category":"Tech","tags":["data","analytics","spreadsheet"]},{"skill_id":"MCP_BUILDER","category":"Tech","tags":["mcp","server","tool-integration"]}]}
+{
+  "generated_at": "PUBLIC_TEMPLATE",
+  "summary": {
+    "active_skills": 12,
+    "total_registered": 12,
+    "missing_files": 0,
+    "collisions": 0,
+    "orphans": 0
+  },
+  "skills": [
+    {"skill_id":"ORCHESTRATOR_AGENT","category":"Workflow","tags":["intent","task-decomposition","state"]},
+    {"skill_id":"ROUTER_AGENT","category":"Workflow","tags":["router","skill-retrieval","confidence"]},
+    {"skill_id":"BASE_DISTILLER","category":"Utility","tags":["distill","registry","maintenance"]},
+    {"skill_id":"MOSA_GRAPH_BUILDER","category":"Core","tags":["topology","graph","token-shield","project-startup"]},
+    {"skill_id":"MOSA_HARMONIZER","category":"Core","tags":["harmonizer","alignment","efficiency","memory","maintenance","dag","framework-contract"]},
+    {"skill_id":"GAS_WEBAPP_ARCHITECT","category":"Framework","tags":["google-apps-script","google-sheets","quota-safe"]},
+    {"skill_id":"GOOGLE_AGENT","category":"Workflow","tags":["google-workspace","apps-script-support"]},
+    {"skill_id":"UTAR_OPS","category":"Framework","tags":["operations-workflow","scanner","quota-email-batching"]},
+    {"skill_id":"FRONTEND_DESIGN","category":"Design","tags":["frontend","ui","responsive"]},
+    {"skill_id":"UI_SUITE","category":"Design","tags":["ui","ux","component","layout"]},
+    {"skill_id":"DATA_ANALYTICS_CORE","category":"Tech","tags":["data","analytics","spreadsheet"]},
+    {"skill_id":"MCP_BUILDER","category":"Tech","tags":["mcp","server","tool-integration"]}
+  ]
+}

@@ -95,6 +95,8 @@ Router must return:
 ## Token Rules
 
 - Run `node 00_System/mosa_cli.js check` before framework maintenance.
+- Run `node 00_System/mosa_cli.js dag` before changing skill dependencies, references, or graph contracts.
+- Run `node 00_System/mosa_cli.js maintain` for full read-only health checks.
 - Prefer `00_System/mosa_startup.js` for lightweight startup.
 - Prefer graph first.
 - Prefer cache second.
@@ -107,6 +109,60 @@ Router must return:
 - Treat full reports as output artifacts, not chat context.
 - Never read `registry_distiller_report.json` during normal startup.
 - Trigger Registry Distiller only for low-confidence routing or registry health checks.
+
+## Maintenance Contract
+
+MOSA maintenance is read-only by default.
+
+Use:
+
+```bash
+node 00_System/mosa_cli.js maintain
+```
+
+This runs:
+
+- workspace and JSON checks
+- golden route tests
+- dependency and reference DAG validation
+- graph contract checks
+- token budget checks
+
+To save the maintenance result as an output artifact:
+
+```bash
+node 00_System/mosa_cli.js maintain --write
+```
+
+This writes only `02_Output/maintenance_report.json`. It must not mutate registry files, skill files, or routing indexes.
+
+Use:
+
+```bash
+node 00_System/mosa_cli.js dag
+```
+
+This checks:
+
+- missing skill dependencies
+- dependency cycles
+- duplicate skill ids
+- unresolved reference masters
+- stale graph pointers
+
+External skill folder orphan checks are optional:
+
+```bash
+node 00_System/mosa_cli.js dag --external
+```
+
+The default skill root priority is:
+
+1. `--skill_root`
+2. `MOSA_SKILL_ROOT`
+3. `~/.codex/skills`
+4. `~/.gemini/antigravity/skills`
+5. `~/.gemini/config/skills`
 
 ## Startup Modes
 

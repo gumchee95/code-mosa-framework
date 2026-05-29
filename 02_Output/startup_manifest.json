@@ -11,6 +11,7 @@
   "mode_profiles": "02_Output/mode_profiles.json",
   "context_bus": "01_Work/context_bus.json",
   "context_bus_template": "02_Output/context_bus_template.json",
+  "maintenance_report": "02_Output/maintenance_report.json",
   "registry_distiller_report": "02_Output/registry_distiller_report.json",
   "health": {
     "active_skills": 12,
@@ -30,6 +31,13 @@
     "01_Work/task.md",
     "01_Work/context_bus.json",
     "02_Output/routing_index_light.json"
+  ],
+  "maintenance_commands": [
+    "node 00_System/mosa_cli.js check",
+    "node 00_System/mosa_cli.js test",
+    "node 00_System/mosa_cli.js dag",
+    "node 00_System/mosa_cli.js maintain",
+    "node 00_System/mosa_cli.js maintain --write"
   ],
   "routing_read_order": [
     "00_System/routing_cache.json",

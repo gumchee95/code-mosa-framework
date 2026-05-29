@@ -130,6 +130,8 @@ node 00_System/mosa_cli.js check
 node 00_System/mosa_cli.js start --mode ask --intent "<user intent>"
 node 00_System/mosa_cli.js route --intent "<user intent>" --write
 node 00_System/mosa_cli.js test
+node 00_System/mosa_cli.js dag
+node 00_System/mosa_cli.js maintain --write
 node 00_System/mosa_cli.js context --fact key --value value
 ```
 
@@ -139,9 +141,35 @@ What it solves:
 - falls back to safe `micro` mode when startup breaks
 - gives route reasons and writes `02_Output/last_route_decision.md`
 - runs golden route tests without a full testing framework
+- validates dependency DAGs, reference maps, and graph contracts
+- writes `02_Output/maintenance_report.json` only when `--write` is used
 - updates `context_bus.json` with atomic write-and-rename
 
 This is intentionally dependency-free Node.js. No npm install is required.
+
+Maintenance is read-only by default. It does not rewrite registries, shards, routing indexes, or skill files. Registry mutation belongs to a separate confirmed Distiller workflow.
+
+The old maintenance idea is folded into the framework as:
+
+| Need | Command |
+|---|---|
+| Quick health check | `node 00_System/mosa_cli.js check` |
+| Startup with fallback | `node 00_System/mosa_cli.js start --mode ask --intent "..."` |
+| Explain routing | `node 00_System/mosa_cli.js route --intent "..." --write` |
+| Golden route regression | `node 00_System/mosa_cli.js test` |
+| Dependency/reference validation | `node 00_System/mosa_cli.js dag` |
+| Full read-only maintenance | `node 00_System/mosa_cli.js maintain` |
+| Save maintenance report | `node 00_System/mosa_cli.js maintain --write` |
+
+`dag` absorbs the useful parts of legacy DAG validators:
+
+- missing dependencies
+- dependency cycles
+- duplicate skill ids
+- reference master drift
+- stale graph pointers
+
+It intentionally avoids old Mermaid tree validation. MOSA's graph is an architecture graph, not a directory tree.
 
 ### Orchestrator
 
@@ -232,6 +260,8 @@ Distiller outputs are split by temperature:
 
 The full JSON report is intentionally cold. It currently costs about 69K tokens if read directly, so it must not be part of normal startup.
 
+Registry Distiller remains the only layer that should rebuild or mutate registry-derived artifacts. The CLI can detect drift, but it does not rewrite the registry by default.
+
 ### Context Bus
 
 Context Bus is the current-task shared workspace for multiple agents. It is not a router index and not long-term memory.
@@ -302,6 +332,8 @@ Responsibilities:
 - maintain cleanup backlogs
 - consolidate repeated skill families
 - run maintenance when drift threshold is reached
+- use `mosa_cli.js maintain` as the default read-only maintenance pass
+- use `mosa_cli.js dag` before changing skill relationships
 
 Harmonizer should not handle normal business execution. It is used when the framework itself needs alignment or when important experience should be preserved.
 

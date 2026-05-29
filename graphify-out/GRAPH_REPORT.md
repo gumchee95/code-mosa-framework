@@ -33,9 +33,13 @@ graph LR
   W --> TR["01_Work/task_results.md"]
   TR --> H["mosa-harmonizer"]
   H --> P["00_System/prompt_stack.md"]
+  H --> CLI["00_System/mosa_cli.js\ncheck + test + dag + maintain"]
+  CLI --> MR["02_Output/maintenance_report.json\nGenerated only with --write"]
   G["mosa-graph-builder"] --> GR["graphify-out/GRAPH_REPORT.md"]
   GR --> O
   GR --> R
+  CLI --> GR
+  CLI --> S
 ```
 
 ## Token Shield Rule
@@ -47,6 +51,7 @@ graph LR
 - Use `startup_manifest.json` and `routing_index_light.json` before full skill indexes.
 - Never read `registry_distiller_report.json` during normal startup.
 - Use `context_bus.json` for current-task Agent handoff, not long-term memory.
+- Use `mosa_cli.js maintain` for read-only framework health checks.
 
 ## Active Skill Routing
 
@@ -61,6 +66,16 @@ graph LR
 9. Skill skeleton
 10. Full Skill file
 
+## Maintenance Routing
+
+1. `node 00_System/mosa_cli.js check`
+2. `node 00_System/mosa_cli.js test`
+3. `node 00_System/mosa_cli.js dag`
+4. `node 00_System/mosa_cli.js maintain`
+5. `node 00_System/mosa_cli.js maintain --write`
+
+Maintenance is read-only by default. `--write` writes only `02_Output/maintenance_report.json`.
+
 ## Current Efficiency Notes
 
 - Router reads frontmatter, headings, and protocol lines only.
@@ -68,6 +83,8 @@ graph LR
 - Registry Distiller emits hot startup manifest, warm routing indexes, and cold full diagnostics.
 - `session_state.json` stores graph context as a pointer-level summary.
 - `context_bus.json` stores current-task shared facts and Agent handoffs.
+- `mosa_cli.js dag` validates dependency, reference, and graph contract drift.
+- `mosa_cli.js maintain` combines check, test, dag, token budget, and framework contract checks.
 - Registry tag collisions are currently 0 after shard rebuild.
 - New projects start from `00_System/MOSA_PROJECT_STARTUP_PROTOCOL.md`.
 - Router now prefers `routing_index_light.json`, excludes reference skills from Top 3, and uses `mode_profiles.json` for deterministic boosts.

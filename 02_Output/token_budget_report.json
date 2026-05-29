@@ -1,1 +1,31 @@
-﻿{"generated_at":"PUBLIC_TEMPLATE","policy":"Public template budget report. Full registry diagnostics are intentionally omitted.","files":[{"file":"graphify-out/GRAPH_REPORT.md","estimated_tokens":800,"status":"ok"},{"file":"02_Output/startup_manifest.json","estimated_tokens":600,"status":"ok"},{"file":"02_Output/routing_index_light.json","estimated_tokens":700,"status":"ok"},{"file":"01_Work/context_bus.json","estimated_tokens":120,"status":"ok"}]}
+{
+  "generated_at": "PUBLIC_TEMPLATE",
+  "policy": "Public template budget report. Full registry diagnostics and maintenance reports are cold artifacts.",
+  "files": [
+    {
+      "file": "graphify-out/GRAPH_REPORT.md",
+      "estimated_tokens": 900,
+      "status": "ok"
+    },
+    {
+      "file": "02_Output/startup_manifest.json",
+      "estimated_tokens": 750,
+      "status": "ok"
+    },
+    {
+      "file": "02_Output/routing_index_light.json",
+      "estimated_tokens": 700,
+      "status": "ok"
+    },
+    {
+      "file": "01_Work/context_bus.json",
+      "estimated_tokens": 120,
+      "status": "ok"
+    },
+    {
+      "file": "02_Output/maintenance_report.json",
+      "estimated_tokens": "task-dependent",
+      "status": "cold-only"
+    }
+  ]
+}
