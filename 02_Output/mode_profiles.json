@@ -1,0 +1,112 @@
+{
+  "generated_at": "2026-05-29T07:13:03.517Z",
+  "profiles": {
+    "gas": {
+      "triggers": [
+        "gas",
+        "google apps script",
+        "apps script",
+        "google sheets",
+        "sheet",
+        "spreadsheet",
+        "quota",
+        "scanner",
+        "webapp",
+        "web app"
+      ],
+      "boosts": {
+        "GAS_WEBAPP_ARCHITECT": 70,
+        "GOOGLE_AGENT": 36,
+        "UTAR_OPS": 30,
+        "DATA_ANALYTICS_CORE": 10,
+        "AUDIT_AGENT": 10
+      }
+    },
+    "mosa": {
+      "triggers": [
+        "mosa",
+        "token shield",
+        "graph",
+        "router",
+        "registry",
+        "distiller",
+        "project startup"
+      ],
+      "boosts": {
+        "MOSA_GRAPH_BUILDER": 42,
+        "MOSA_HARMONIZER": 34,
+        "BASE_DISTILLER": 30,
+        "ROUTER_AGENT": 28,
+        "ORCHESTRATOR_AGENT": 22
+      }
+    },
+    "frontend": {
+      "triggers": [
+        "frontend",
+        "ui",
+        "ux",
+        "react",
+        "interface",
+        "responsive",
+        "browser test"
+      ],
+      "boosts": {
+        "FRONTEND_DESIGN": 42,
+        "UI_SUITE": 34,
+        "WEBAPP_TESTING": 24,
+        "WEB_ARTIFACTS_BUILDER": 18
+      }
+    },
+    "data": {
+      "triggers": [
+        "data",
+        "analytics",
+        "spreadsheet",
+        "csv",
+        "xlsx",
+        "eda",
+        "visualization"
+      ],
+      "boosts": {
+        "DATA_ANALYTICS_CORE": 44,
+        "XLSX": 30,
+        "SPREADSHEETS": 24,
+        "AUTOMATED_DATA_CLEANER": 20
+      }
+    },
+    "document": {
+      "triggers": [
+        "document",
+        "docx",
+        "word",
+        "pdf",
+        "report",
+        "proposal"
+      ],
+      "boosts": {
+        "DOCX": 34,
+        "DOC_PIPELINE": 28,
+        "REPORT_GENERATOR": 24,
+        "PDF": 20
+      }
+    },
+    "finance": {
+      "triggers": [
+        "finance",
+        "market",
+        "trading",
+        "macro",
+        "yield",
+        "credit",
+        "commodity"
+      ],
+      "boosts": {
+        "MARKET_AGENT": 40,
+        "TRADING_EXPERT": 30,
+        "MACRO_YIELD_CURVE_ANALYST": 24,
+        "MACRO_CREDIT_SPREAD_ANALYST": 24,
+        "MACRO_COMMODITY_RATIO_ANALYST": 24
+      }
+    }
+  }
+}

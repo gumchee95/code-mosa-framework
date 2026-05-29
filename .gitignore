@@ -1,0 +1,8 @@
+﻿# Local and generated files
+02_Output/registry_distiller_report.json
+02_Output/registry_distiller_report.full.json
+02_Output/startup_packet.json
+.DS_Store
+.env
+*.log
+node_modules/

@@ -1,0 +1,21 @@
+{
+  "_meta": {
+    "version": "1.1",
+    "task_id": "current",
+    "lifecycle": "ephemeral",
+    "max_tokens": 2000,
+    "updated_at": null,
+    "policy": "Current-task cross-agent context only. Do not use as long-term memory."
+  },
+  "shared_facts": {},
+  "agent_outputs": {},
+  "handoff": {
+    "next_agent": null,
+    "needed_inputs": []
+  },
+  "gc_policy": {
+    "clear_after_task": true,
+    "promote_to_prompt_stack": false,
+    "promote_summary_only": true
+  }
+}
