@@ -23,10 +23,16 @@ Every project must contain:
 Preferred lightweight startup:
 
 ```bash
-node 00_System/mosa_startup.js --mode ask --intent "<user intent>"
+node 00_System/mosa_cli.js start --mode ask --intent "<user intent>"
 ```
 
 Use the returned startup packet first. If the packet mode is `ask`, confirm the mode with the user before escalating. Escalate to the manual read order only when the chosen mode is `standard`, `full`, or `maintenance`.
+
+If the CLI is unavailable, call the startup script directly:
+
+```bash
+node 00_System/mosa_startup.js --mode ask --intent "<user intent>"
+```
 
 For every new chat or resumed task:
 
@@ -88,6 +94,7 @@ Router must return:
 
 ## Token Rules
 
+- Run `node 00_System/mosa_cli.js check` before framework maintenance.
 - Prefer `00_System/mosa_startup.js` for lightweight startup.
 - Prefer graph first.
 - Prefer cache second.
@@ -122,6 +129,7 @@ Mode policy:
 ## Context Bus Rules
 
 - Use `01_Work/context_bus.json` for current-task shared facts.
+- Prefer `node 00_System/mosa_cli.js context --fact key --value value` for simple updates.
 - Store summaries, key outputs, confidence, and pointers.
 - Do not store full source files or long drafts.
 - Clear it after task completion unless explicitly promoted.

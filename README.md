@@ -69,10 +69,18 @@ graph LR
 The cheapest startup path is the coded startup packet:
 
 ```bash
+node 00_System/mosa_cli.js start --mode ask --intent "<user intent>"
+```
+
+The CLI first checks required files and JSON health, then calls the lightweight startup script. If startup fails, it returns a safe `micro` fallback packet instead of breaking the workflow.
+
+Direct startup still works:
+
+```bash
 node 00_System/mosa_startup.js --mode ask --intent "<user intent>"
 ```
 
-The script returns a compact packet with graph summary, recent memory, current task, context bus status, health, and escalation advice. If the task is ambiguous, it returns `mode: ask` with a recommended mode and a short question. This is the preferred entry point for normal new chats because it avoids making the LLM read every startup file directly.
+The startup packet returns a compact graph summary, recent memory, current task, context bus status, health, and escalation advice. If the task is ambiguous, it returns `mode: ask` with a recommended mode and a short question. This is the preferred entry point for normal new chats because it avoids making the LLM read every startup file directly.
 
 For a new chat or resumed project, read in this order:
 
@@ -110,6 +118,30 @@ Mode policy:
 - Use `ask` when the choice is unclear.
 
 ## Core Tools
+
+### MOSA CLI
+
+`00_System/mosa_cli.js` is the solo-developer safety layer. It keeps the framework useful even when an index or JSON file is broken.
+
+Common commands:
+
+```bash
+node 00_System/mosa_cli.js check
+node 00_System/mosa_cli.js start --mode ask --intent "<user intent>"
+node 00_System/mosa_cli.js route --intent "<user intent>" --write
+node 00_System/mosa_cli.js test
+node 00_System/mosa_cli.js context --fact key --value value
+```
+
+What it solves:
+
+- validates required files and JSON before startup
+- falls back to safe `micro` mode when startup breaks
+- gives route reasons and writes `02_Output/last_route_decision.md`
+- runs golden route tests without a full testing framework
+- updates `context_bus.json` with atomic write-and-rename
+
+This is intentionally dependency-free Node.js. No npm install is required.
 
 ### Orchestrator
 

@@ -57,6 +57,18 @@
         "WEB_ARTIFACTS_BUILDER": 18
       }
     },
+    "mcp": {
+      "triggers": [
+        "mcp",
+        "model context protocol",
+        "tool integration",
+        "server tool"
+      ],
+      "boosts": {
+        "MCP_BUILDER": 60,
+        "API_EXPERT": 16
+      }
+    },
     "data": {
       "triggers": [
         "data",

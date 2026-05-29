@@ -2,6 +2,7 @@
 02_Output/registry_distiller_report.json
 02_Output/registry_distiller_report.full.json
 02_Output/startup_packet.json
+02_Output/last_route_decision.md
 .DS_Store
 .env
 *.log

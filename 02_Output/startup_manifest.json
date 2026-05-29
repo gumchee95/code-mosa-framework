@@ -1,6 +1,7 @@
 ﻿{
   "generated_at": "PUBLIC_TEMPLATE",
   "mosa_version": "2.6-public",
+  "mosa_cli": "00_System/mosa_cli.js",
   "startup_script": "00_System/mosa_startup.js",
   "graph_report": "graphify-out/GRAPH_REPORT.md",
   "routing_index_light": "02_Output/routing_index_light.json",
@@ -21,6 +22,7 @@
   },
   "startup_order": [
     "AGENTS.md",
+    "00_System/mosa_cli.js",
     "00_System/mosa_startup.js",
     "02_Output/startup_manifest.json",
     "graphify-out/GRAPH_REPORT.md",

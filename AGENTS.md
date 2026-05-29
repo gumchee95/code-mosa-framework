@@ -2,7 +2,7 @@
 
 When querying architecture, relationships, or tracing logic:
 
-1. Prefer `node 00_System/mosa_startup.js --mode ask --intent "<intent>"`.
+1. Prefer `node 00_System/mosa_cli.js start --mode ask --intent "<intent>"`.
 2. Read `graphify-out/GRAPH_REPORT.md` when the packet asks for graph context.
 3. Use God Nodes as the search boundary.
 4. Prefer `00_System`, `01_Work`, and `02_Output` pointer files.

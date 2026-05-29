@@ -40,7 +40,7 @@ graph LR
 
 ## Token Shield Rule
 
-- Prefer `00_System/mosa_startup.js --mode ask` for lightweight startup.
+- Prefer `00_System/mosa_cli.js start --mode ask` for lightweight startup.
 - Read this graph before scanning workspace architecture.
 - Use God Nodes to bound search.
 - Prefer pointer files over full content.
@@ -51,14 +51,15 @@ graph LR
 ## Active Skill Routing
 
 1. `00_System/routing_cache.json`
-2. `00_System/mosa_startup.js`
-3. `02_Output/startup_manifest.json`
-4. `02_Output/routing_index_light.json`
-5. `02_Output/mode_profiles.json`
-6. `02_Output/reference_map_light.json`
-7. `02_Output/active_skill_index.json`
-8. Skill skeleton
-9. Full Skill file
+2. `00_System/mosa_cli.js`
+3. `00_System/mosa_startup.js`
+4. `02_Output/startup_manifest.json`
+5. `02_Output/routing_index_light.json`
+6. `02_Output/mode_profiles.json`
+7. `02_Output/reference_map_light.json`
+8. `02_Output/active_skill_index.json`
+9. Skill skeleton
+10. Full Skill file
 
 ## Current Efficiency Notes
 
