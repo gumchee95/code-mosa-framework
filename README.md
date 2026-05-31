@@ -63,6 +63,21 @@ graph LR
 | `02_Output/reference_map_light.json` | Lightweight reference-to-master map |
 | `02_Output/active_skill_index.json` | Fuller active skill index |
 | `02_Output/registry_distiller_report.json` | Cold full diagnostics |
+| `skills/` | English public MOSA core skills |
+
+## Included Core Skills
+
+The public repository includes the English versions of the MOSA core skills:
+
+| Skill | Role |
+|---|---|
+| `skills/orchestrator-agent/SKILL.md` | Intent atomization, state, dispatch |
+| `skills/router-agent/SKILL.md` | Explainable skill routing |
+| `skills/base-distiller/SKILL.md` | Registry diagnostics and routing artifacts |
+| `skills/mosa-graph-builder/SKILL.md` | Graph, Token Shield, startup topology |
+| `skills/mosa-harmonizer/SKILL.md` | Framework maintenance and memory |
+
+The core Router and Distiller Node scripts are included under their skill folders so the framework can be cloned and inspected without relying on a private local skill directory.
 
 ## Startup Flow
 

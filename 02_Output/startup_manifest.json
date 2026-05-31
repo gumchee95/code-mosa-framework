@@ -12,6 +12,15 @@
   "context_bus": "01_Work/context_bus.json",
   "context_bus_template": "02_Output/context_bus_template.json",
   "maintenance_report": "02_Output/maintenance_report.json",
+  "public_skills_root": "skills",
+  "public_skills_registry": "skills/skills_registry.json",
+  "core_skills": [
+    "skills/orchestrator-agent/SKILL.md",
+    "skills/router-agent/SKILL.md",
+    "skills/base-distiller/SKILL.md",
+    "skills/mosa-graph-builder/SKILL.md",
+    "skills/mosa-harmonizer/SKILL.md"
+  ],
   "registry_distiller_report": "02_Output/registry_distiller_report.json",
   "health": {
     "active_skills": 12,

@@ -5,10 +5,11 @@
 - `00_System/`: long-term workspace memory, state, and routing cache.
 - `01_Work/`: active task pointers, intent profile, session state, and context bus.
 - `02_Output/`: generated reports and durable outputs.
-- `{SKILL_ROOT}/router-agent/`: intelligent skill routing.
-- `{SKILL_ROOT}/base-distiller/`: read-only registry diagnostics.
-- `{SKILL_ROOT}/mosa-harmonizer/`: framework alignment and memory sync.
-- `{SKILL_ROOT}/mosa-graph-builder/`: topology and Token Shield generation.
+- `skills/`: English public MOSA core skills.
+- `skills/router-agent/`: intelligent skill routing.
+- `skills/base-distiller/`: read-only registry diagnostics.
+- `skills/mosa-harmonizer/`: framework alignment and memory sync.
+- `skills/mosa-graph-builder/`: topology and Token Shield generation.
 
 ## Mermaid Topology
 
@@ -24,6 +25,7 @@ graph LR
   R --> MP["02_Output/mode_profiles.json"]
   R --> RM["02_Output/reference_map_light.json"]
   R --> AS["02_Output/active_skill_index.json"]
+  R --> PS["skills/\nEnglish core skills"]
   R --> D["base-distiller fallback"]
   D --> L["02_Output/routing_index_light.json"]
   D --> M["02_Output/registry_distiller_report.json\nCold diagnostics only"]

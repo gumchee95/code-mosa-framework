@@ -1,0 +1,42 @@
+[
+  {
+    "skill_id": "ORCHESTRATOR_AGENT",
+    "name": "orchestrator-agent",
+    "category": "Workflow",
+    "route_policy": "active",
+    "filepath": "skills/orchestrator-agent/SKILL.md",
+    "tags": ["intent", "task-decomposition", "state", "dispatch"]
+  },
+  {
+    "skill_id": "ROUTER_AGENT",
+    "name": "router-agent",
+    "category": "Workflow",
+    "route_policy": "active",
+    "filepath": "skills/router-agent/SKILL.md",
+    "tags": ["router", "skill-retrieval", "confidence", "routing"]
+  },
+  {
+    "skill_id": "BASE_DISTILLER",
+    "name": "Registry Distiller",
+    "category": "Core",
+    "route_policy": "active",
+    "filepath": "skills/base-distiller/SKILL.md",
+    "tags": ["distill", "registry", "maintenance", "diagnostics"]
+  },
+  {
+    "skill_id": "MOSA_GRAPH_BUILDER",
+    "name": "mosa-graph-builder",
+    "category": "Discovery",
+    "route_policy": "active",
+    "filepath": "skills/mosa-graph-builder/SKILL.md",
+    "tags": ["topology", "graph", "token-shield", "project-startup"]
+  },
+  {
+    "skill_id": "MOSA_HARMONIZER",
+    "name": "mosa-harmonizer",
+    "category": "Core",
+    "route_policy": "active",
+    "filepath": "skills/mosa-harmonizer/SKILL.md",
+    "tags": ["harmonizer", "alignment", "efficiency", "memory", "maintenance", "dag", "framework-contract"]
+  }
+]

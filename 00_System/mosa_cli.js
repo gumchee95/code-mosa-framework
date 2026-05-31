@@ -358,6 +358,9 @@ function runDag(root, args = {}) {
     }
     if (skillIds.has(skill.skill_id)) duplicates.add(skill.skill_id);
     skillIds.add(skill.skill_id);
+    if (skill.filepath && !fs.existsSync(path.join(root, skill.filepath))) {
+      issues.push({ type: 'missing_skill_file', skill_id: skill.skill_id, filepath: skill.filepath });
+    }
   }
 
   for (const skillId of duplicates) {

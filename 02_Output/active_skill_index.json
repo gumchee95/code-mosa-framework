@@ -8,11 +8,11 @@
     "orphans": 0
   },
   "skills": [
-    {"skill_id":"ORCHESTRATOR_AGENT","category":"Workflow","tags":["intent","task-decomposition","state"]},
-    {"skill_id":"ROUTER_AGENT","category":"Workflow","tags":["router","skill-retrieval","confidence"]},
-    {"skill_id":"BASE_DISTILLER","category":"Utility","tags":["distill","registry","maintenance"]},
-    {"skill_id":"MOSA_GRAPH_BUILDER","category":"Core","tags":["topology","graph","token-shield","project-startup"]},
-    {"skill_id":"MOSA_HARMONIZER","category":"Core","tags":["harmonizer","alignment","efficiency","memory","maintenance","dag","framework-contract"]},
+    {"skill_id":"ORCHESTRATOR_AGENT","category":"Workflow","tags":["intent","task-decomposition","state"],"filepath":"skills/orchestrator-agent/SKILL.md"},
+    {"skill_id":"ROUTER_AGENT","category":"Workflow","tags":["router","skill-retrieval","confidence"],"filepath":"skills/router-agent/SKILL.md"},
+    {"skill_id":"BASE_DISTILLER","category":"Utility","tags":["distill","registry","maintenance"],"filepath":"skills/base-distiller/SKILL.md"},
+    {"skill_id":"MOSA_GRAPH_BUILDER","category":"Core","tags":["topology","graph","token-shield","project-startup"],"filepath":"skills/mosa-graph-builder/SKILL.md"},
+    {"skill_id":"MOSA_HARMONIZER","category":"Core","tags":["harmonizer","alignment","efficiency","memory","maintenance","dag","framework-contract"],"filepath":"skills/mosa-harmonizer/SKILL.md"},
     {"skill_id":"GAS_WEBAPP_ARCHITECT","category":"Framework","tags":["google-apps-script","google-sheets","quota-safe"]},
     {"skill_id":"GOOGLE_AGENT","category":"Workflow","tags":["google-workspace","apps-script-support"]},
     {"skill_id":"UTAR_OPS","category":"Framework","tags":["operations-workflow","scanner","quota-email-batching"]},

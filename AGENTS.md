@@ -12,6 +12,7 @@ When querying architecture, relationships, or tracing logic:
 8. Never read `02_Output/registry_distiller_report.json` during normal startup.
 9. Use `01_Work/context_bus.json` only for current-task cross-agent handoff.
 10. Use `node 00_System/mosa_cli.js maintain` for read-only framework health checks.
+11. Use `skills/` for the English public core skill SOPs.
 
 When starting a new project:
 

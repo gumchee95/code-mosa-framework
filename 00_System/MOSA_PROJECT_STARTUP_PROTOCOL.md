@@ -17,6 +17,7 @@ Every project must contain:
 - `01_Work/session_state.json`
 - `01_Work/context_bus.json`
 - `02_Output/`
+- `skills/` when distributing the public framework package
 
 ## Startup Read Order
 
@@ -70,6 +71,7 @@ When starting a new project:
 6. Route skills through `routing_index_light.json` before reading Skill files.
 7. Use `01_Work/context_bus.json` for current-task cross-agent handoff.
 8. Record durable decisions in `00_System/prompt_stack.md`.
+9. Keep public core skills in English under `skills/`.
 
 ## Router Contract
 

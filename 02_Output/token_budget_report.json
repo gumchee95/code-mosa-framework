@@ -26,6 +26,11 @@
       "file": "02_Output/maintenance_report.json",
       "estimated_tokens": "task-dependent",
       "status": "cold-only"
+    },
+    {
+      "file": "skills/",
+      "estimated_tokens": "load selected skill only",
+      "status": "cold-only"
     }
   ]
 }
