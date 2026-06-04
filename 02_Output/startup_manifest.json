@@ -1,7 +1,6 @@
-﻿{
-  "generated_at": "PUBLIC_TEMPLATE",
-  "mosa_version": "2.6-public",
-  "mosa_cli": "00_System/mosa_cli.js",
+{
+  "generated_at": "2026-06-04T10:14:19.637Z",
+  "mosa_version": "2.6",
   "startup_script": "00_System/mosa_startup.js",
   "graph_report": "graphify-out/GRAPH_REPORT.md",
   "routing_index_light": "02_Output/routing_index_light.json",
@@ -11,28 +10,17 @@
   "mode_profiles": "02_Output/mode_profiles.json",
   "context_bus": "01_Work/context_bus.json",
   "context_bus_template": "02_Output/context_bus_template.json",
-  "maintenance_report": "02_Output/maintenance_report.json",
-  "public_skills_root": "skills",
-  "public_skills_registry": "skills/skills_registry.json",
-  "core_skills": [
-    "skills/orchestrator-agent/SKILL.md",
-    "skills/router-agent/SKILL.md",
-    "skills/base-distiller/SKILL.md",
-    "skills/mosa-graph-builder/SKILL.md",
-    "skills/mosa-harmonizer/SKILL.md"
-  ],
   "registry_distiller_report": "02_Output/registry_distiller_report.json",
   "health": {
-    "active_skills": 12,
-    "total_registered": 12,
-    "references": 3,
+    "active_skills": 182,
+    "total_registered": 216,
+    "references": 29,
     "missing_files": 0,
     "collisions": 0,
     "orphans": 0
   },
   "startup_order": [
     "AGENTS.md",
-    "00_System/mosa_cli.js",
     "00_System/mosa_startup.js",
     "02_Output/startup_manifest.json",
     "graphify-out/GRAPH_REPORT.md",
@@ -40,13 +28,6 @@
     "01_Work/task.md",
     "01_Work/context_bus.json",
     "02_Output/routing_index_light.json"
-  ],
-  "maintenance_commands": [
-    "node 00_System/mosa_cli.js check",
-    "node 00_System/mosa_cli.js test",
-    "node 00_System/mosa_cli.js dag",
-    "node 00_System/mosa_cli.js maintain",
-    "node 00_System/mosa_cli.js maintain --write"
   ],
   "routing_read_order": [
     "00_System/routing_cache.json",
@@ -58,12 +39,22 @@
     "Full Skill file"
   ],
   "forbidden_startup_reads": [
-    "02_Output/registry_distiller_report.json"
+    "02_Output/registry_distiller_report.json",
+    "02_Output/registry_distiller_report.full.json",
+    "02_Output/Archive/registry_distiller_report.full.json"
   ],
   "cold_read_conditions": [
     "Router confidence < 0.35",
     "User requests registry audit",
     "missing_files/collisions/orphans > 0",
     "mosa-harmonizer maintenance mode"
-  ]
+  ],
+  "token_budget_limits_bytes": {
+    "graphify-out/GRAPH_REPORT.md": 3072,
+    "02_Output/startup_manifest.json": 5120,
+    "02_Output/routing_index_light.json": 20480,
+    "02_Output/reference_map_light.json": 5120,
+    "02_Output/active_skill_index.json": 51200,
+    "01_Work/context_bus.json": 8192
+  }
 }

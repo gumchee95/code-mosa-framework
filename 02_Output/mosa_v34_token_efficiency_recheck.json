@@ -1,0 +1,100 @@
+{
+  "generated_at": "2026-06-04T08:45:45Z",
+  "status": "pass_compact_provision_applied",
+  "version": "MOSA v3.4",
+  "measured_files": [
+    {
+      "file": "01_Work/startup_result.json",
+      "bytes": 1191,
+      "estimated_tokens": 298,
+      "exposure": "model_reads"
+    },
+    {
+      "file": "01_Work/context_bus.json",
+      "bytes": 871,
+      "estimated_tokens": 218,
+      "exposure": "model_reads"
+    },
+    {
+      "file": "01_Work/routing_result.json",
+      "bytes": 2835,
+      "estimated_tokens": 709,
+      "exposure": "model_reads"
+    },
+    {
+      "file": "02_Output/startup_manifest.json",
+      "bytes": 2044,
+      "estimated_tokens": 511,
+      "exposure": "optional_pointer"
+    },
+    {
+      "file": "02_Output/routing_index_light.json",
+      "bytes": 18226,
+      "estimated_tokens": 4557,
+      "exposure": "node_reads"
+    },
+    {
+      "file": "02_Output/reference_map_light.json",
+      "bytes": 1186,
+      "estimated_tokens": 297,
+      "exposure": "node_reads"
+    },
+    {
+      "file": "02_Output/mode_profiles.json",
+      "bytes": 2204,
+      "estimated_tokens": 551,
+      "exposure": "node_reads"
+    },
+    {
+      "file": "02_Output/active_skill_index.json",
+      "bytes": 42715,
+      "estimated_tokens": 10679,
+      "exposure": "fallback_only"
+    },
+    {
+      "file": "02_Output/registry_distiller_report.json",
+      "bytes": 283327,
+      "estimated_tokens": 70832,
+      "exposure": "cold_diagnostics_only"
+    },
+    {
+      "file": "00_System/routing_cache.json",
+      "bytes": 98990,
+      "estimated_tokens": 24748,
+      "exposure": "node_reads"
+    }
+  ],
+  "model_visible_cost": {
+    "startup_only_tokens": 516,
+    "route_proof_tokens": 709,
+    "startup_plus_route_tokens": 1225,
+    "startup_plus_route_plus_manifest_tokens": 1736
+  },
+  "runtime_modes": {
+    "cold": {
+      "status": "pass",
+      "test_workspace": "C:/tmp/mosa_token_recheck_v34",
+      "router_source": "routing_index_light",
+      "full_registry_avoided": true
+    },
+    "warm": {
+      "status": "pass",
+      "startup_estimated_hot_tokens": 5916,
+      "model_visible_startup_plus_route_tokens": 1225
+    },
+    "hot": {
+      "status": "pass",
+      "router_source": "cache",
+      "model_visible_route_proof_tokens": 709
+    }
+  },
+  "optimization": {
+    "status": "applied",
+    "file": "00_System/mosa_provision_workspace.js",
+    "default_output": "compact pointers",
+    "verbose_output": "nested startup and route JSON",
+    "full_evidence_file": "01_Work/provision_result.json",
+    "compact_test_workspace": "C:/tmp/mosa_compact_provision_check",
+    "verbose_test_workspace": "C:/tmp/mosa_compact_provision_check_verbose"
+  }
+}

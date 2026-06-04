@@ -130,7 +130,7 @@ function readSkillText(skill) {
     const content = fs.readFileSync(resolved, 'utf8');
     const frontmatter = content.match(/^---\s*[\s\S]*?\s*---/)?.[0] || '';
     const headings = (content.match(/^#{1,3}\s+.+$/gmi) || []).join('\n');
-    const protocols = (content.match(/^.*(protocol|sop|workflow|policy|required|must).*$/gmi) || [])
+    const protocols = (content.match(/^.*(protocol|sop|強制|workflow|流程|policy).*$/gmi) || [])
         .slice(0, 40)
         .join('\n');
     return [frontmatter, headings, protocols].join('\n').slice(0, SKILL_TEXT_LIMIT);
@@ -141,18 +141,26 @@ function loadCache(intent) {
     if (!workspaceRoot) return null;
     const cachePath = path.join(workspaceRoot, '00_System', 'routing_cache.json');
     const cache = loadJson(cachePath, { entries: [] });
+    const intentHash = intentHashFor(intent);
     const key = crypto
         .createHash('sha1')
         .update(JSON.stringify({
             keywords: intent.atomic_keywords,
             summary: intent.intent_summary,
             capability: intent.required_capability,
+            exclusions: intent.exclusions || [],
             routing_version: routingVersion()
         }))
         .digest('hex');
 
-    const hit = (cache.entries || []).find(entry => entry.key === key && entry.confidence >= 0.8);
-    return hit ? { key, hit } : { key, hit: null };
+    const hit = (cache.entries || []).find(entry => (
+        entry.key === key &&
+        entry.intent_hash === intentHash &&
+        entry.routing_version === routingVersion() &&
+        entry.confidence >= 0.8 &&
+        cachedPathsValid(entry.results || [])
+    ));
+    return hit ? { key, intentHash, hit } : { key, intentHash, hit: null };
 }
 
 function writeCache(cacheInfo, results) {
@@ -167,11 +175,75 @@ function writeCache(cacheInfo, results) {
     const entries = (cache.entries || []).filter(entry => entry.key !== cacheInfo.key);
     entries.unshift({
         key: cacheInfo.key,
+        intent_hash: cacheInfo.intentHash,
+        routing_version: routingVersion(),
         confidence,
         created_at: new Date().toISOString(),
         results
     });
     fs.writeFileSync(cachePath, JSON.stringify({ entries: entries.slice(0, 50) }, null, 2));
+}
+
+function intentHashFor(intent) {
+    return crypto
+        .createHash('sha1')
+        .update(JSON.stringify({
+            intent_summary: intent.intent_summary || '',
+            atomic_keywords: intent.atomic_keywords || [],
+            preferred_domain: intent.preferred_domain || '',
+            required_capability: intent.required_capability || '',
+            exclusions: intent.exclusions || []
+        }))
+        .digest('hex');
+}
+
+function cachedPathsValid(results) {
+    return results.every(result => result.resolved_path && fs.existsSync(result.resolved_path));
+}
+
+function confidenceTier(confidence) {
+    if (confidence >= 0.8) return 'strong';
+    if (confidence >= 0.5) return 'medium';
+    if (confidence >= 0.35) return 'weak';
+    return 'fail';
+}
+
+function fallbackCodeFor(results, registrySource) {
+    if (!registrySource) return 'MISSING_INDEX';
+    if (!results.length) return 'NO_CANDIDATE';
+    if (!results[0].resolved_path || !fs.existsSync(results[0].resolved_path)) return 'INVALID_SKILL_PATH';
+    const tier = confidenceTier(results[0].confidence || 0);
+    if (tier === 'fail') return 'LOW_CONFIDENCE';
+    if (tier === 'weak') return 'WEAK_CONFIDENCE';
+    return null;
+}
+
+function normalizeExclusions(intent) {
+    const raw = intent.exclusions || [];
+    const values = raw.flatMap(item => {
+        if (typeof item === 'string') return [item];
+        if (!item || typeof item !== 'object') return [];
+        return [item.skill_id, item.path, item.category, item.capability, item.tag];
+    }).filter(Boolean);
+    const text = values.join(' ').toLowerCase();
+    return {
+        text,
+        terms: new Set(values.flatMap(words)),
+        values: values.map(value => String(value).toLowerCase())
+    };
+}
+
+function isExcludedSkill(skill, exclusions) {
+    if (!exclusions?.values?.length) return false;
+    const fields = [
+        skill.skill_id,
+        skill.name,
+        skill.category,
+        skill.filepath,
+        ...(skill.tags || []),
+        ...(skill.capability_phrases || [])
+    ].map(value => String(value || '').toLowerCase());
+    return exclusions.values.some(exclusion => fields.some(field => field === exclusion || field.includes(exclusion)));
 }
 
 function skillSearchText(skill, skillText) {
@@ -215,7 +287,7 @@ function scoreSkill(skill, intent, modeProfiles = { profiles: {} }) {
         ...words(intent.preferred_domain),
         ...words(intent.required_capability)
     ]);
-    const exclusions = new Set(intent.exclusions.flatMap(words));
+    const exclusions = normalizeExclusions(intent).terms;
     const skillId = String(skill.skill_id || '').toLowerCase();
     const tags = (skill.tags || []).map(tag => String(tag).toLowerCase());
     const category = String(skill.category || '').toLowerCase();
@@ -324,8 +396,10 @@ function main() {
         console.log(JSON.stringify({
             status: 'success',
             source: 'cache',
+            intent_hash: cache.intentHash,
             confidence: cache.hit.confidence,
             results: cache.hit.results,
+            fallback_code: null,
             fallback_recommendation: null
         }, null, 2));
         return;
@@ -354,11 +428,13 @@ function main() {
         });
     }
 
-    const candidates = supportIndex?.skills?.length
+    const exclusions = normalizeExclusions(intent);
+    const candidates = (supportIndex?.skills?.length
         ? registry
         : candidateCategories.size
         ? registry.filter(skill => candidateCategories.has(String(skill.category || '').toLowerCase()))
-        : registry;
+        : registry)
+        .filter(skill => !isExcludedSkill(skill, exclusions));
 
     const fullRegistry = loadJson(registryPath, []);
     const activeById = new Map(candidates.map(skill => [skill.skill_id, skill]));
@@ -441,31 +517,37 @@ function main() {
         .map(skill => {
             const fullSkill = fullRegistry.find(item => item.skill_id === skill.skill_id) || {};
             const filepath = skill.filepath || fullSkill.filepath || '';
+            const confidence = skill.confidence;
             return {
                 skill_id: skill.skill_id,
                 filepath,
                 resolved_path: resolveSkillPath(filepath),
                 category: skill.category || fullSkill.category,
                 tags: skill.tags || fullSkill.tags || [],
-                confidence: skill.confidence,
+                confidence,
+                confidence_tier: confidenceTier(confidence),
                 match_reasons: skill.match_reasons,
                 referenced_skills: skill.referenced_skills || []
             };
         });
 
     const topConfidence = results[0]?.confidence || 0;
-    const fallback = topConfidence < 0.35
-        ? 'LOW_CONFIDENCE: run Registry Distiller diagnostics or ask Orchestrator for user confirmation.'
+    const source = supportIndex?.skills?.length ? (supportIndex.summary?.active_skills && supportIndex.skills?.some(skill => !skill.filepath) ? 'routing_index_light' : supportIndex.summary?.active_skills ? 'active_skill_index' : 'router_support_index') : 'registry';
+    const fallbackCode = fallbackCodeFor(results, source);
+    const fallback = fallbackCode
+        ? `${fallbackCode}: run Registry Distiller diagnostics or ask Orchestrator for user confirmation.`
         : null;
 
     writeCache(cache, results);
 
     console.log(JSON.stringify({
         status: 'success',
-        source: supportIndex?.skills?.length ? (supportIndex.summary?.active_skills && supportIndex.skills?.some(skill => !skill.filepath) ? 'routing_index_light' : supportIndex.summary?.active_skills ? 'active_skill_index' : 'router_support_index') : 'registry',
+        source,
         skill_root: skillRoot,
+        intent_hash: cache?.intentHash || intentHashFor(intent),
         active_modes: activeModes,
         results,
+        fallback_code: fallbackCode,
         fallback_recommendation: fallback
     }, null, 2));
 }

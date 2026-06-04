@@ -1,42 +1,4272 @@
-[
-  {
-    "skill_id": "ORCHESTRATOR_AGENT",
-    "name": "orchestrator-agent",
-    "category": "Workflow",
-    "route_policy": "active",
-    "filepath": "skills/orchestrator-agent/SKILL.md",
-    "tags": ["intent", "task-decomposition", "state", "dispatch"]
-  },
-  {
-    "skill_id": "ROUTER_AGENT",
-    "name": "router-agent",
-    "category": "Workflow",
-    "route_policy": "active",
-    "filepath": "skills/router-agent/SKILL.md",
-    "tags": ["router", "skill-retrieval", "confidence", "routing"]
-  },
-  {
-    "skill_id": "BASE_DISTILLER",
-    "name": "Registry Distiller",
-    "category": "Core",
-    "route_policy": "active",
-    "filepath": "skills/base-distiller/SKILL.md",
-    "tags": ["distill", "registry", "maintenance", "diagnostics"]
-  },
-  {
-    "skill_id": "MOSA_GRAPH_BUILDER",
-    "name": "mosa-graph-builder",
-    "category": "Discovery",
-    "route_policy": "active",
-    "filepath": "skills/mosa-graph-builder/SKILL.md",
-    "tags": ["topology", "graph", "token-shield", "project-startup"]
-  },
-  {
-    "skill_id": "MOSA_HARMONIZER",
-    "name": "mosa-harmonizer",
-    "category": "Core",
-    "route_policy": "active",
-    "filepath": "skills/mosa-harmonizer/SKILL.md",
-    "tags": ["harmonizer", "alignment", "efficiency", "memory", "maintenance", "dag", "framework-contract"]
-  }
+﻿[
+    {
+        "skill_id":  "API_EXPERT",
+        "filepath":  "~/.codex/skills/api-expert/SKILL.md",
+        "category":  "Core",
+        "tags":  [
+                     "rest",
+                     "integration"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "BRAINSTORMING_AGENT",
+        "filepath":  "~/.codex/skills/brainstorming-agent/SKILL.md",
+        "category":  "Core",
+        "tags":  [
+                     "ideation",
+                     "solo-brainstorm",
+                     "creative"
+                 ],
+        "complexity":  "Low",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "DOC_PIPELINE",
+        "filepath":  "~/.codex/skills/doc-pipeline/SKILL.md",
+        "category":  "Core",
+        "tags":  [
+                     "document",
+                     "pipeline",
+                     "automation"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "PROJECT_PLANNER",
+        "filepath":  "~/.codex/skills/project-planner/SKILL.md",
+        "category":  "Core",
+        "tags":  [
+                     "planning",
+                     "gantt",
+                     "milestone"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "REPORT_GENERATOR",
+        "filepath":  "~/.codex/skills/report-generator/SKILL.md",
+        "category":  "Core",
+        "tags":  [
+                     "report",
+                     "summary",
+                     "output",
+                     "formatting"
+                 ],
+        "complexity":  "Low",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "KYC_DATA_FETCHER",
+        "filepath":  "~/.codex/skills/kyc-data-fetcher/SKILL.md",
+        "category":  "Admin",
+        "tags":  [
+                     "kyc",
+                     "due-diligence",
+                     "sme",
+                     "corporate",
+                     "screening",
+                     "fetcher"
+                 ],
+        "complexity":  "High",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "ALGORITHMIC_ART",
+        "filepath":  "~/.codex/skills/algorithmic-art/SKILL.md",
+        "category":  "Design",
+        "tags":  [
+                     "p5js",
+                     "generative",
+                     "art",
+                     "particles",
+                     "flow-field"
+                 ],
+        "complexity":  "High",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "AUTO_SKILL",
+        "filepath":  "~/.codex/skills/auto-skill/SKILL.md",
+        "category":  "Core",
+        "tags":  [
+                     "bootstrap",
+                     "knowledge-base",
+                     "experience",
+                     "memory",
+                     "self-evolution"
+                 ],
+        "complexity":  "High",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "BRAND_GUIDELINES",
+        "filepath":  "~/.codex/skills/brand-guidelines/SKILL.md",
+        "category":  "Design",
+        "tags":  [
+                     "brand-guidelines",
+                     "identity",
+                     "logo",
+                     "color-palette",
+                     "typography",
+                     "copy-style"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+                                              "BRAND_GUIDELINES_ANTHROPIC",
+                                              "BRAND_GUIDELINES_COMMUNITY"
+                                          ]
+                         },
+        "references":  [
+                           "BRAND_GUIDELINES_ANTHROPIC",
+                           "BRAND_GUIDELINES_COMMUNITY"
+                       ]
+    },
+    {
+        "skill_id":  "CANVAS_DESIGN",
+        "filepath":  "~/.codex/skills/canvas-design/SKILL.md",
+        "category":  "Design",
+        "tags":  [
+                     "canvas",
+                     "layout",
+                     "composition",
+                     "visual",
+                     "static"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "CODE_REVIEW",
+        "filepath":  "~/.codex/skills/code-review/SKILL.md",
+        "category":  "Tech",
+        "tags":  [
+                     "code-review",
+                     "lint",
+                     "best-practice",
+                     "security"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "COMPLIANCE_FRAMEWORK",
+        "filepath":  "~/.codex/skills/compliance-framework/SKILL.md",
+        "category":  "Admin",
+        "tags":  [
+                     "regulation",
+                     "governance",
+                     "policy"
+                 ],
+        "complexity":  "High",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "DATA_ANALYTICS_CORE",
+        "filepath":  "~/.codex/skills/data-analytics-core/SKILL.md",
+        "category":  "Tech",
+        "tags":  [
+                     "data",
+                     "analytics",
+                     "eda",
+                     "visualization",
+                     "pandas",
+                     "statistics"
+                 ],
+        "complexity":  "High",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "DOC_COAUTHORING",
+        "filepath":  "~/.codex/skills/doc-coauthoring/SKILL.md",
+        "category":  "Core",
+        "tags":  [
+                     "document",
+                     "collaboration",
+                     "coauthoring",
+                     "google-docs"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "DOCX",
+        "filepath":  "~/.codex/skills/docx/SKILL.md",
+        "category":  "Core",
+        "tags":  [
+                     "docx",
+                     "word",
+                     "microsoft",
+                     "export"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "FRONTEND_DESIGN",
+        "filepath":  "~/.codex/skills/frontend-design/SKILL.md",
+        "category":  "Design",
+        "tags":  [
+                     "css",
+                     "html",
+                     "responsive"
+                 ],
+        "complexity":  "High",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "HR_STRATEGY",
+        "filepath":  "~/.codex/skills/hr-strategy/SKILL.md",
+        "category":  "Admin",
+        "tags":  [
+                     "hr",
+                     "recruitment",
+                     "talent",
+                     "jd"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "INTERNAL_COMMS",
+        "filepath":  "~/.codex/skills/internal-comms/SKILL.md",
+        "category":  "Admin",
+        "tags":  [
+                     "internal",
+                     "communications",
+                     "memo",
+                     "announcement",
+                     "newsletter"
+                 ],
+        "complexity":  "Low",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "MCP_BUILDER",
+        "filepath":  "~/.codex/skills/mcp-builder/SKILL.md",
+        "category":  "Tech",
+        "tags":  [
+                     "mcp",
+                     "server",
+                     "tool-integration",
+                     "fastmcp",
+                     "api"
+                 ],
+        "complexity":  "High",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+                                              "MCP_BUILDER_MS"
+                                          ]
+                         },
+        "references":  [
+                           "MCP_BUILDER_MS"
+                       ]
+    },
+    {
+        "skill_id":  "MENTAL_MODELS",
+        "filepath":  "~/.codex/skills/mental-models/SKILL.md",
+        "category":  "Core",
+        "tags":  [
+                     "thinking",
+                     "mental-model",
+                     "framework",
+                     "decision",
+                     "first-principles"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "MOSA_HARMONIZER",
+        "filepath":  "~/.codex/skills/mosa-harmonizer/SKILL.md",
+        "category":  "Core",
+        "tags":  [
+                     "harmonizer",
+                     "alignment",
+                     "architecture",
+                     "framework"
+                 ],
+        "complexity":  "High",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+                                              "AGENT_ORCHESTRATION_MULTI_AGENT_OPTIMIZE",
+                                              "AGENT_ORCHESTRATION_IMPROVE_AGENT"
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "PDF",
+        "filepath":  "~/.codex/skills/pdf/SKILL.md",
+        "category":  "Core",
+        "tags":  [
+                     "pdf",
+                     "extract",
+                     "parse",
+                     "distill"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "PPTX",
+        "filepath":  "~/.codex/skills/pptx/SKILL.md",
+        "category":  "Core",
+        "tags":  [
+                     "pptx",
+                     "powerpoint",
+                     "presentation",
+                     "slides"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "PROJECT_MANAGEMENT_CORE",
+        "filepath":  "~/.codex/skills/project-management-core/SKILL.md",
+        "category":  "Core",
+        "tags":  [
+                     "management",
+                     "tracking",
+                     "agile"
+                 ],
+        "complexity":  "High",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "SKILL_ARCHITECT",
+        "filepath":  "~/.codex/skills/skill-architect/SKILL.md",
+        "category":  "Core",
+        "tags":  [
+                     "skill",
+                     "yaml"
+                 ],
+        "complexity":  "High",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "SKILL_CREATOR",
+        "filepath":  "~/.codex/skills/skill-creator/SKILL.md",
+        "category":  "Core",
+        "tags":  [
+                     "skill",
+                     "create",
+                     "template",
+                     "skill-scaffold"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "SLACK_GIF_CREATOR",
+        "filepath":  "~/.codex/skills/slack-gif-creator/SKILL.md",
+        "category":  "Design",
+        "tags":  [
+                     "gif",
+                     "animation",
+                     "sticker"
+                 ],
+        "complexity":  "Low",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "STRATEGIC_FINANCE",
+        "filepath":  "~/.codex/skills/strategic-finance/SKILL.md",
+        "category":  "Financial",
+        "tags":  [
+                     "finance",
+                     "budget",
+                     "roi",
+                     "cash-flow",
+                     "valuation",
+                     "dcf"
+                 ],
+        "complexity":  "High",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "THEME_FACTORY",
+        "filepath":  "~/.codex/skills/theme-factory/SKILL.md",
+        "category":  "Design",
+        "tags":  [
+                     "theme",
+                     "dark-mode",
+                     "color",
+                     "design-system"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "THOUGHT_DISTILLER",
+        "filepath":  "~/.codex/skills/thought-distiller/SKILL.md",
+        "category":  "Core",
+        "tags":  [
+                     "extraction",
+                     "meta-logic",
+                     "cognitive"
+                 ],
+        "complexity":  "High",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "TRADING_EXPERT",
+        "filepath":  "~/.codex/skills/trading-expert/SKILL.md",
+        "category":  "Financial",
+        "tags":  [
+                     "trading",
+                     "stock",
+                     "us-market",
+                     "nyse",
+                     "nasdaq",
+                     "technical-analysis",
+                     "pine-script",
+                     "swing"
+                 ],
+        "complexity":  "High",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "TRADING_EXPERT_HS",
+        "filepath":  "~/.codex/skills/trading-expert-hs/SKILL.md",
+        "category":  "Financial",
+        "tags":  [
+                     "trading",
+                     "hong-kong",
+                     "hsi",
+                     "china",
+                     "a-shares",
+                     "h-shares",
+                     "mainland",
+                     "swing"
+                 ],
+        "complexity":  "High",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "WEB_ARTIFACTS_BUILDER",
+        "filepath":  "~/.codex/skills/web-artifacts-builder/SKILL.md",
+        "category":  "Design",
+        "tags":  [
+                     "web-artifact",
+                     "html-ui",
+                     "interactive-dashboard"
+                 ],
+        "complexity":  "High",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "WEBAPP_TESTING",
+        "filepath":  "~/.codex/skills/webapp-testing/SKILL.md",
+        "category":  "Tech",
+        "tags":  [
+                     "qa",
+                     "browser",
+                     "e2e",
+                     "validation"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "XLSX",
+        "filepath":  "~/.codex/skills/xlsx/SKILL.md",
+        "category":  "Core",
+        "tags":  [
+                     "xlsx",
+                     "excel",
+                     "spreadsheet",
+                     "data"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "SCRAPING_FAILURE_HANDLER",
+        "filepath":  "~/.codex/skills/scraping-failure-handler/SKILL.md",
+        "category":  "Tech",
+        "tags":  [
+                     "scraping",
+                     "resilience",
+                     "circuit-breaker",
+                     "failure",
+                     "browser-fallback"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "MOSA_GRAPH_BUILDER",
+        "filepath":  "~/.codex/skills/mosa-graph-builder/SKILL.md",
+        "category":  "Core",
+        "tags":  [
+                     "topology",
+                     "graph",
+                     "mermaid",
+                     "token-shield",
+                     "project-startup",
+                     "god-nodes",
+                     "router-support"
+                 ],
+        "complexity":  "High",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "GAS_WEBAPP_ARCHITECT",
+        "filepath":  "~/.codex/skills/gas-webapp-architect/SKILL.md",
+        "category":  "Framework",
+        "tags":  [
+                     "google-apps-script",
+                     "gas-webapp",
+                     "google-sheets",
+                     "client-cache",
+                     "quota-safe",
+                     "scanner",
+                     "batch-email"
+                 ],
+        "complexity":  "High",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "AUTOMATED_DATA_CLEANER",
+        "filepath":  "~/.codex/skills/automated-data-cleaner/SKILL.md",
+        "category":  "Utility",
+        "tags":  [
+                     "data-cleaning",
+                     "regex",
+                     "standardization"
+                 ],
+        "complexity":  "Low",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "BASE_DISTILLER",
+        "filepath":  "~/.codex/skills/base-distiller/SKILL.md",
+        "category":  "Utility",
+        "tags":  [
+                     "distill",
+                     "registry",
+                     "maintenance"
+                 ],
+        "complexity":  "Low",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "ORCHESTRATOR_AGENT",
+        "filepath":  "~/.codex/skills/orchestrator-agent/SKILL.md",
+        "category":  "Workflow",
+        "tags":  [
+                     "task-decomposition"
+                 ],
+        "complexity":  "High",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+                                              "MULTI_AGENT_PATTERNS",
+                                              "PARALLEL_AGENTS",
+                                              "AI_AGENTS_ARCHITECT"
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "ROUTER_AGENT",
+        "filepath":  "~/.codex/skills/router-agent/SKILL.md",
+        "category":  "Workflow",
+        "tags":  [
+                     "router",
+                     "skill-retrieval"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "AUDIT_AGENT",
+        "filepath":  "~/.codex/skills/audit-agent/SKILL.md",
+        "category":  "Workflow",
+        "tags":  [
+                     "compliance",
+                     "efficiency"
+                 ],
+        "complexity":  "High",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "CODER_AGENT",
+        "filepath":  "~/.codex/skills/coder-agent/SKILL.md",
+        "category":  "Workflow",
+        "tags":  [
+                     "coder",
+                     "execution",
+                     "tech"
+                 ],
+        "complexity":  "High",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "ADMIN_AGENT",
+        "filepath":  "~/.codex/skills/admin-agent/SKILL.md",
+        "category":  "Workflow",
+        "tags":  [
+                     "hr",
+                     "operations"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "DESIGN_AGENT",
+        "filepath":  "~/.codex/skills/design-agent/SKILL.md",
+        "category":  "Workflow",
+        "tags":  [
+                     "design-workflow",
+                     "ui-ux",
+                     "creative-direction"
+                 ],
+        "complexity":  "High",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "MARKET_AGENT",
+        "filepath":  "~/.codex/skills/market-agent/SKILL.md",
+        "category":  "Workflow",
+        "tags":  [
+                     "financial-market",
+                     "finance",
+                     "analysis"
+                 ],
+        "complexity":  "High",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "GOOGLE_AGENT",
+        "filepath":  "~/.codex/skills/google-agent/SKILL.md",
+        "category":  "Workflow",
+        "tags":  [
+                     "google-workspace",
+                     "google-docs",
+                     "google-sheets",
+                     "google-drive",
+                     "apps-script-support"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "MICROSOFT_AGENT",
+        "filepath":  "~/.codex/skills/microsoft-agent/SKILL.md",
+        "category":  "Workflow",
+        "tags":  [
+                     "microsoft",
+                     "office",
+                     "automation"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "WF_AGENT_OS_SETUP",
+        "filepath":  "~/.codex/skills/agent-os-setup/SKILL.md",
+        "category":  "Archived",
+        "tags":  [
+
+                 ],
+        "complexity":  "Low",
+        "dependencies":  {
+                             "requires":  [
+                                              "AGENT_OS_SETUP"
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         },
+        "previous_category":  "Workflow",
+        "archived_tags":  [
+                              "agent-os-bootstrap"
+                          ],
+        "consolidated_into":  "AGENT_OS_SETUP",
+        "reference_role":  "workflow-alias"
+    },
+    {
+        "skill_id":  "BOOTSTRAP_AGENT",
+        "filepath":  "~/.codex/skills/bootstrap-agent/SKILL.md",
+        "category":  "Workflow",
+        "tags":  [
+                     "bootstrap",
+                     "initialization"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "WF_PROJECT_LAUNCH",
+        "filepath":  "~/.codex/skills/project-launch/SKILL.md",
+        "category":  "Archived",
+        "tags":  [
+
+                 ],
+        "complexity":  "Low",
+        "archived_tags":  [
+                              "workflow"
+                          ],
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "WF_SIMPLE_TASK",
+        "filepath":  "~/.codex/skills/simple-workflow/SKILL.md",
+        "category":  "Workflow",
+        "tags":  [
+                     "task"
+                 ],
+        "complexity":  "Low",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "WF_INVESTMENT_COMMITTEE",
+        "filepath":  "~/.codex/skills/run-investment-committee/SKILL.md",
+        "category":  "Workflow",
+        "tags":  [
+                     "workflow"
+                 ],
+        "complexity":  "High",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "WF_PLACEMENT_DRIVE",
+        "filepath":  "~/.codex/skills/run-placement-drive/SKILL.md",
+        "category":  "Archived",
+        "tags":  [
+
+                 ],
+        "complexity":  "Medium",
+        "archived_tags":  [
+                              "workflow"
+                          ],
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "WF_PDF_TO_EXCEL",
+        "filepath":  "~/.codex/skills/pdf-to-excel-export/SKILL.md",
+        "category":  "Archived",
+        "tags":  [
+
+                 ],
+        "complexity":  "Medium",
+        "archived_tags":  [
+                              "workflow"
+                          ],
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "IMAGE_THUMBNAIL_GENERATOR",
+        "filepath":  "~/.codex/skills/image-thumbnail-generator/SKILL.md",
+        "category":  "Utility",
+        "tags":  [
+                     "data-processor",
+                     "image-optimization",
+                     "python",
+                     "nodejs"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "FRONTEND_PERFORMANCE_EXPERT",
+        "filepath":  "~/.codex/skills/frontend-performance-expert/SKILL.md",
+        "category":  "Tech",
+        "tags":  [
+                     "optimization",
+                     "dom",
+                     "css"
+                 ],
+        "complexity":  "High",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "UTAR_OPS",
+        "filepath":  "~/.codex/skills/utar-ops/SKILL.md",
+        "category":  "Framework",
+        "tags":  [
+                     "utar-ops",
+                     "utar-scanner",
+                     "schema-sync",
+                     "quota-email-batching",
+                     "operations-workflow"
+                 ],
+        "complexity":  "High",
+        "dependencies":  {
+                             "requires":  [
+                                              "UI_SUITE"
+                                          ],
+                             "suggests":  [
+                                              "GOOGLE_AGENT"
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "00_ANDRUIA_CONSULTANT",
+        "filepath":  "~/.codex/skills/00-andruia-consultant/SKILL.md",
+        "category":  "Design",
+        "tags":  [
+                     "00",
+                     "andruia",
+                     "consultant"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "10_ANDRUIA_SKILL_SMITH",
+        "filepath":  "~/.codex/skills/10-andruia-skill-smith/SKILL.md",
+        "category":  "Design",
+        "tags":  [
+                     "10",
+                     "andruia",
+                     "skill",
+                     "smith"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "20_ANDRUIA_NICHE_INTELLIGENCE",
+        "filepath":  "~/.codex/skills/20-andruia-niche-intelligence/SKILL.md",
+        "category":  "Design",
+        "tags":  [
+                     "20",
+                     "andruia",
+                     "niche",
+                     "intelligence"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "AGENT_ORCHESTRATION_IMPROVE_AGENT",
+        "filepath":  "~/.codex/skills/agent-orchestration-improve-agent/SKILL.md",
+        "category":  "Utility",
+        "tags":  [
+                     "improve"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         },
+        "route_policy":  "reference",
+        "master_skill":  "MOSA_HARMONIZER",
+        "mosa_reference_target":  "MOSA_HARMONIZER",
+        "reference_role":  "agent-quality-reference",
+        "reference_reason":  "Agent quality, failure mode, and prompt improvement reference for MOSA maintenance."
+    },
+    {
+        "skill_id":  "AGENT_ORCHESTRATION_MULTI_AGENT_OPTIMIZE",
+        "filepath":  "~/.codex/skills/agent-orchestration-multi-agent-optimize/SKILL.md",
+        "category":  "Utility",
+        "tags":  [
+                     "multi",
+                     "optimize"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         },
+        "route_policy":  "reference",
+        "master_skill":  "MOSA_HARMONIZER",
+        "mosa_reference_target":  "MOSA_HARMONIZER",
+        "reference_role":  "efficiency-audit-reference",
+        "reference_reason":  "Multi-agent cost, latency, and bottleneck optimization reference for MOSA maintenance."
+    },
+    {
+        "skill_id":  "AGENT_OS_SETUP",
+        "filepath":  "~/.codex/skills/agent-os-setup/SKILL.md",
+        "category":  "Workflow",
+        "tags":  [
+                     "agent-os-bootstrap",
+                     "agent-os-setup"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+                                              "WF_AGENT_OS_SETUP"
+                                          ]
+                         },
+        "references":  [
+                           "WF_AGENT_OS_SETUP"
+                       ]
+    },
+    {
+        "skill_id":  "AGENT_TOOL_BUILDER",
+        "filepath":  "~/.codex/skills/agent-tool-builder/SKILL.md",
+        "category":  "Design",
+        "tags":  [
+                     "agent-tooling"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "AI_AGENT_DEVELOPMENT",
+        "filepath":  "~/.codex/skills/ai-agent-development/SKILL.md",
+        "category":  "Tech",
+        "tags":  [
+                     "development"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "AI_AGENTS_ARCHITECT",
+        "filepath":  "~/.codex/skills/ai-agents-architect/SKILL.md",
+        "category":  "Utility",
+        "tags":  [
+                     "agent-architecture",
+                     "multi-agent-architecture",
+                     "langgraph",
+                     "langchain"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         },
+        "route_policy":  "specialized",
+        "mosa_reference_target":  "ORCHESTRATOR_AGENT",
+        "reference_role":  "agent-architecture-reference",
+        "reference_reason":  "General agent architecture reference for designing new agent systems.",
+        "exact_triggers":  [
+                               "agent architecture",
+                               "ai agent architecture",
+                               "multi agent architecture",
+                               "langgraph",
+                               "langchain",
+                               "agent system design"
+                           ]
+    },
+    {
+        "skill_id":  "AI_SEO",
+        "filepath":  "~/.codex/skills/ai-seo/SKILL.md",
+        "category":  "Archived",
+        "tags":  [
+
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         },
+        "archived_tags":  [
+                              "ai"
+                          ],
+        "consolidated_into":  "seo-suite"
+    },
+    {
+        "skill_id":  "AKF_TRUST_METADATA",
+        "filepath":  "~/.codex/skills/akf-trust-metadata/SKILL.md",
+        "category":  "Tech",
+        "tags":  [
+                     "akf",
+                     "trust",
+                     "metadata"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "ANTIGRAVITY_DESIGN_EXPERT",
+        "filepath":  "~/.codex/skills/antigravity-design-expert/SKILL.md",
+        "category":  "Design",
+        "tags":  [
+                     "antigravity",
+                     "expert"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "API_DESIGN_PRINCIPLES",
+        "filepath":  "~/.codex/skills/api-design-principles/SKILL.md",
+        "category":  "Design",
+        "tags":  [
+                     "api",
+                     "principles"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "API_ENDPOINT_BUILDER",
+        "filepath":  "~/.codex/skills/api-endpoint-builder/SKILL.md",
+        "category":  "Design",
+        "tags":  [
+                     "api",
+                     "endpoint",
+                     "builder"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "APP_BUILDER",
+        "filepath":  "~/.codex/skills/app-builder/SKILL.md",
+        "category":  "Design",
+        "tags":  [
+                     "application-scaffold",
+                     "app-builder"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "AUDIT_CONTEXT_BUILDING",
+        "filepath":  "~/.codex/skills/audit-context-building/SKILL.md",
+        "category":  "Design",
+        "tags":  [
+                     "audit-context"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "AUTONOMOUS_AGENT_PATTERNS",
+        "filepath":  "~/.codex/skills/autonomous-agent-patterns/SKILL.md",
+        "category":  "Utility",
+        "tags":  [
+                     "autonomous"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "AUTONOMOUS_AGENTS",
+        "filepath":  "~/.codex/skills/autonomous-agents/SKILL.md",
+        "category":  "Archived",
+        "tags":  [
+
+                 ],
+        "complexity":  "Medium",
+        "archived_tags":  [
+                              "agents"
+                          ],
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "BACKEND_DEV_GUIDELINES",
+        "filepath":  "~/.codex/skills/backend-dev-guidelines/SKILL.md",
+        "category":  "Design",
+        "tags":  [
+                     "backend"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "BASH_LINUX",
+        "filepath":  "~/.codex/skills/bash-linux/SKILL.md",
+        "category":  "Design",
+        "tags":  [
+                     "bash",
+                     "linux"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "BAZEL_BUILD_OPTIMIZATION",
+        "filepath":  "~/.codex/skills/bazel-build-optimization/SKILL.md",
+        "category":  "Design",
+        "tags":  [
+                     "bazel",
+                     "optimization"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "BLOG_WRITING_GUIDE",
+        "filepath":  "~/.codex/skills/blog-writing-guide/SKILL.md",
+        "category":  "Design",
+        "tags":  [
+                     "writing",
+                     "guide"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "BRAND_GUIDELINES_ANTHROPIC",
+        "filepath":  "~/.codex/skills/brand-guidelines-anthropic/SKILL.md",
+        "category":  "Archived",
+        "tags":  [
+
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+                                              "BRAND_GUIDELINES"
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         },
+        "previous_category":  "Design",
+        "archived_tags":  [
+                              "anthropic"
+                          ],
+        "consolidated_into":  "BRAND_GUIDELINES",
+        "reference_role":  "brand-variant-reference"
+    },
+    {
+        "skill_id":  "BRAND_GUIDELINES_COMMUNITY",
+        "filepath":  "~/.codex/skills/brand-guidelines-community/SKILL.md",
+        "category":  "Archived",
+        "tags":  [
+
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+                                              "BRAND_GUIDELINES"
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         },
+        "previous_category":  "Design",
+        "archived_tags":  [
+                              "brand",
+                              "guidelines",
+                              "community"
+                          ],
+        "consolidated_into":  "BRAND_GUIDELINES",
+        "reference_role":  "brand-variant-reference"
+    },
+    {
+        "skill_id":  "BROWSER_EXTENSION_BUILDER",
+        "filepath":  "~/.codex/skills/browser-extension-builder/SKILL.md",
+        "category":  "Design",
+        "tags":  [
+                     "browser",
+                     "extension",
+                     "builder"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "BUILD",
+        "filepath":  "~/.codex/skills/build/SKILL.md",
+        "category":  "Design",
+        "tags":  [
+                     "build-system"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "BURP_SUITE_TESTING",
+        "filepath":  "~/.codex/skills/burp-suite-testing/SKILL.md",
+        "category":  "Design",
+        "tags":  [
+                     "burp",
+                     "suite"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "BURPSUITE_PROJECT_PARSER",
+        "filepath":  "~/.codex/skills/burpsuite-project-parser/SKILL.md",
+        "category":  "Design",
+        "tags":  [
+                     "burpsuite",
+                     "parser"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "CC_SKILL_PROJECT_GUIDELINES_EXAMPLE",
+        "filepath":  "~/.codex/skills/cc-skill-project-guidelines-example/SKILL.md",
+        "category":  "Design",
+        "tags":  [
+                     "cc",
+                     "skill",
+                     "guidelines",
+                     "example"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "CLAUDE_CODE_GUIDE",
+        "filepath":  "~/.codex/skills/claude-code-guide/SKILL.md",
+        "category":  "Design",
+        "tags":  [
+                     "claude",
+                     "code",
+                     "guide"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "COMFYUI_GATEWAY",
+        "filepath":  "~/.codex/skills/comfyui-gateway/SKILL.md",
+        "category":  "Design",
+        "tags":  [
+                     "comfyui",
+                     "gateway"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "COMPUTER_USE_AGENTS",
+        "filepath":  "~/.codex/skills/computer-use-agents/SKILL.md",
+        "category":  "Utility",
+        "tags":  [
+                     "computer",
+                     "use",
+                     "cua",
+                     "operator",
+                     "screen-control"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         },
+        "route_policy":  "specialized",
+        "reference_reason":  "Vision-based computer control / CUA skill.",
+        "exact_triggers":  [
+                               "computer use",
+                               "cua",
+                               "operator",
+                               "screen control",
+                               "click agent",
+                               "vision control"
+                           ]
+    },
+    {
+        "skill_id":  "CONTENT_STRATEGY",
+        "filepath":  "~/.codex/skills/content-strategy/SKILL.md",
+        "category":  "Marketing",
+        "tags":  [
+                     "strategy"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "CONTEXT_AGENT",
+        "filepath":  "~/.codex/skills/context-agent/SKILL.md",
+        "category":  "Utility",
+        "tags":  [
+                     "context"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "CRYPTO_BD_AGENT",
+        "filepath":  "~/.codex/skills/crypto-bd-agent/SKILL.md",
+        "category":  "Utility",
+        "tags":  [
+                     "crypto",
+                     "bd"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "DATA_ENGINEER",
+        "filepath":  "~/.codex/skills/data-engineer/SKILL.md",
+        "category":  "Archived",
+        "tags":  [
+
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         },
+        "archived_tags":  [
+                              "data",
+                              "engineer"
+                          ],
+        "consolidated_into":  "database-suite"
+    },
+    {
+        "skill_id":  "DATA_ENGINEERING_DATA_DRIVEN_FEATURE",
+        "filepath":  "~/.codex/skills/data-engineering-data-driven-feature/SKILL.md",
+        "category":  "Archived",
+        "tags":  [
+
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         },
+        "archived_tags":  [
+                              "driven",
+                              "feature"
+                          ],
+        "consolidated_into":  "database-suite"
+    },
+    {
+        "skill_id":  "DATA_ENGINEERING_DATA_PIPELINE",
+        "filepath":  "~/.codex/skills/data-engineering-data-pipeline/SKILL.md",
+        "category":  "Archived",
+        "tags":  [
+
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         },
+        "archived_tags":  [
+                              "data",
+                              "engineering",
+                              "data",
+                              "pipeline"
+                          ],
+        "consolidated_into":  "database-suite"
+    },
+    {
+        "skill_id":  "DATA_QUALITY_FRAMEWORKS",
+        "filepath":  "~/.codex/skills/data-quality-frameworks/SKILL.md",
+        "category":  "Tech",
+        "tags":  [
+                     "data",
+                     "frameworks"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "DATA_SCIENTIST",
+        "filepath":  "~/.codex/skills/data-scientist/SKILL.md",
+        "category":  "Tech",
+        "tags":  [
+                     "data",
+                     "scientist"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "DATA_STORYTELLING",
+        "filepath":  "~/.codex/skills/data-storytelling/SKILL.md",
+        "category":  "Tech",
+        "tags":  [
+                     "data",
+                     "storytelling"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "DATA_STRUCTURE_PROTOCOL",
+        "filepath":  "~/.codex/skills/data-structure-protocol/SKILL.md",
+        "category":  "Tech",
+        "tags":  [
+                     "data",
+                     "protocol"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "DATADOG_AUTOMATION",
+        "filepath":  "~/.codex/skills/datadog-automation/SKILL.md",
+        "category":  "Tech",
+        "tags":  [
+                     "datadog",
+                     "automation"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "DDD_STRATEGIC_DESIGN",
+        "filepath":  "~/.codex/skills/ddd-strategic-design/SKILL.md",
+        "category":  "Design",
+        "tags":  [
+                     "ddd",
+                     "strategic"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "DEPLOYMENT_PIPELINE_DESIGN",
+        "filepath":  "~/.codex/skills/deployment-pipeline-design/SKILL.md",
+        "category":  "Design",
+        "tags":  [
+                     "deployment",
+                     "pipeline"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "DESIGN_MD",
+        "filepath":  "~/.codex/skills/design-md/SKILL.md",
+        "category":  "Design",
+        "tags":  [
+                     "md"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "DESIGN_ORCHESTRATION",
+        "filepath":  "~/.codex/skills/design-orchestration/SKILL.md",
+        "category":  "Design",
+        "tags":  [
+                     "orchestration"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         },
+        "route_policy":  "reference",
+        "consolidated_into":  "UI_SUITE",
+        "master_skill":  "UI_SUITE",
+        "reference_role":  "ui-ux-flow-reference",
+        "reference_reason":  "Design flow control belongs under UI_SUITE.",
+        "previous_category":  "Design"
+    },
+    {
+        "skill_id":  "DESIGN_SPELLS",
+        "filepath":  "~/.codex/skills/design-spells/SKILL.md",
+        "category":  "Design",
+        "tags":  [
+                     "spells"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "DESIGN_TASTE_FRONTEND",
+        "filepath":  "~/.codex/skills/design-taste-frontend/SKILL.md",
+        "category":  "Design",
+        "tags":  [
+                     "frontend"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "DISPATCHING_PARALLEL_AGENTS",
+        "filepath":  "~/.codex/skills/dispatching-parallel-agents/SKILL.md",
+        "category":  "Utility",
+        "tags":  [
+                     "dispatching"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         },
+        "route_policy":  "reference",
+        "consolidated_into":  "PARALLEL_AGENTS",
+        "master_skill":  "PARALLEL_AGENTS",
+        "reference_role":  "duplicate-parallel-pattern",
+        "reference_reason":  "Subset of PARALLEL_AGENTS focused on dispatching independent failures.",
+        "archive_reason":  "duplicate-parallel-pattern",
+        "previous_category":  "Utility"
+    },
+    {
+        "skill_id":  "DOMAIN_DRIVEN_DESIGN",
+        "filepath":  "~/.codex/skills/domain-driven-design/SKILL.md",
+        "category":  "Design",
+        "tags":  [
+                     "domain",
+                     "driven"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "EARLLM_BUILD",
+        "filepath":  "~/.codex/skills/earllm-build/SKILL.md",
+        "category":  "Design",
+        "tags":  [
+                     "earllm"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "EMOTIONAL_ARC_DESIGNER",
+        "filepath":  "~/.codex/skills/emotional-arc-designer/SKILL.md",
+        "category":  "Design",
+        "tags":  [
+                     "emotional",
+                     "arc"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "ENVIRONMENT_SETUP_GUIDE",
+        "filepath":  "~/.codex/skills/environment-setup-guide/SKILL.md",
+        "category":  "Design",
+        "tags":  [
+                     "environment",
+                     "guide"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "ERROR_DEBUGGING_MULTI_AGENT_REVIEW",
+        "filepath":  "~/.codex/skills/error-debugging-multi-agent-review/SKILL.md",
+        "category":  "Utility",
+        "tags":  [
+                     "error",
+                     "debugging"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "EVENT_STORE_DESIGN",
+        "filepath":  "~/.codex/skills/event-store-design/SKILL.md",
+        "category":  "Design",
+        "tags":  [
+                     "event",
+                     "store"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "EXPO_TAILWIND_SETUP",
+        "filepath":  "~/.codex/skills/expo-tailwind-setup/SKILL.md",
+        "category":  "Design",
+        "tags":  [
+                     "expo"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "FIXING_METADATA",
+        "filepath":  "~/.codex/skills/fixing-metadata/SKILL.md",
+        "category":  "Tech",
+        "tags":  [
+                     "fixing",
+                     "metadata"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "FOOD_DATABASE_QUERY",
+        "filepath":  "~/.codex/skills/food-database-query/SKILL.md",
+        "category":  "Tech",
+        "tags":  [
+                     "food",
+                     "query"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "FP_DATA_TRANSFORMS",
+        "filepath":  "~/.codex/skills/fp-data-transforms/SKILL.md",
+        "category":  "Tech",
+        "tags":  [
+                     "fp",
+                     "data",
+                     "transforms"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "FREE_TOOL_STRATEGY",
+        "filepath":  "~/.codex/skills/free-tool-strategy/SKILL.md",
+        "category":  "Utility",
+        "tags":  [
+                     "free"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "FRONTEND_DEV_GUIDELINES",
+        "filepath":  "~/.codex/skills/frontend-dev-guidelines/SKILL.md",
+        "category":  "Design",
+        "tags":  [
+                     "dev",
+                     "guidelines"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "GDPR_DATA_HANDLING",
+        "filepath":  "~/.codex/skills/gdpr-data-handling/SKILL.md",
+        "category":  "Tech",
+        "tags":  [
+                     "gdpr",
+                     "data",
+                     "handling"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "GLOBAL_CHAT_AGENT_DISCOVERY",
+        "filepath":  "~/.codex/skills/global-chat-agent-discovery/SKILL.md",
+        "category":  "Utility",
+        "tags":  [
+                     "global",
+                     "chat",
+                     "discovery"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "HIERARCHICAL_AGENT_MEMORY",
+        "filepath":  "~/.codex/skills/hierarchical-agent-memory/SKILL.md",
+        "category":  "Utility",
+        "tags":  [
+                     "hierarchical",
+                     "memory"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "HIGH_END_VISUAL_DESIGN",
+        "filepath":  "~/.codex/skills/high-end-visual-design/SKILL.md",
+        "category":  "Design",
+        "tags":  [
+                     "high",
+                     "end",
+                     "visual"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "HOSTED_AGENTS",
+        "filepath":  "~/.codex/skills/hosted-agents/SKILL.md",
+        "category":  "Utility",
+        "tags":  [
+                     "hosted",
+                     "remote-agent",
+                     "sandbox",
+                     "hosted-infrastructure"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         },
+        "route_policy":  "specialized",
+        "reference_reason":  "Remote sandbox and hosted agent infrastructure skill.",
+        "exact_triggers":  [
+                               "hosted agents",
+                               "remote agent",
+                               "sandboxed agents",
+                               "background coding agents",
+                               "azure hosted agents",
+                               "agent sandbox"
+                           ]
+    },
+    {
+        "skill_id":  "HOSTED_AGENTS_V2_PY",
+        "filepath":  "~/.codex/skills/hosted-agents-v2-py/SKILL.md",
+        "category":  "Utility",
+        "tags":  [
+                     "v2"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         },
+        "route_policy":  "reference",
+        "consolidated_into":  "HOSTED_AGENTS",
+        "master_skill":  "HOSTED_AGENTS",
+        "reference_role":  "azure-python-hosted-agent-reference",
+        "reference_reason":  "Azure Python implementation details for HOSTED_AGENTS.",
+        "previous_category":  "Utility"
+    },
+    {
+        "skill_id":  "HUGGING_FACE_DATASET_VIEWER",
+        "filepath":  "~/.codex/skills/hugging-face-dataset-viewer/SKILL.md",
+        "category":  "Archived",
+        "tags":  [
+
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+                                              "HUGGING_FACE_DATASETS"
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         },
+        "previous_category":  "Tech",
+        "archived_tags":  [
+                              "dataset-viewer",
+                              "hugging-face"
+                          ],
+        "consolidated_into":  "HUGGING_FACE_DATASETS",
+        "reference_role":  "viewer-reference"
+    },
+    {
+        "skill_id":  "HUGGING_FACE_DATASETS",
+        "filepath":  "~/.codex/skills/hugging-face-datasets/SKILL.md",
+        "category":  "Tech",
+        "tags":  [
+                     "hugging-face",
+                     "dataset-catalog",
+                     "dataset-viewer",
+                     "model-hub"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+                                              "HUGGING_FACE_DATASET_VIEWER",
+                                              "HUGGING_FACE_TOOL_BUILDER"
+                                          ]
+                         },
+        "references":  [
+                           "HUGGING_FACE_DATASET_VIEWER",
+                           "HUGGING_FACE_TOOL_BUILDER"
+                       ]
+    },
+    {
+        "skill_id":  "HUGGING_FACE_TOOL_BUILDER",
+        "filepath":  "~/.codex/skills/hugging-face-tool-builder/SKILL.md",
+        "category":  "Archived",
+        "tags":  [
+
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+                                              "HUGGING_FACE_DATASETS"
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         },
+        "previous_category":  "Design",
+        "archived_tags":  [
+                              "hugging",
+                              "face"
+                          ],
+        "consolidated_into":  "HUGGING_FACE_DATASETS",
+        "reference_role":  "tool-builder-reference"
+    },
+    {
+        "skill_id":  "IOS_DEBUGGER_AGENT",
+        "filepath":  "~/.codex/skills/ios-debugger-agent/SKILL.md",
+        "category":  "Utility",
+        "tags":  [
+                     "ios",
+                     "debugger"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "JSON_CANVAS",
+        "filepath":  "~/.codex/skills/json-canvas/SKILL.md",
+        "category":  "Design",
+        "tags":  [
+                     "json",
+                     "canvas"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "KPI_DASHBOARD_DESIGN",
+        "filepath":  "~/.codex/skills/kpi-dashboard-design/SKILL.md",
+        "category":  "Design",
+        "tags":  [
+                     "kpi",
+                     "dashboard"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "LAMBDATEST_AGENT_SKILLS",
+        "filepath":  "~/.codex/skills/lambdatest-agent-skills/SKILL.md",
+        "category":  "Utility",
+        "tags":  [
+                     "lambdatest"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "LAUNCH_STRATEGY",
+        "filepath":  "~/.codex/skills/launch-strategy/SKILL.md",
+        "category":  "Workflow",
+        "tags":  [
+                     "launch"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "LINUX_PRIVILEGE_ESCALATION",
+        "filepath":  "~/.codex/skills/linux-privilege-escalation/SKILL.md",
+        "category":  "Design",
+        "tags":  [
+                     "linux",
+                     "privilege",
+                     "escalation"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "LINUX_SHELL_SCRIPTING",
+        "filepath":  "~/.codex/skills/linux-shell-scripting/SKILL.md",
+        "category":  "Design",
+        "tags":  [
+                     "linux",
+                     "shell",
+                     "scripting"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "LINUX_TROUBLESHOOTING",
+        "filepath":  "~/.codex/skills/linux-troubleshooting/SKILL.md",
+        "category":  "Design",
+        "tags":  [
+                     "linux",
+                     "troubleshooting"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "LLM_APPLICATION_DEV_LANGCHAIN_AGENT",
+        "filepath":  "~/.codex/skills/llm-application-dev-langchain-agent/SKILL.md",
+        "category":  "Tech",
+        "tags":  [
+                     "llm",
+                     "application",
+                     "dev",
+                     "langchain"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "LOCAL_LEGAL_SEO_AUDIT",
+        "filepath":  "~/.codex/skills/local-legal-seo-audit/SKILL.md",
+        "category":  "Archived",
+        "tags":  [
+
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         },
+        "archived_tags":  [
+                              "local",
+                              "legal"
+                          ],
+        "consolidated_into":  "seo-suite"
+    },
+    {
+        "skill_id":  "LOSS_AVERSION_DESIGNER",
+        "filepath":  "~/.codex/skills/loss-aversion-designer/SKILL.md",
+        "category":  "Design",
+        "tags":  [
+                     "loss",
+                     "aversion"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "M365_AGENTS_DOTNET",
+        "filepath":  "~/.codex/skills/m365-agents-dotnet/SKILL.md",
+        "category":  "Utility",
+        "tags":  [
+                     "m365"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "M365_AGENTS_PY",
+        "filepath":  "~/.codex/skills/m365-agents-py/SKILL.md",
+        "category":  "Archived",
+        "tags":  [
+
+                 ],
+        "complexity":  "Medium",
+        "archived_tags":  [
+                              "m365"
+                          ],
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         },
+        "consolidated_into":  "m365-agents-dotnet"
+    },
+    {
+        "skill_id":  "M365_AGENTS_TS",
+        "filepath":  "~/.codex/skills/m365-agents-ts/SKILL.md",
+        "category":  "Archived",
+        "tags":  [
+
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         },
+        "archived_tags":  [
+                              "ts"
+                          ],
+        "consolidated_into":  "m365-agents-dotnet"
+    },
+    {
+        "skill_id":  "MACOS_MENUBAR_TUIST_APP",
+        "filepath":  "~/.codex/skills/macos-menubar-tuist-app/SKILL.md",
+        "category":  "Design",
+        "tags":  [
+                     "macos",
+                     "menubar",
+                     "tuist",
+                     "app"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "MARKETING_IDEAS",
+        "filepath":  "~/.codex/skills/marketing-ideas/SKILL.md",
+        "category":  "Marketing",
+        "tags":  [
+                     "ideas"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "MARKETING_PSYCHOLOGY",
+        "filepath":  "~/.codex/skills/marketing-psychology/SKILL.md",
+        "category":  "Marketing",
+        "tags":  [
+                     "psychology"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "MCP_BUILDER_MS",
+        "filepath":  "~/.codex/skills/mcp-builder-ms/SKILL.md",
+        "category":  "Archived",
+        "tags":  [
+
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+                                              "MCP_BUILDER"
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         },
+        "previous_category":  "Design",
+        "archived_tags":  [
+                              "mcp",
+                              "builder",
+                              "ms"
+                          ],
+        "consolidated_into":  "MCP_BUILDER",
+        "reference_role":  "microsoft-mcp-reference"
+    },
+    {
+        "skill_id":  "MOBILE_DESIGN",
+        "filepath":  "~/.codex/skills/mobile-design/SKILL.md",
+        "category":  "Design",
+        "tags":  [
+                     "mobile"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "MULTI_AGENT_ARCHITECT",
+        "filepath":  "~/.codex/skills/multi-agent-architect/SKILL.md",
+        "category":  "Utility",
+        "tags":  [
+                     "architect"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         },
+        "route_policy":  "reference",
+        "consolidated_into":  "AI_AGENTS_ARCHITECT",
+        "master_skill":  "AI_AGENTS_ARCHITECT",
+        "reference_role":  "langgraph-agent-architecture-reference",
+        "reference_reason":  "LangGraph/LangChain implementation reference for production multi-agent systems.",
+        "previous_category":  "Utility"
+    },
+    {
+        "skill_id":  "MULTI_AGENT_BRAINSTORMING",
+        "filepath":  "~/.codex/skills/multi-agent-brainstorming/SKILL.md",
+        "category":  "Utility",
+        "tags":  [
+                     "multi-agent-brainstorm"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         },
+        "route_policy":  "reference",
+        "consolidated_into":  "BRAINSTORMING_AGENT",
+        "master_skill":  "BRAINSTORMING_AGENT",
+        "reference_role":  "brainstorming-variant-reference",
+        "reference_reason":  "Multi-agent variant of brainstorming workflow.",
+        "previous_category":  "Utility"
+    },
+    {
+        "skill_id":  "MULTI_AGENT_PATTERNS",
+        "filepath":  "~/.codex/skills/multi-agent-patterns/SKILL.md",
+        "category":  "Utility",
+        "tags":  [
+                     "patterns"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         },
+        "route_policy":  "reference",
+        "master_skill":  "ORCHESTRATOR_AGENT",
+        "mosa_reference_target":  "ORCHESTRATOR_AGENT",
+        "reference_role":  "mosa-orchestration-reference",
+        "reference_reason":  "Context isolation, task decomposition, and token tradeoff guidance for MOSA orchestration."
+    },
+    {
+        "skill_id":  "NATIVE_DATA_FETCHING",
+        "filepath":  "~/.codex/skills/native-data-fetching/SKILL.md",
+        "category":  "Tech",
+        "tags":  [
+                     "data",
+                     "fetching"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "ODOO_BACKUP_STRATEGY",
+        "filepath":  "~/.codex/skills/odoo-backup-strategy/SKILL.md",
+        "category":  "Utility",
+        "tags":  [
+                     "odoo",
+                     "backup"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "ODOO_XML_VIEWS_BUILDER",
+        "filepath":  "~/.codex/skills/odoo-xml-views-builder/SKILL.md",
+        "category":  "Design",
+        "tags":  [
+                     "odoo",
+                     "xml",
+                     "views",
+                     "builder"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "OSTERWALDER_CANVAS_ARCHITECT",
+        "filepath":  "~/.codex/skills/osterwalder-canvas-architect/SKILL.md",
+        "category":  "Design",
+        "tags":  [
+                     "osterwalder",
+                     "canvas"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "PARALLEL_AGENTS",
+        "filepath":  "~/.codex/skills/parallel-agents/SKILL.md",
+        "category":  "Utility",
+        "tags":  [
+                     "parallel",
+                     "parallel-dispatch",
+                     "independent-tasks"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         },
+        "route_policy":  "specialized",
+        "mosa_reference_target":  "ORCHESTRATOR_AGENT",
+        "reference_role":  "parallel-dispatch-reference",
+        "reference_reason":  "Parallel dispatch rule reference for independent MOSA subtasks.",
+        "exact_triggers":  [
+                               "parallel agents",
+                               "parallel dispatch",
+                               "dispatching parallel agents",
+                               "one agent per problem domain",
+                               "independent failures",
+                               "parallel task dispatch",
+                               "mosa parallel task dispatch"
+                           ]
+    },
+    {
+        "skill_id":  "PDF_TO_EXCEL_EXPORT",
+        "filepath":  "~/.codex/skills/pdf-to-excel-export/SKILL.md",
+        "category":  "Utility",
+        "tags":  [
+                     "pdf",
+                     "to",
+                     "excel",
+                     "export"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "PERFORMANCE_TESTING_REVIEW_MULTI_AGENT_REVIEW",
+        "filepath":  "~/.codex/skills/performance-testing-review-multi-agent-review/SKILL.md",
+        "category":  "Utility",
+        "tags":  [
+                     "testing"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "PERSONAL_TOOL_BUILDER",
+        "filepath":  "~/.codex/skills/personal-tool-builder/SKILL.md",
+        "category":  "Design",
+        "tags":  [
+                     "personal"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "PINE_STRATEGY_ARCHITECT",
+        "filepath":  "~/.codex/skills/pine-strategy-architect/SKILL.md",
+        "category":  "Utility",
+        "tags":  [
+                     "pine"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "PIPECAT_FRIDAY_AGENT",
+        "filepath":  "~/.codex/skills/pipecat-friday-agent/SKILL.md",
+        "category":  "Utility",
+        "tags":  [
+                     "pipecat",
+                     "friday"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "PRICING_STRATEGY",
+        "filepath":  "~/.codex/skills/pricing-strategy/SKILL.md",
+        "category":  "Financial",
+        "tags":  [
+                     "pricing"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "PRIVACY_BY_DESIGN",
+        "filepath":  "~/.codex/skills/privacy-by-design/SKILL.md",
+        "category":  "Design",
+        "tags":  [
+                     "privacy",
+                     "by"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "PRODUCT_DESIGN",
+        "filepath":  "~/.codex/skills/product-design/SKILL.md",
+        "category":  "Design",
+        "tags":  [
+                     "product"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "PRODUCT_MARKETING_CONTEXT",
+        "filepath":  "~/.codex/skills/product-marketing-context/SKILL.md",
+        "category":  "Marketing",
+        "tags":  [
+                     "product-marketing"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "PROGRAMMATIC_SEO",
+        "filepath":  "~/.codex/skills/programmatic-seo/SKILL.md",
+        "category":  "Archived",
+        "tags":  [
+
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         },
+        "archived_tags":  [
+                              "programmatic"
+                          ],
+        "consolidated_into":  "seo-suite"
+    },
+    {
+        "skill_id":  "PROJECT_LAUNCH",
+        "filepath":  "~/.codex/skills/project-launch/SKILL.md",
+        "category":  "Workflow",
+        "tags":  [
+                     "project-launch"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "PUBMED_DATABASE",
+        "filepath":  "~/.codex/skills/pubmed-database/SKILL.md",
+        "category":  "Tech",
+        "tags":  [
+                     "pubmed"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "REDESIGN_EXISTING_PROJECTS",
+        "filepath":  "~/.codex/skills/redesign-existing-projects/SKILL.md",
+        "category":  "Design",
+        "tags":  [
+                     "redesign",
+                     "existing-projects"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "REFERENCE_BUILDER",
+        "filepath":  "~/.codex/skills/reference-builder/SKILL.md",
+        "category":  "Design",
+        "tags":  [
+                     "reference",
+                     "builder"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "RUN_INVESTMENT_COMMITTEE",
+        "filepath":  "~/.codex/skills/run-investment-committee/SKILL.md",
+        "category":  "Financial",
+        "tags":  [
+                     "run",
+                     "investment",
+                     "committee"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "RUN_PLACEMENT_DRIVE",
+        "filepath":  "~/.codex/skills/run-placement-drive/SKILL.md",
+        "category":  "Utility",
+        "tags":  [
+                     "run",
+                     "placement",
+                     "drive"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "SECURITY_BLUEBOOK_BUILDER",
+        "filepath":  "~/.codex/skills/security-bluebook-builder/SKILL.md",
+        "category":  "Design",
+        "tags":  [
+                     "security",
+                     "bluebook",
+                     "builder"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "SECURITY_REQUIREMENT_EXTRACTION",
+        "filepath":  "~/.codex/skills/security-requirement-extraction/SKILL.md",
+        "category":  "Design",
+        "tags":  [
+                     "security",
+                     "requirement",
+                     "extraction"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "SEO",
+        "filepath":  "~/.codex/skills/seo/SKILL.md",
+        "category":  "Archived",
+        "tags":  [
+
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         },
+        "archived_tags":  [
+                              "seo"
+                          ],
+        "consolidated_into":  "seo-suite"
+    },
+    {
+        "skill_id":  "SIMPLE_WORKFLOW",
+        "filepath":  "~/.codex/skills/simple-workflow/SKILL.md",
+        "category":  "Workflow",
+        "tags":  [
+                     "simple"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "SLACK_BOT_BUILDER",
+        "filepath":  "~/.codex/skills/slack-bot-builder/SKILL.md",
+        "category":  "Design",
+        "tags":  [
+                     "slack"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "SOCIAL_POST_WRITER_SEO",
+        "filepath":  "~/.codex/skills/social-post-writer-seo/SKILL.md",
+        "category":  "Archived",
+        "tags":  [
+
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         },
+        "archived_tags":  [
+                              "social",
+                              "post"
+                          ],
+        "consolidated_into":  "seo-suite"
+    },
+    {
+        "skill_id":  "SQLMAP_DATABASE_PENTESTING",
+        "filepath":  "~/.codex/skills/sqlmap-database-pentesting/SKILL.md",
+        "category":  "Tech",
+        "tags":  [
+                     "sqlmap",
+                     "pentesting"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "SQUIRREL",
+        "filepath":  "~/.codex/skills/squirrel/SKILL.md",
+        "category":  "Design",
+        "tags":  [
+                     "squirrel"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "STITCH_DESIGN_TASTE",
+        "filepath":  "~/.codex/skills/stitch-design-taste/SKILL.md",
+        "category":  "Design",
+        "tags":  [
+                     "taste"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "STITCH_LOOP",
+        "filepath":  "~/.codex/skills/stitch-loop/SKILL.md",
+        "category":  "Design",
+        "tags":  [
+                     "loop"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "SWIFTUI_EXPERT_SKILL",
+        "filepath":  "~/.codex/skills/swiftui-expert-skill/SKILL.md",
+        "category":  "Design",
+        "tags":  [
+                     "expert",
+                     "skill"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "SWIFTUI_LIQUID_GLASS",
+        "filepath":  "~/.codex/skills/swiftui-liquid-glass/SKILL.md",
+        "category":  "Design",
+        "tags":  [
+                     "liquid",
+                     "glass"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "SWIFTUI_PERFORMANCE_AUDIT",
+        "filepath":  "~/.codex/skills/swiftui-performance-audit/SKILL.md",
+        "category":  "Design",
+        "tags":  [
+                     "performance"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "SWIFTUI_VIEW_REFACTOR",
+        "filepath":  "~/.codex/skills/swiftui-view-refactor/SKILL.md",
+        "category":  "Design",
+        "tags":  [
+                     "view",
+                     "refactor"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "TAILWIND_DESIGN_SYSTEM",
+        "filepath":  "~/.codex/skills/tailwind-design-system/SKILL.md",
+        "category":  "Design",
+        "tags":  [
+                     "tailwind"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "TAILWIND_PATTERNS",
+        "filepath":  "~/.codex/skills/tailwind-patterns/SKILL.md",
+        "category":  "Archived",
+        "tags":  [
+
+                 ],
+        "complexity":  "Medium",
+        "archived_tags":  [
+                              "tailwind"
+                          ],
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "TELEGRAM_BOT_BUILDER",
+        "filepath":  "~/.codex/skills/telegram-bot-builder/SKILL.md",
+        "category":  "Design",
+        "tags":  [
+                     "telegram",
+                     "bot",
+                     "builder"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "TMUX",
+        "filepath":  "~/.codex/skills/tmux/SKILL.md",
+        "category":  "Design",
+        "tags":  [
+                     "tmux"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "TOOL_DESIGN",
+        "filepath":  "~/.codex/skills/tool-design/SKILL.md",
+        "category":  "Design",
+        "tags":  [
+                     "tool"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "UNIPROT_DATABASE",
+        "filepath":  "~/.codex/skills/uniprot-database/SKILL.md",
+        "category":  "Tech",
+        "tags":  [
+                     "uniprot"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "UX_AUDIT",
+        "filepath":  "~/.codex/skills/ux-audit/SKILL.md",
+        "category":  "Archived",
+        "tags":  [
+
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         },
+        "archived_tags":  [
+                              "ux"
+                          ],
+        "consolidated_into":  "ui-suite"
+    },
+    {
+        "skill_id":  "UX_COPY",
+        "filepath":  "~/.codex/skills/ux-copy/SKILL.md",
+        "category":  "Archived",
+        "tags":  [
+
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         },
+        "archived_tags":  [
+                              "copy"
+                          ],
+        "consolidated_into":  "ui-suite"
+    },
+    {
+        "skill_id":  "UX_FEEDBACK",
+        "filepath":  "~/.codex/skills/ux-feedback/SKILL.md",
+        "category":  "Archived",
+        "tags":  [
+
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         },
+        "archived_tags":  [
+                              "feedback"
+                          ],
+        "consolidated_into":  "ui-suite"
+    },
+    {
+        "skill_id":  "UX_FLOW",
+        "filepath":  "~/.codex/skills/ux-flow/SKILL.md",
+        "category":  "Archived",
+        "tags":  [
+
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         },
+        "archived_tags":  [
+                              "flow"
+                          ],
+        "consolidated_into":  "ui-suite"
+    },
+    {
+        "skill_id":  "UX_PERSUASION_ENGINEER",
+        "filepath":  "~/.codex/skills/ux-persuasion-engineer/SKILL.md",
+        "category":  "Archived",
+        "tags":  [
+
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         },
+        "archived_tags":  [
+                              "persuasion",
+                              "engineer"
+                          ],
+        "consolidated_into":  "ui-suite"
+    },
+    {
+        "skill_id":  "VECTOR_DATABASE_ENGINEER",
+        "filepath":  "~/.codex/skills/vector-database-engineer/SKILL.md",
+        "category":  "Tech",
+        "tags":  [
+                     "vector",
+                     "engineer"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "VIRAL_GENERATOR_BUILDER",
+        "filepath":  "~/.codex/skills/viral-generator-builder/SKILL.md",
+        "category":  "Design",
+        "tags":  [
+                     "viral",
+                     "builder"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "VOICE_AGENTS",
+        "filepath":  "~/.codex/skills/voice-agents/SKILL.md",
+        "category":  "Utility",
+        "tags":  [
+                     "voice",
+                     "realtime",
+                     "stt",
+                     "tts",
+                     "vad"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         },
+        "route_policy":  "specialized",
+        "reference_reason":  "Voice, realtime, STT/TTS, VAD agent product skill.",
+        "exact_triggers":  [
+                               "voice",
+                               "voice agents",
+                               "realtime",
+                               "stt",
+                               "tts",
+                               "vad",
+                               "speech to speech"
+                           ]
+    },
+    {
+        "skill_id":  "VSCODE_EXTENSION_GUIDE_EN",
+        "filepath":  "~/.codex/skills/vscode-extension-guide-en/SKILL.md",
+        "category":  "Design",
+        "tags":  [
+                     "vscode",
+                     "extension",
+                     "guide",
+                     "en"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "WORDPRESS_CENTRIC_HIGH_SEO_OPTIMIZED_BLOGWRITING_SKILL",
+        "filepath":  "~/.codex/skills/wordpress-centric-high-seo-optimized-blogwriting-skill/SKILL.md",
+        "category":  "Marketing",
+        "tags":  [
+                     "wordpress",
+                     "centric",
+                     "high",
+                     "optimized",
+                     "blogwriting",
+                     "skill"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "MACRO_COMMODITY_RATIO_ANALYST",
+        "filepath":  "~/.codex/skills/macro-commodity-ratio-analyst/SKILL.md",
+        "category":  "Utility",
+        "tags":  [
+                     "commodity",
+                     "ratio"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "MACRO_CREDIT_SPREAD_ANALYST",
+        "filepath":  "~/.codex/skills/macro-credit-spread-analyst/SKILL.md",
+        "category":  "Utility",
+        "tags":  [
+                     "credit",
+                     "spread"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "MACRO_YIELD_CURVE_ANALYST",
+        "filepath":  "~/.codex/skills/macro-yield-curve-analyst/SKILL.md",
+        "category":  "Utility",
+        "tags":  [
+                     "yield",
+                     "curve"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "SEO_SUITE",
+        "name":  "seo-suite",
+        "description":  "Unified Search Engine Optimization Suite. Consolidates auditing, keyword research, on-page schema, competitor analysis, and content structures.",
+        "filepath":  "~/.codex/skills/seo-suite/SKILL.md",
+        "category":  "Marketing",
+        "risk":  "safe",
+        "tags":  [
+                     "aeo",
+                     "content",
+                     "audit",
+                     "technical"
+                 ],
+        "dependencies":  {
+                             "requires":  [
+                                              "UI_SUITE"
+                                          ],
+                             "suggests":  [
+                                              "DATABASE_SUITE"
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "DATABASE_SUITE",
+        "name":  "database-suite",
+        "description":  "Unified Database Management Suite. Consolidates administration, architecture, design, migration, performance tuning, and SQL optimizations.",
+        "filepath":  "~/.codex/skills/database-suite/SKILL.md",
+        "category":  "Tech",
+        "risk":  "safe",
+        "tags":  [
+                     "database",
+                     "sql",
+                     "migration",
+                     "query",
+                     "perf",
+                     "admin"
+                 ],
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+                                              "AZURE_SUITE"
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "AZURE_SUITE",
+        "name":  "azure-suite",
+        "description":  "Unified Azure Cloud Services Suite. Consolidates persistent AI agents, Data Tables integration, and Data Lake Storage API operations.",
+        "filepath":  "~/.codex/skills/azure-suite/SKILL.md",
+        "category":  "Tech",
+        "risk":  "safe",
+        "tags":  [
+                     "azure",
+                     "cloud",
+                     "storage",
+                     "datalake",
+                     "tables"
+                 ],
+        "dependencies":  {
+                             "requires":  [
+                                              "DATABASE_SUITE"
+                                          ],
+                             "suggests":  [
+
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "UI_SUITE",
+        "name":  "ui-suite",
+        "description":  "Unified User Interface \u0026 Experience Design Suite. Consolidates design systems, framework patterns, UX principles, component libraries, and visual verification.",
+        "filepath":  "~/.codex/skills/ui-suite/SKILL.md",
+        "category":  "Design",
+        "risk":  "safe",
+        "tags":  [
+                     "ui",
+                     "design",
+                     "component",
+                     "styling",
+                     "layout"
+                 ],
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+                                              "SEO_SUITE"
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "GEMINI_CODEX_SKILL_SYNC",
+        "filepath":  "~/.codex/skills/gemini-codex-skill-sync/SKILL.md",
+        "category":  "Workflow",
+        "tags":  [
+                     "codex",
+                     "gemini",
+                     "mosa-sync",
+                     "skills",
+                     "registry",
+                     "migration"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+                                              "AUTO_SKILL",
+                                              "ORCHESTRATOR_AGENT"
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "HSWING_SETUP_EDGE_SYSTEM",
+        "filepath":  "~/.codex/skills/hswing-setup-edge-system/SKILL.md",
+        "category":  "Financial",
+        "tags":  [
+                     "hswing",
+                     "setup-edge",
+                     "trading",
+                     "pinescript",
+                     "python-screener",
+                     "telegram-alerts",
+                     "backtest"
+                 ],
+        "complexity":  "High",
+        "dependencies":  {
+                             "requires":  [
+                                              "TRADING_EXPERT_HS"
+                                          ],
+                             "suggests":  [
+                                              "PINE_STRATEGY_ARCHITECT",
+                                              "TELEGRAM_BOT_BUILDER",
+                                              "BASE_DISTILLER"
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "STATIC_CSV_MAP_APP_BUILDER",
+        "filepath":  "~/.codex/skills/static-csv-map-app-builder/SKILL.md",
+        "category":  "Frontend",
+        "tags":  [
+                     "csv",
+                     "static-site",
+                     "map",
+                     "excel-bom",
+                     "json-fallback",
+                     "github-pages",
+                     "netlify"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+                                              "FRONTEND_DESIGN",
+                                              "XLSX"
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "LEAFLET_ROUTE_EXPLORER_UX",
+        "filepath":  "~/.codex/skills/leaflet-route-explorer-ux/SKILL.md",
+        "category":  "Frontend",
+        "tags":  [
+                     "leaflet",
+                     "map-ux",
+                     "route-graph",
+                     "nearby",
+                     "markers",
+                     "travel",
+                     "card-map-sync"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+                                              "FRONTEND_DESIGN",
+                                              "UI_SUITE"
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "PLAYWRIGHT",
+        "filepath":  "~/.codex/skills/playwright/SKILL.md",
+        "category":  "Tooling",
+        "tags":  [
+                     "browser-automation",
+                     "playwright",
+                     "cli",
+                     "screenshots",
+                     "ui-debugging"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+                                              "node",
+                                              "npx"
+                                          ],
+                             "suggests":  [
+                                              "@playwright/cli"
+                                          ]
+                         }
+    },
+    {
+        "skill_id":  "UTARIAN_MAGAZINE_CANVA",
+        "filepath":  "~/.codex/skills/utarian-magazine-canva/SKILL.md",
+        "category":  "content-production",
+        "tags":  [
+                     "utar",
+                     "magazine",
+                     "alumni",
+                     "student-achievement",
+                     "canva",
+                     "editorial",
+                     "story-flow"
+                 ],
+        "complexity":  "Medium",
+        "dependencies":  {
+                             "requires":  [
+
+                                          ],
+                             "suggests":  [
+                                              "canva:canva-branded-presentation",
+                                              "creative-production:positioning-explorer"
+                                          ]
+                         }
+    }
 ]

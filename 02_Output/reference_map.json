@@ -1,1 +1,252 @@
-﻿{"generated_at":"PUBLIC_TEMPLATE","references":{"MULTI_AGENT_PATTERNS":"ORCHESTRATOR_AGENT","AGENT_ORCHESTRATION_MULTI_AGENT_OPTIMIZE":"MOSA_HARMONIZER","UX_AUDIT":"UI_SUITE"}}
+{
+  "generated_at": "2026-06-04T10:14:19.630Z",
+  "references": {
+    "WF_AGENT_OS_SETUP": {
+      "master": "AGENT_OS_SETUP",
+      "role": "workflow-alias",
+      "route_policy": "reference",
+      "previous_category": "Workflow"
+    },
+    "AGENT_ORCHESTRATION_IMPROVE_AGENT": {
+      "master": "MOSA_HARMONIZER",
+      "role": "agent-quality-reference",
+      "route_policy": "reference",
+      "previous_category": "Utility",
+      "reference_reason": "Agent quality, failure mode, and prompt improvement reference for MOSA maintenance.",
+      "mosa_reference_target": "MOSA_HARMONIZER"
+    },
+    "AGENT_ORCHESTRATION_MULTI_AGENT_OPTIMIZE": {
+      "master": "MOSA_HARMONIZER",
+      "role": "efficiency-audit-reference",
+      "route_policy": "reference",
+      "previous_category": "Utility",
+      "reference_reason": "Multi-agent cost, latency, and bottleneck optimization reference for MOSA maintenance.",
+      "mosa_reference_target": "MOSA_HARMONIZER"
+    },
+    "AI_SEO": {
+      "master": "seo-suite",
+      "role": "reference",
+      "route_policy": "reference",
+      "previous_category": "Archived"
+    },
+    "BRAND_GUIDELINES_ANTHROPIC": {
+      "master": "BRAND_GUIDELINES",
+      "role": "brand-variant-reference",
+      "route_policy": "reference",
+      "previous_category": "Design"
+    },
+    "BRAND_GUIDELINES_COMMUNITY": {
+      "master": "BRAND_GUIDELINES",
+      "role": "brand-variant-reference",
+      "route_policy": "reference",
+      "previous_category": "Design"
+    },
+    "DATA_ENGINEER": {
+      "master": "database-suite",
+      "role": "reference",
+      "route_policy": "reference",
+      "previous_category": "Archived"
+    },
+    "DATA_ENGINEERING_DATA_DRIVEN_FEATURE": {
+      "master": "database-suite",
+      "role": "reference",
+      "route_policy": "reference",
+      "previous_category": "Archived"
+    },
+    "DATA_ENGINEERING_DATA_PIPELINE": {
+      "master": "database-suite",
+      "role": "reference",
+      "route_policy": "reference",
+      "previous_category": "Archived"
+    },
+    "DESIGN_ORCHESTRATION": {
+      "master": "UI_SUITE",
+      "role": "ui-ux-flow-reference",
+      "route_policy": "reference",
+      "previous_category": "Design",
+      "reference_reason": "Design flow control belongs under UI_SUITE."
+    },
+    "DISPATCHING_PARALLEL_AGENTS": {
+      "master": "PARALLEL_AGENTS",
+      "role": "duplicate-parallel-pattern",
+      "route_policy": "reference",
+      "previous_category": "Utility",
+      "reference_reason": "Subset of PARALLEL_AGENTS focused on dispatching independent failures.",
+      "archive_reason": "duplicate-parallel-pattern"
+    },
+    "HOSTED_AGENTS_V2_PY": {
+      "master": "HOSTED_AGENTS",
+      "role": "azure-python-hosted-agent-reference",
+      "route_policy": "reference",
+      "previous_category": "Utility",
+      "reference_reason": "Azure Python implementation details for HOSTED_AGENTS."
+    },
+    "HUGGING_FACE_DATASET_VIEWER": {
+      "master": "HUGGING_FACE_DATASETS",
+      "role": "viewer-reference",
+      "route_policy": "reference",
+      "previous_category": "Tech"
+    },
+    "HUGGING_FACE_TOOL_BUILDER": {
+      "master": "HUGGING_FACE_DATASETS",
+      "role": "tool-builder-reference",
+      "route_policy": "reference",
+      "previous_category": "Design"
+    },
+    "LOCAL_LEGAL_SEO_AUDIT": {
+      "master": "seo-suite",
+      "role": "reference",
+      "route_policy": "reference",
+      "previous_category": "Archived"
+    },
+    "M365_AGENTS_PY": {
+      "master": "m365-agents-dotnet",
+      "role": "reference",
+      "route_policy": "reference",
+      "previous_category": "Archived"
+    },
+    "M365_AGENTS_TS": {
+      "master": "m365-agents-dotnet",
+      "role": "reference",
+      "route_policy": "reference",
+      "previous_category": "Archived"
+    },
+    "MCP_BUILDER_MS": {
+      "master": "MCP_BUILDER",
+      "role": "microsoft-mcp-reference",
+      "route_policy": "reference",
+      "previous_category": "Design"
+    },
+    "MULTI_AGENT_ARCHITECT": {
+      "master": "AI_AGENTS_ARCHITECT",
+      "role": "langgraph-agent-architecture-reference",
+      "route_policy": "reference",
+      "previous_category": "Utility",
+      "reference_reason": "LangGraph/LangChain implementation reference for production multi-agent systems."
+    },
+    "MULTI_AGENT_BRAINSTORMING": {
+      "master": "BRAINSTORMING_AGENT",
+      "role": "brainstorming-variant-reference",
+      "route_policy": "reference",
+      "previous_category": "Utility",
+      "reference_reason": "Multi-agent variant of brainstorming workflow."
+    },
+    "MULTI_AGENT_PATTERNS": {
+      "master": "ORCHESTRATOR_AGENT",
+      "role": "mosa-orchestration-reference",
+      "route_policy": "reference",
+      "previous_category": "Utility",
+      "reference_reason": "Context isolation, task decomposition, and token tradeoff guidance for MOSA orchestration.",
+      "mosa_reference_target": "ORCHESTRATOR_AGENT"
+    },
+    "PROGRAMMATIC_SEO": {
+      "master": "seo-suite",
+      "role": "reference",
+      "route_policy": "reference",
+      "previous_category": "Archived"
+    },
+    "SEO": {
+      "master": "seo-suite",
+      "role": "reference",
+      "route_policy": "reference",
+      "previous_category": "Archived"
+    },
+    "SOCIAL_POST_WRITER_SEO": {
+      "master": "seo-suite",
+      "role": "reference",
+      "route_policy": "reference",
+      "previous_category": "Archived"
+    },
+    "UX_AUDIT": {
+      "master": "ui-suite",
+      "role": "reference",
+      "route_policy": "reference",
+      "previous_category": "Archived"
+    },
+    "UX_COPY": {
+      "master": "ui-suite",
+      "role": "reference",
+      "route_policy": "reference",
+      "previous_category": "Archived"
+    },
+    "UX_FEEDBACK": {
+      "master": "ui-suite",
+      "role": "reference",
+      "route_policy": "reference",
+      "previous_category": "Archived"
+    },
+    "UX_FLOW": {
+      "master": "ui-suite",
+      "role": "reference",
+      "route_policy": "reference",
+      "previous_category": "Archived"
+    },
+    "UX_PERSUASION_ENGINEER": {
+      "master": "ui-suite",
+      "role": "reference",
+      "route_policy": "reference",
+      "previous_category": "Archived"
+    }
+  },
+  "masters": {
+    "BRAND_GUIDELINES": [
+      "BRAND_GUIDELINES_ANTHROPIC",
+      "BRAND_GUIDELINES_COMMUNITY"
+    ],
+    "MCP_BUILDER": [
+      "MCP_BUILDER_MS"
+    ],
+    "AGENT_OS_SETUP": [
+      "WF_AGENT_OS_SETUP"
+    ],
+    "MOSA_HARMONIZER": [
+      "AGENT_ORCHESTRATION_IMPROVE_AGENT",
+      "AGENT_ORCHESTRATION_MULTI_AGENT_OPTIMIZE"
+    ],
+    "seo-suite": [
+      "AI_SEO",
+      "LOCAL_LEGAL_SEO_AUDIT",
+      "PROGRAMMATIC_SEO",
+      "SEO",
+      "SOCIAL_POST_WRITER_SEO"
+    ],
+    "database-suite": [
+      "DATA_ENGINEER",
+      "DATA_ENGINEERING_DATA_DRIVEN_FEATURE",
+      "DATA_ENGINEERING_DATA_PIPELINE"
+    ],
+    "UI_SUITE": [
+      "DESIGN_ORCHESTRATION"
+    ],
+    "PARALLEL_AGENTS": [
+      "DISPATCHING_PARALLEL_AGENTS"
+    ],
+    "HOSTED_AGENTS": [
+      "HOSTED_AGENTS_V2_PY"
+    ],
+    "HUGGING_FACE_DATASETS": [
+      "HUGGING_FACE_DATASET_VIEWER",
+      "HUGGING_FACE_TOOL_BUILDER"
+    ],
+    "m365-agents-dotnet": [
+      "M365_AGENTS_PY",
+      "M365_AGENTS_TS"
+    ],
+    "AI_AGENTS_ARCHITECT": [
+      "MULTI_AGENT_ARCHITECT"
+    ],
+    "BRAINSTORMING_AGENT": [
+      "MULTI_AGENT_BRAINSTORMING"
+    ],
+    "ORCHESTRATOR_AGENT": [
+      "MULTI_AGENT_PATTERNS"
+    ],
+    "ui-suite": [
+      "UX_AUDIT",
+      "UX_COPY",
+      "UX_FEEDBACK",
+      "UX_FLOW",
+      "UX_PERSUASION_ENGINEER"
+    ]
+  }
+}

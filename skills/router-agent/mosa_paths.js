@@ -21,14 +21,6 @@ function resolveSkillRoot() {
         return normalizePath(explicit);
     }
 
-    const workspaceRoot = findWorkspaceRoot();
-    if (workspaceRoot) {
-        const localSkills = path.join(workspaceRoot, 'skills');
-        if (fs.existsSync(path.join(localSkills, 'skills_registry.json'))) {
-            return localSkills;
-        }
-    }
-
     return existingDir([
         path.join(os.homedir(), '.codex', 'skills'),
         path.join(os.homedir(), '.gemini', 'antigravity', 'skills')
@@ -49,12 +41,6 @@ function resolveRegistryRoot() {
 }
 
 function resolveSkillPath(registryPath) {
-    const workspaceRoot = findWorkspaceRoot();
-    if (workspaceRoot) {
-        const localCandidate = path.join(workspaceRoot, registryPath);
-        if (fs.existsSync(localCandidate)) return localCandidate;
-    }
-
     const codexRoot = path.join(os.homedir(), '.codex', 'skills');
     const geminiRoot = path.join(os.homedir(), '.gemini', 'antigravity', 'skills');
     const normalized = registryPath.replace(/\\/g, '/');

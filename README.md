@@ -1,5 +1,15 @@
 # MOSA Framework
 
+## MOSA v3.5 Update
+
+The current public protocol uses proportional activation instead of running every MOSA layer for every task:
+
+- `lean`: simple Q&A, direct checks, and tiny obvious edits skip startup, Router, hooks, and task-state writes.
+- `standard`: multi-step, file-changing, MOSA, skill, routing, graph, hook, registry, audit, or resumable work uses startup evidence and Router proof.
+- `cold-repair`: new or damaged workspaces run provision/startup/route only when MOSA evidence is missing, stale, or untrusted.
+
+Cold provision output is compact by default. Use `--verbose` only when nested startup and route JSON is needed for debugging.
+
 MOSA is a project startup and skill-routing framework for working with AI agents across different projects, tools, and chat sessions. Its main goal is simple: each new AI session should recover the project state quickly, route to the right skill, and avoid rereading the whole workspace or the whole skill registry.
 
 MOSA is not meant to replace the coding agent. It is a lightweight coordination layer around the agent.

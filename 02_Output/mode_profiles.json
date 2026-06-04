@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-29T07:13:03.517Z",
+  "generated_at": "2026-06-04T10:14:19.630Z",
   "profiles": {
     "gas": {
       "triggers": [
@@ -55,18 +55,6 @@
         "UI_SUITE": 34,
         "WEBAPP_TESTING": 24,
         "WEB_ARTIFACTS_BUILDER": 18
-      }
-    },
-    "mcp": {
-      "triggers": [
-        "mcp",
-        "model context protocol",
-        "tool integration",
-        "server tool"
-      ],
-      "boosts": {
-        "MCP_BUILDER": 60,
-        "API_EXPERT": 16
       }
     },
     "data": {

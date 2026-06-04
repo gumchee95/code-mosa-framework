@@ -57,7 +57,7 @@ lines.forEach((line, index) => {
 
     // Protocol & SOP Detection
     const lowerLine = line.toLowerCase();
-    if (lowerLine.includes('protocol') || lowerLine.includes('sop') || lowerLine.includes('required') || lowerLine.includes('must')) {
+    if (lowerLine.includes('protocol') || lowerLine.includes('sop') || lowerLine.includes('強制')) {
         skeleton.protocols.push({
             content: line.trim(),
             line: lineNum

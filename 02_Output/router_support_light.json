@@ -1,0 +1,3100 @@
+{
+  "generated_at": "2026-06-04T10:14:19.633Z",
+  "primary_skill_root": "C:\\Users\\USER\\.codex\\skills",
+  "summary": {
+    "registered": 216,
+    "missing_files": 0,
+    "collisions": 0,
+    "orphans": 0
+  },
+  "normalized_tags": {
+    "canva": [
+      "canvas",
+      "canva"
+    ],
+    "framework": [
+      "framework",
+      "frameworks"
+    ],
+    "skill": [
+      "skill",
+      "skills"
+    ],
+    "view": [
+      "views",
+      "view"
+    ]
+  },
+  "router_support": [
+    {
+      "skill_id": "API_EXPERT",
+      "filepath": "~/.codex/skills/api-expert/SKILL.md",
+      "category": "Core",
+      "tags": [
+        "rest",
+        "integration"
+      ],
+      "capability_phrases": [
+        "FastAPI development best practices and conventions. Use when building, reviewing, or debugging FastAPI applications, REST APIs, or Pydantic models.",
+        "API Expert",
+        "Core Conventions"
+      ]
+    },
+    {
+      "skill_id": "BRAINSTORMING_AGENT",
+      "filepath": "~/.codex/skills/brainstorming-agent/SKILL.md",
+      "category": "Core",
+      "tags": [
+        "ideation",
+        "solo-brainstorm",
+        "creative"
+      ],
+      "capability_phrases": [
+        "头脑风暴与跨界思考专家。使用外挂式的“思维破壁人”邏輯打破原有的討論框架。",
+        "Brainstorming Agent",
+        "Mission"
+      ]
+    },
+    {
+      "skill_id": "DOC_PIPELINE",
+      "filepath": "~/.codex/skills/doc-pipeline/SKILL.md",
+      "category": "Core",
+      "tags": [
+        "document",
+        "pipeline",
+        "automation"
+      ],
+      "capability_phrases": [
+        "Generates API documentation from Python source code through a multi-step pipeline.",
+        "Documentation Pipeline",
+        "Step 1 — Parse & Inventory"
+      ]
+    },
+    {
+      "skill_id": "PROJECT_PLANNER",
+      "filepath": "~/.codex/skills/project-planner/SKILL.md",
+      "category": "Core",
+      "tags": [
+        "planning",
+        "gantt",
+        "milestone"
+      ],
+      "capability_phrases": [
+        "Plans a new software project by gathering requirements through structured questions.",
+        "Project Planner",
+        "Phase 1 — Problem Discovery"
+      ]
+    },
+    {
+      "skill_id": "REPORT_GENERATOR",
+      "filepath": "~/.codex/skills/report-generator/SKILL.md",
+      "category": "Core",
+      "tags": [
+        "report",
+        "summary",
+        "output",
+        "formatting"
+      ],
+      "capability_phrases": [
+        "Generates structured technical reports in Markdown.",
+        "Report Generator",
+        "Protocol"
+      ]
+    },
+    {
+      "skill_id": "KYC_DATA_FETCHER",
+      "filepath": "~/.codex/skills/kyc-data-fetcher/SKILL.md",
+      "category": "Admin",
+      "tags": [
+        "kyc",
+        "due-diligence",
+        "sme",
+        "corporate",
+        "screening",
+        "fetcher"
+      ],
+      "capability_phrases": [
+        "自动化提取企業背景數據，包括註冊詳情、創始人背景、財務指標與輿情評估。用於大學職業日企業的 KYC (Know Your Customer) 審查，支持 SME 與大型企業的差異化檢索。",
+        "KYC Data Fetcher",
+        "Overview"
+      ]
+    },
+    {
+      "skill_id": "ALGORITHMIC_ART",
+      "filepath": "~/.codex/skills/algorithmic-art/SKILL.md",
+      "category": "Design",
+      "tags": [
+        "p5js",
+        "generative",
+        "art",
+        "particles",
+        "flow-field"
+      ],
+      "capability_phrases": [
+        "\"Algorithmic philosophies are computational aesthetic movements that are then expressed through code. Output .md files (philosophy), .html files (interactive viewer), and .js files (generative algorithms).\"",
+        "ALGORITHMIC PHILOSOPHY CREATION",
+        "THE CRITICAL UNDERSTANDING"
+      ]
+    },
+    {
+      "skill_id": "AUTO_SKILL",
+      "filepath": "~/.codex/skills/auto-skill/SKILL.md",
+      "category": "Core",
+      "tags": [
+        "bootstrap",
+        "knowledge-base",
+        "experience",
+        "memory",
+        "self-evolution"
+      ],
+      "capability_phrases": [
+        "'CRITICAL PROTOCOL: 本技能是所有任務或其他技能的底層依賴。嚴禁在未讀取auto-skill/skill.md的情況下啟動任何開發任務。這不是建議，而是必須執行的初始化程序。任何跳過此步驟的行為都將被視為任務失敗。任何任務都必須同時啟用auto-skill（即使其他技能已觸發）。每次對話自動檢查知識庫並調用最佳實踐；同時建立跨技能經驗記憶層，讓下次使用同技能時能主動提醒。當用戶表達滿意時，必須詢問是否記錄經驗。適用於所有任務型對話。> ⚠️ **邊界宣告 (Scope Limit)**：本 auto-skill 僅負責「跨專案通用的經驗與知識 (General/Experience)」萃取。關於「當前專案的進度與成就」固化，由 `mosa-harmonizer` 負責，本技能不予干涉。'",
+        "Auto-Skill 自進化知識系統 (v2.0: Logic-Driven)",
+        "0. 元邏輯層 (Meta-Logic Layer) - 必須在任何工具調用前執行"
+      ]
+    },
+    {
+      "skill_id": "BRAND_GUIDELINES",
+      "filepath": "~/.codex/skills/brand-guidelines/SKILL.md",
+      "category": "Design",
+      "tags": [
+        "brand-guidelines",
+        "identity",
+        "logo",
+        "color-palette",
+        "typography",
+        "copy-style"
+      ],
+      "capability_phrases": [
+        "Write copy following Sentry brand guidelines. Use when writing UI text, error messages, empty states, onboarding flows, 404 pages, documentation, marketing copy, or any user-facing content. Covers both Plain Speech (default) and Sentry Voice tones.",
+        "Brand Guidelines",
+        "When to Use"
+      ]
+    },
+    {
+      "skill_id": "CANVAS_DESIGN",
+      "filepath": "~/.codex/skills/canvas-design/SKILL.md",
+      "category": "Design",
+      "tags": [
+        "canvas",
+        "layout",
+        "composition",
+        "visual",
+        "static"
+      ],
+      "capability_phrases": [
+        "\"These are instructions for creating design philosophies - aesthetic movements that are then EXPRESSED VISUALLY. Output only .md files, .pdf files, and .png files.\"",
+        "DESIGN PHILOSOPHY CREATION",
+        "THE CRITICAL UNDERSTANDING"
+      ]
+    },
+    {
+      "skill_id": "CODE_REVIEW",
+      "filepath": "~/.codex/skills/code-review/SKILL.md",
+      "category": "Tech",
+      "tags": [
+        "code-review",
+        "lint",
+        "best-practice",
+        "security"
+      ],
+      "capability_phrases": [
+        "Reviews code changes for quality, style, and common bugs. Use when the user submits code for review, asks for feedback, or wants a code audit.",
+        "Code Review Skill",
+        "Review Protocol"
+      ]
+    },
+    {
+      "skill_id": "COMPLIANCE_FRAMEWORK",
+      "filepath": "~/.codex/skills/compliance-framework/SKILL.md",
+      "category": "Admin",
+      "tags": [
+        "regulation",
+        "governance",
+        "policy"
+      ],
+      "capability_phrases": [
+        "Multi-domain compliance framework covering ISO, AI Ethics, and Security.",
+        "Compliance & Ethical Frameworks",
+        "Audit Domains"
+      ]
+    },
+    {
+      "skill_id": "DATA_ANALYTICS_CORE",
+      "filepath": "~/.codex/skills/data-analytics-core/SKILL.md",
+      "category": "Tech",
+      "tags": [
+        "data",
+        "analytics",
+        "eda",
+        "visualization",
+        "pandas",
+        "statistics"
+      ],
+      "capability_phrases": [
+        "核心数据分析技能。用于自动化清洗数据、执行 EDA（探索性分析）并生成支持中文显示的专业图表。",
+        "Data Analytics Core Skill",
+        "1. Environment & Setup"
+      ]
+    },
+    {
+      "skill_id": "DOC_COAUTHORING",
+      "filepath": "~/.codex/skills/doc-coauthoring/SKILL.md",
+      "category": "Core",
+      "tags": [
+        "document",
+        "collaboration",
+        "coauthoring",
+        "google-docs"
+      ],
+      "capability_phrases": [
+        "\"This skill provides a structured workflow for guiding users through collaborative document creation. Act as an active guide, walking users through three stages: Context Gathering, Refinement & Structure, and Reader Testing.\"",
+        "Doc Co-Authoring Workflow",
+        "When to Offer This Workflow"
+      ]
+    },
+    {
+      "skill_id": "DOCX",
+      "filepath": "~/.codex/skills/docx/SKILL.md",
+      "category": "Core",
+      "tags": [
+        "docx",
+        "word",
+        "microsoft",
+        "export"
+      ],
+      "capability_phrases": [
+        "'Comprehensive document creation, editing, and analysis with support",
+        "DOCX creation, editing, and analysis",
+        "Overview"
+      ]
+    },
+    {
+      "skill_id": "FRONTEND_DESIGN",
+      "filepath": "~/.codex/skills/frontend-design/SKILL.md",
+      "category": "Design",
+      "tags": [
+        "css",
+        "html",
+        "responsive"
+      ],
+      "capability_phrases": [
+        "\"You are a frontend designer-engineer, not a layout generator.\"",
+        "Frontend Design (Distinctive, Production-Grade)",
+        "1. Core Design Mandate"
+      ]
+    },
+    {
+      "skill_id": "HR_STRATEGY",
+      "filepath": "~/.codex/skills/hr-strategy/SKILL.md",
+      "category": "Admin",
+      "tags": [
+        "hr",
+        "recruitment",
+        "talent",
+        "jd"
+      ],
+      "capability_phrases": [
+        "Best practices for personnel management, OKRs, employee retention, and",
+        "HR Strategy & Personnel Management Best Practices",
+        "Core Modules"
+      ]
+    },
+    {
+      "skill_id": "INTERNAL_COMMS",
+      "filepath": "~/.codex/skills/internal-comms/SKILL.md",
+      "category": "Admin",
+      "tags": [
+        "internal",
+        "communications",
+        "memo",
+        "announcement",
+        "newsletter"
+      ],
+      "capability_phrases": [
+        "\"Write internal communications such as status reports, leadership updates, 3P updates, newsletters, FAQs, incident reports, and project updates using repeatable internal formats.\"",
+        "When to use this skill",
+        "How to use this skill"
+      ]
+    },
+    {
+      "skill_id": "MCP_BUILDER",
+      "filepath": "~/.codex/skills/mcp-builder/SKILL.md",
+      "category": "Tech",
+      "tags": [
+        "mcp",
+        "server",
+        "tool-integration",
+        "fastmcp",
+        "api"
+      ],
+      "capability_phrases": [
+        "\"Create MCP (Model Context Protocol) servers that enable LLMs to interact with external services through well-designed tools. The quality of an MCP server is measured by how well it enables LLMs to accomplish real-world tasks.\"",
+        "MCP Server Development Guide",
+        "Overview"
+      ]
+    },
+    {
+      "skill_id": "MENTAL_MODELS",
+      "filepath": "~/.codex/skills/mental-models/SKILL.md",
+      "category": "Core",
+      "tags": [
+        "thinking",
+        "mental-model",
+        "framework",
+        "decision",
+        "first-principles"
+      ],
+      "capability_phrases": [
+        "Collection of advanced cognitive models for brainstorming and problem",
+        "Mental Models & Cognitive Tools",
+        "Thinking Patterns"
+      ]
+    },
+    {
+      "skill_id": "MOSA_HARMONIZER",
+      "filepath": "~/.codex/skills/mosa-harmonizer/SKILL.md",
+      "category": "Core",
+      "tags": [
+        "harmonizer",
+        "alignment",
+        "architecture",
+        "framework"
+      ],
+      "capability_phrases": [
+        "Use when MOSA needs protocol alignment, skill alignment, Node tool alignment, routing artifact checks, hook policy checks, graph topology checks, or framework drift repair.",
+        "MOSA Harmonizer",
+        "Identity"
+      ]
+    },
+    {
+      "skill_id": "PDF",
+      "filepath": "~/.codex/skills/pdf/SKILL.md",
+      "category": "Core",
+      "tags": [
+        "pdf",
+        "extract",
+        "parse",
+        "distill"
+      ],
+      "capability_phrases": [
+        "Comprehensive PDF manipulation toolkit for extracting text and tables,",
+        "PDF Processing Guide",
+        "Overview"
+      ]
+    },
+    {
+      "skill_id": "PPTX",
+      "filepath": "~/.codex/skills/pptx/SKILL.md",
+      "category": "Core",
+      "tags": [
+        "pptx",
+        "powerpoint",
+        "presentation",
+        "slides"
+      ],
+      "capability_phrases": [
+        "'Presentation creation, editing, and analysis. When Claude needs to work",
+        "PPTX creation, editing, and analysis",
+        "Overview"
+      ]
+    },
+    {
+      "skill_id": "PROJECT_MANAGEMENT_CORE",
+      "filepath": "~/.codex/skills/project-management-core/SKILL.md",
+      "category": "Core",
+      "tags": [
+        "management",
+        "tracking",
+        "agile"
+      ],
+      "capability_phrases": [
+        "Core methodologies for project planning, Gantt charts, and vendor management.",
+        "Project Management Core & Operations",
+        "Core Methodologies"
+      ]
+    },
+    {
+      "skill_id": "SKILL_ARCHITECT",
+      "filepath": "~/.codex/skills/skill-architect/SKILL.md",
+      "category": "Core",
+      "tags": [
+        "skill",
+        "yaml"
+      ],
+      "capability_phrases": [
+        "Meta-skill for designing high-quality, composable, and token-efficient",
+        "Skill Architect: Google-Inspired Design Framework",
+        "The Five Core Patterns"
+      ]
+    },
+    {
+      "skill_id": "SKILL_CREATOR",
+      "filepath": "~/.codex/skills/skill-creator/SKILL.md",
+      "category": "Core",
+      "tags": [
+        "skill",
+        "create",
+        "template",
+        "skill-scaffold"
+      ],
+      "capability_phrases": [
+        "\"To create new CLI skills following Anthropic's official best practices with zero manual configuration. This skill automates brainstorming, template application, validation, and installation processes while maintaining progressive disclosure patterns and writing style standards.\"",
+        "skill-creator",
+        "Purpose"
+      ]
+    },
+    {
+      "skill_id": "SLACK_GIF_CREATOR",
+      "filepath": "~/.codex/skills/slack-gif-creator/SKILL.md",
+      "category": "Design",
+      "tags": [
+        "gif",
+        "animation",
+        "sticker"
+      ],
+      "capability_phrases": [
+        "\"A toolkit providing utilities and knowledge for creating animated GIFs optimized for Slack.\"",
+        "Slack GIF Creator",
+        "Slack Requirements"
+      ]
+    },
+    {
+      "skill_id": "STRATEGIC_FINANCE",
+      "filepath": "~/.codex/skills/strategic-finance/SKILL.md",
+      "category": "Financial",
+      "tags": [
+        "finance",
+        "budget",
+        "roi",
+        "cash-flow",
+        "valuation",
+        "dcf"
+      ],
+      "capability_phrases": [
+        "Advanced financial modeling, tax optimization, and audit readiness.",
+        "Strategic Finance & Risk Management",
+        "Core Modules"
+      ]
+    },
+    {
+      "skill_id": "THEME_FACTORY",
+      "filepath": "~/.codex/skills/theme-factory/SKILL.md",
+      "category": "Design",
+      "tags": [
+        "theme",
+        "dark-mode",
+        "color",
+        "design-system"
+      ],
+      "capability_phrases": [
+        "\"This skill provides a curated collection of professional font and color themes themes, each with carefully selected color palettes and font pairings. Once a theme is chosen, it can be applied to any artifact.\"",
+        "Theme Factory Skill",
+        "Purpose"
+      ]
+    },
+    {
+      "skill_id": "THOUGHT_DISTILLER",
+      "filepath": "~/.codex/skills/thought-distiller/SKILL.md",
+      "category": "Core",
+      "tags": [
+        "extraction",
+        "meta-logic",
+        "cognitive"
+      ],
+      "capability_phrases": [
+        "Advanced cognitive tool for distilling logic, thinking patterns, and",
+        "Thought Distiller (思維蒸餾器)",
+        "核心工作流 (The Distillation Pipeline)"
+      ]
+    },
+    {
+      "skill_id": "TRADING_EXPERT",
+      "filepath": "~/.codex/skills/trading-expert/SKILL.md",
+      "category": "Financial",
+      "tags": [
+        "trading",
+        "stock",
+        "us-market",
+        "nyse",
+        "nasdaq",
+        "technical-analysis",
+        "pine-script",
+        "swing"
+      ],
+      "capability_phrases": [
+        "提供專業量化交易員的視角，包含策略審計、風控管理、市場微觀結構分析與 Pine Script 最佳實踐。",
+        "Trading Expert 專業交易員技能",
+        "核心能力"
+      ]
+    },
+    {
+      "skill_id": "TRADING_EXPERT_HS",
+      "filepath": "~/.codex/skills/trading-expert-hs/SKILL.md",
+      "category": "Financial",
+      "tags": [
+        "trading",
+        "hong-kong",
+        "hsi",
+        "china",
+        "a-shares",
+        "h-shares",
+        "mainland",
+        "swing"
+      ],
+      "capability_phrases": [
+        "Expert Trading Strategy Logic for HS Swing and v26. Handles multi-layer",
+        "Trading Expert HS (HS_Swing_Signal v26)",
+        "1. Environment Analysis (The \"Gatekeeper\" Mode)"
+      ]
+    },
+    {
+      "skill_id": "WEB_ARTIFACTS_BUILDER",
+      "filepath": "~/.codex/skills/web-artifacts-builder/SKILL.md",
+      "category": "Design",
+      "tags": [
+        "web-artifact",
+        "html-ui",
+        "interactive-dashboard"
+      ],
+      "capability_phrases": [
+        "\"To build powerful frontend claude.ai artifacts, follow these steps:\"",
+        "Web Artifacts Builder",
+        "Design & Style Guidelines"
+      ]
+    },
+    {
+      "skill_id": "WEBAPP_TESTING",
+      "filepath": "~/.codex/skills/webapp-testing/SKILL.md",
+      "category": "Tech",
+      "tags": [
+        "qa",
+        "browser",
+        "e2e",
+        "validation"
+      ],
+      "capability_phrases": [
+        "\"To test local web applications, write native Python Playwright scripts.\"",
+        "Web Application Testing",
+        "Decision Tree: Choosing Your Approach"
+      ]
+    },
+    {
+      "skill_id": "XLSX",
+      "filepath": "~/.codex/skills/xlsx/SKILL.md",
+      "category": "Core",
+      "tags": [
+        "xlsx",
+        "excel",
+        "spreadsheet",
+        "data"
+      ],
+      "capability_phrases": [
+        "'Comprehensive spreadsheet creation, editing, and analysis with support",
+        "Requirements for Outputs",
+        "All Excel files"
+      ]
+    },
+    {
+      "skill_id": "SCRAPING_FAILURE_HANDLER",
+      "filepath": "~/.codex/skills/scraping-failure-handler/SKILL.md",
+      "category": "Tech",
+      "tags": [
+        "scraping",
+        "resilience",
+        "circuit-breaker",
+        "failure",
+        "browser-fallback"
+      ],
+      "capability_phrases": [
+        "\"爬蟲韌性與熔斷處理：自動檢測數據抓取故障（403/404/Timeout），執行持久化日誌記錄，並通過多模態通知觸發 Agent 或人工手動介入。\"",
+        "Scraping Failure Handler (爬蟲故障熔斷器)",
+        "0. 元邏輯：失敗隔離與手動轉接 (Failure Isolation)"
+      ]
+    },
+    {
+      "skill_id": "MOSA_GRAPH_BUILDER",
+      "filepath": "~/.codex/skills/mosa-graph-builder/SKILL.md",
+      "category": "Core",
+      "tags": [
+        "topology",
+        "graph",
+        "mermaid",
+        "token-shield",
+        "project-startup",
+        "god-nodes",
+        "router-support"
+      ],
+      "capability_phrases": [
+        "Use when MOSA needs graph topology, God Nodes, Router Token Shield pointers, startup evidence, cold-start project maps, or workspace-local AGENTS guidance.",
+        "MOSA Graph Builder v3.5",
+        "0. Mission"
+      ]
+    },
+    {
+      "skill_id": "GAS_WEBAPP_ARCHITECT",
+      "filepath": "~/.codex/skills/gas-webapp-architect/SKILL.md",
+      "category": "Framework",
+      "tags": [
+        "google-apps-script",
+        "gas-webapp",
+        "google-sheets",
+        "client-cache",
+        "quota-safe",
+        "scanner",
+        "batch-email"
+      ],
+      "capability_phrases": [
+        "Comprehensive framework for generating robust Google Apps Script (GAS) Web Apps backed by Google Sheets. Use this when the user needs a high-performance web app for data entry, scanning, or querying with features like client-side caching, instant search, hardware scanner compatibility, auto-tracking logs, and batch email processing with quota protection.",
+        "GAS Web App Architect (v2.0)",
+        "Core Architectural Patterns"
+      ]
+    },
+    {
+      "skill_id": "AUTOMATED_DATA_CLEANER",
+      "filepath": "~/.codex/skills/automated-data-cleaner/SKILL.md",
+      "category": "Utility",
+      "tags": [
+        "data-cleaning",
+        "regex",
+        "standardization"
+      ],
+      "capability_phrases": [
+        "\"自動化數據清理器：專門處理職位名稱中的常見拼寫錯誤 (Typos) 與格式標準化。在進入行業判定邏輯前執行預處理。\"",
+        "Automated Data Cleaner (自動化數據清理器)",
+        "0. 元邏輯 (Meta-Logic)"
+      ]
+    },
+    {
+      "skill_id": "BASE_DISTILLER",
+      "filepath": "~/.codex/skills/base-distiller/SKILL.md",
+      "category": "Utility",
+      "tags": [
+        "distill",
+        "registry",
+        "maintenance"
+      ],
+      "capability_phrases": [
+        "Read-only registry diagnostics and router-support artifact generation for MOSA and legacy Antigravity skill registries.",
+        "Registry Distiller",
+        "Core Policy"
+      ]
+    },
+    {
+      "skill_id": "ORCHESTRATOR_AGENT",
+      "filepath": "~/.codex/skills/orchestrator-agent/SKILL.md",
+      "category": "Workflow",
+      "tags": [
+        "task-decomposition"
+      ],
+      "capability_phrases": [
+        "Use when MOSA needs workspace startup, intent atomization, Router coordination, Sub-Agent dispatch, audit triggers, GC, or memory consolidation.",
+        "Orchestrator Agent",
+        "Identity"
+      ]
+    },
+    {
+      "skill_id": "ROUTER_AGENT",
+      "filepath": "~/.codex/skills/router-agent/SKILL.md",
+      "category": "Workflow",
+      "tags": [
+        "router",
+        "skill-retrieval"
+      ],
+      "capability_phrases": [
+        "Use when MOSA needs to route an already atomized Intent Profile to the best matching skills with confidence, reasons, and fallback guidance.",
+        "Router Agent",
+        "Identity"
+      ]
+    },
+    {
+      "skill_id": "AUDIT_AGENT",
+      "filepath": "~/.codex/skills/audit-agent/SKILL.md",
+      "category": "Workflow",
+      "tags": [
+        "compliance",
+        "efficiency"
+      ],
+      "capability_phrases": [
+        "MOSA Audit Agent. Reviews workflow compliance, routing evidence, context safety, file-write blast radius, and delivery risks.",
+        "Audit Agent",
+        "Identity"
+      ]
+    },
+    {
+      "skill_id": "CODER_AGENT",
+      "filepath": "~/.codex/skills/coder-agent/SKILL.md",
+      "category": "Workflow",
+      "tags": [
+        "coder",
+        "execution",
+        "tech"
+      ],
+      "capability_phrases": [
+        "MOSA Coder Sub-Agent. Executes technical implementation, debugging, scripts, APIs, data processing, tests, and code review tasks selected by Router.",
+        "Coder Agent",
+        "Identity"
+      ]
+    },
+    {
+      "skill_id": "ADMIN_AGENT",
+      "filepath": "~/.codex/skills/admin-agent/SKILL.md",
+      "category": "Workflow",
+      "tags": [
+        "hr",
+        "operations"
+      ],
+      "capability_phrases": [
+        "MOSA Admin Sub-Agent. Executes administration, HR, operations, communications, planning, and process tasks selected by Router.",
+        "Admin Agent",
+        "Identity"
+      ]
+    },
+    {
+      "skill_id": "DESIGN_AGENT",
+      "filepath": "~/.codex/skills/design-agent/SKILL.md",
+      "category": "Workflow",
+      "tags": [
+        "design-workflow",
+        "ui-ux",
+        "creative-direction"
+      ],
+      "capability_phrases": [
+        "MOSA Design Sub-Agent. Executes UI, UX, visual design, frontend, canvas, and creative production tasks selected by Router.",
+        "Design Agent",
+        "Identity"
+      ]
+    },
+    {
+      "skill_id": "MARKET_AGENT",
+      "filepath": "~/.codex/skills/market-agent/SKILL.md",
+      "category": "Workflow",
+      "tags": [
+        "financial-market",
+        "finance",
+        "analysis"
+      ],
+      "capability_phrases": [
+        "MOSA Market Sub-Agent. Executes market, trading, macro, finance, and investment analysis tasks selected by Router.",
+        "Market Agent",
+        "Identity"
+      ]
+    },
+    {
+      "skill_id": "GOOGLE_AGENT",
+      "filepath": "~/.codex/skills/google-agent/SKILL.md",
+      "category": "Workflow",
+      "tags": [
+        "google-workspace",
+        "google-docs",
+        "google-sheets",
+        "google-drive",
+        "apps-script-support"
+      ],
+      "capability_phrases": [
+        "MOSA Google Workspace Sub-Agent. Executes Google Docs, Sheets, Calendar, Drive, and Apps Script tasks selected by Router.",
+        "Google Agent",
+        "Identity"
+      ]
+    },
+    {
+      "skill_id": "MICROSOFT_AGENT",
+      "filepath": "~/.codex/skills/microsoft-agent/SKILL.md",
+      "category": "Workflow",
+      "tags": [
+        "microsoft",
+        "office",
+        "automation"
+      ],
+      "capability_phrases": [
+        "MOSA Microsoft Office Sub-Agent. Executes Word, Excel, PowerPoint, document, spreadsheet, and presentation tasks selected by Router.",
+        "Microsoft Agent",
+        "Identity"
+      ]
+    },
+    {
+      "skill_id": "WF_AGENT_OS_SETUP",
+      "filepath": "~/.codex/skills/agent-os-setup/SKILL.md",
+      "category": "Archived",
+      "tags": [],
+      "capability_phrases": []
+    },
+    {
+      "skill_id": "BOOTSTRAP_AGENT",
+      "filepath": "~/.codex/skills/bootstrap-agent/SKILL.md",
+      "category": "Workflow",
+      "tags": [
+        "bootstrap",
+        "initialization"
+      ],
+      "capability_phrases": [
+        "MOSA Bootstrap Agent. Initializes MOSA workspaces, required folders, state files, startup evidence, and provision pointers.",
+        "Bootstrap Agent",
+        "Identity"
+      ]
+    },
+    {
+      "skill_id": "WF_PROJECT_LAUNCH",
+      "filepath": "~/.codex/skills/project-launch/SKILL.md",
+      "category": "Archived",
+      "tags": [],
+      "capability_phrases": []
+    },
+    {
+      "skill_id": "WF_SIMPLE_TASK",
+      "filepath": "~/.codex/skills/simple-workflow/SKILL.md",
+      "category": "Workflow",
+      "tags": [
+        "task"
+      ],
+      "capability_phrases": []
+    },
+    {
+      "skill_id": "WF_INVESTMENT_COMMITTEE",
+      "filepath": "~/.codex/skills/run-investment-committee/SKILL.md",
+      "category": "Workflow",
+      "tags": [
+        "workflow"
+      ],
+      "capability_phrases": [
+        "聯合投資委員會 (Joint Investment Committee)",
+        "執行管線 (Pipeline)",
+        "Phase 1: 宏觀環境掃描"
+      ]
+    },
+    {
+      "skill_id": "WF_PLACEMENT_DRIVE",
+      "filepath": "~/.codex/skills/run-placement-drive/SKILL.md",
+      "category": "Archived",
+      "tags": [],
+      "capability_phrases": [
+        "企業招聘會統籌 (Corporate Placement Drive)",
+        "執行管線 (Pipeline)",
+        "Phase 1: 逆向需求偵測 (Inversion)"
+      ]
+    },
+    {
+      "skill_id": "WF_PDF_TO_EXCEL",
+      "filepath": "~/.codex/skills/pdf-to-excel-export/SKILL.md",
+      "category": "Archived",
+      "tags": [],
+      "capability_phrases": [
+        "Workflow: Bursa PDF to Excel Registry Export",
+        "Prerequisites",
+        "Steps"
+      ]
+    },
+    {
+      "skill_id": "IMAGE_THUMBNAIL_GENERATOR",
+      "filepath": "~/.codex/skills/image-thumbnail-generator/SKILL.md",
+      "category": "Utility",
+      "tags": [
+        "data-processor",
+        "image-optimization",
+        "python",
+        "nodejs"
+      ],
+      "capability_phrases": [
+        "A build-time data processor skill to automatically generate WebP thumbnails from high-resolution images, optimizing web gallery performance.",
+        "Image Thumbnail Generator (圖片縮圖與格式轉換處理器)",
+        "核心職責 (Core Responsibilities)"
+      ]
+    },
+    {
+      "skill_id": "FRONTEND_PERFORMANCE_EXPERT",
+      "filepath": "~/.codex/skills/frontend-performance-expert/SKILL.md",
+      "category": "Tech",
+      "tags": [
+        "optimization",
+        "dom",
+        "css"
+      ],
+      "capability_phrases": [
+        "Specialized skill for optimizing frontend performance in heavy DOM environments. Provides procedural guidance on implementing Virtual Time-Slicing, Advanced CSS Rendering constraints, and Staggered Loading Queues. Use when encountering lag, stuttering, or layout thrashing in image galleries or massive lists.",
+        "Frontend Performance Expert (前端極限效能優化專家)",
+        "核心職責 (Core Responsibilities)"
+      ]
+    },
+    {
+      "skill_id": "UTAR_OPS",
+      "filepath": "~/.codex/skills/utar-ops/SKILL.md",
+      "category": "Framework",
+      "tags": [
+        "utar-ops",
+        "utar-scanner",
+        "schema-sync",
+        "quota-email-batching",
+        "operations-workflow"
+      ],
+      "capability_phrases": [
+        "\"Core operational framework and architecture for building highly scalable UTAR tools (e.g. event systems, registration scanners). Use this skill when the user asks to build or optimize UTAR operations, Google Apps Script web apps, hardware scanner integration, client-side caching, automated schema syncing, or email batching.\"",
+        "UTAR Operations Toolkit (utar-ops)",
+        "How to Use This Skill"
+      ]
+    },
+    {
+      "skill_id": "00_ANDRUIA_CONSULTANT",
+      "filepath": "~/.codex/skills/00-andruia-consultant/SKILL.md",
+      "category": "Design",
+      "tags": [
+        "00",
+        "andruia",
+        "consultant"
+      ],
+      "capability_phrases": [
+        "When to Use",
+        "🤖 Andru.ia Solutions Architect - Hybrid Engine (v2.0)",
+        "Description"
+      ]
+    },
+    {
+      "skill_id": "10_ANDRUIA_SKILL_SMITH",
+      "filepath": "~/.codex/skills/10-andruia-skill-smith/SKILL.md",
+      "category": "Design",
+      "tags": [
+        "10",
+        "andruia",
+        "skill",
+        "smith"
+      ],
+      "capability_phrases": [
+        "🔨 Andru.ia Skill-Smith (The Forge)",
+        "When to Use",
+        "📝 Descripción"
+      ]
+    },
+    {
+      "skill_id": "20_ANDRUIA_NICHE_INTELLIGENCE",
+      "filepath": "~/.codex/skills/20-andruia-niche-intelligence/SKILL.md",
+      "category": "Design",
+      "tags": [
+        "20",
+        "andruia",
+        "niche",
+        "intelligence"
+      ],
+      "capability_phrases": [
+        "When to Use",
+        "🧠 Andru.ia Niche Intelligence (Dominio Experto)",
+        "📝 Descripción"
+      ]
+    },
+    {
+      "skill_id": "AGENT_ORCHESTRATION_IMPROVE_AGENT",
+      "filepath": "~/.codex/skills/agent-orchestration-improve-agent/SKILL.md",
+      "category": "Utility",
+      "tags": [
+        "improve"
+      ],
+      "capability_phrases": [
+        "Agent Performance Optimization Workflow",
+        "Use this skill when",
+        "Do not use this skill when"
+      ]
+    },
+    {
+      "skill_id": "AGENT_ORCHESTRATION_MULTI_AGENT_OPTIMIZE",
+      "filepath": "~/.codex/skills/agent-orchestration-multi-agent-optimize/SKILL.md",
+      "category": "Utility",
+      "tags": [
+        "multi",
+        "optimize"
+      ],
+      "capability_phrases": [
+        "Multi-Agent Optimization Toolkit",
+        "Use this skill when",
+        "Do not use this skill when"
+      ]
+    },
+    {
+      "skill_id": "AGENT_OS_SETUP",
+      "filepath": "~/.codex/skills/agent-os-setup/SKILL.md",
+      "category": "Workflow",
+      "tags": [
+        "agent-os-bootstrap",
+        "agent-os-setup"
+      ],
+      "capability_phrases": []
+    },
+    {
+      "skill_id": "AGENT_TOOL_BUILDER",
+      "filepath": "~/.codex/skills/agent-tool-builder/SKILL.md",
+      "category": "Design",
+      "tags": [
+        "agent-tooling"
+      ],
+      "capability_phrases": [
+        "Agent Tool Builder",
+        "Principles",
+        "Capabilities"
+      ]
+    },
+    {
+      "skill_id": "AI_AGENT_DEVELOPMENT",
+      "filepath": "~/.codex/skills/ai-agent-development/SKILL.md",
+      "category": "Tech",
+      "tags": [
+        "development"
+      ],
+      "capability_phrases": [
+        "AI Agent Development Workflow",
+        "Overview",
+        "When to Use This Workflow"
+      ]
+    },
+    {
+      "skill_id": "AI_AGENTS_ARCHITECT",
+      "filepath": "~/.codex/skills/ai-agents-architect/SKILL.md",
+      "category": "Utility",
+      "tags": [
+        "agent-architecture",
+        "multi-agent-architecture",
+        "langgraph",
+        "langchain"
+      ],
+      "capability_phrases": [
+        "AI Agents Architect",
+        "Expertise",
+        "Principles"
+      ]
+    },
+    {
+      "skill_id": "AI_SEO",
+      "filepath": "~/.codex/skills/ai-seo/SKILL.md",
+      "category": "Archived",
+      "tags": [],
+      "capability_phrases": [
+        "AI SEO",
+        "When to Use",
+        "Before Starting"
+      ]
+    },
+    {
+      "skill_id": "AKF_TRUST_METADATA",
+      "filepath": "~/.codex/skills/akf-trust-metadata/SKILL.md",
+      "category": "Tech",
+      "tags": [
+        "akf",
+        "trust",
+        "metadata"
+      ],
+      "capability_phrases": [
+        "AKF — The AI Native File Format",
+        "When to Use",
+        "After creating or modifying files"
+      ]
+    },
+    {
+      "skill_id": "ANTIGRAVITY_DESIGN_EXPERT",
+      "filepath": "~/.codex/skills/antigravity-design-expert/SKILL.md",
+      "category": "Design",
+      "tags": [
+        "antigravity",
+        "expert"
+      ],
+      "capability_phrases": [
+        "Antigravity UI & Motion Design Expert",
+        "When to Use",
+        "🎯 Role Overview"
+      ]
+    },
+    {
+      "skill_id": "API_DESIGN_PRINCIPLES",
+      "filepath": "~/.codex/skills/api-design-principles/SKILL.md",
+      "category": "Design",
+      "tags": [
+        "api",
+        "principles"
+      ],
+      "capability_phrases": [
+        "API Design Principles",
+        "Use this skill when",
+        "Do not use this skill when"
+      ]
+    },
+    {
+      "skill_id": "API_ENDPOINT_BUILDER",
+      "filepath": "~/.codex/skills/api-endpoint-builder/SKILL.md",
+      "category": "Design",
+      "tags": [
+        "api",
+        "endpoint",
+        "builder"
+      ],
+      "capability_phrases": [
+        "API Endpoint Builder",
+        "When to Use This Skill",
+        "What You'll Build"
+      ]
+    },
+    {
+      "skill_id": "APP_BUILDER",
+      "filepath": "~/.codex/skills/app-builder/SKILL.md",
+      "category": "Design",
+      "tags": [
+        "application-scaffold",
+        "app-builder"
+      ],
+      "capability_phrases": [
+        "App Builder - Application Building Orchestrator",
+        "🎯 Selective Reading Rule",
+        "📦 Templates (13)"
+      ]
+    },
+    {
+      "skill_id": "AUDIT_CONTEXT_BUILDING",
+      "filepath": "~/.codex/skills/audit-context-building/SKILL.md",
+      "category": "Design",
+      "tags": [
+        "audit-context"
+      ],
+      "capability_phrases": [
+        "Deep Context Builder Skill (Ultra-Granular Pure Context Mode)",
+        "1. Purpose",
+        "When to Use"
+      ]
+    },
+    {
+      "skill_id": "AUTONOMOUS_AGENT_PATTERNS",
+      "filepath": "~/.codex/skills/autonomous-agent-patterns/SKILL.md",
+      "category": "Utility",
+      "tags": [
+        "autonomous"
+      ],
+      "capability_phrases": [
+        "🕹️ Autonomous Agent Patterns",
+        "When to Use This Skill",
+        "1. Core Agent Architecture"
+      ]
+    },
+    {
+      "skill_id": "AUTONOMOUS_AGENTS",
+      "filepath": "~/.codex/skills/autonomous-agents/SKILL.md",
+      "category": "Archived",
+      "tags": [],
+      "capability_phrases": [
+        "Autonomous Agents",
+        "Principles",
+        "Capabilities"
+      ]
+    },
+    {
+      "skill_id": "BACKEND_DEV_GUIDELINES",
+      "filepath": "~/.codex/skills/backend-dev-guidelines/SKILL.md",
+      "category": "Design",
+      "tags": [
+        "backend"
+      ],
+      "capability_phrases": [
+        "Backend Development Guidelines",
+        "1. Backend Feasibility & Risk Index (BFRI)",
+        "BFRI Dimensions (1–5)"
+      ]
+    },
+    {
+      "skill_id": "BASH_LINUX",
+      "filepath": "~/.codex/skills/bash-linux/SKILL.md",
+      "category": "Design",
+      "tags": [
+        "bash",
+        "linux"
+      ],
+      "capability_phrases": [
+        "Bash Linux Patterns",
+        "1. Operator Syntax",
+        "Chaining Commands"
+      ]
+    },
+    {
+      "skill_id": "BAZEL_BUILD_OPTIMIZATION",
+      "filepath": "~/.codex/skills/bazel-build-optimization/SKILL.md",
+      "category": "Design",
+      "tags": [
+        "bazel",
+        "optimization"
+      ],
+      "capability_phrases": [
+        "Bazel Build Optimization",
+        "Do not use this skill when",
+        "Instructions"
+      ]
+    },
+    {
+      "skill_id": "BLOG_WRITING_GUIDE",
+      "filepath": "~/.codex/skills/blog-writing-guide/SKILL.md",
+      "category": "Design",
+      "tags": [
+        "writing",
+        "guide"
+      ],
+      "capability_phrases": [
+        "Sentry Blog Writing Skill",
+        "When to Use",
+        "The Sentry Voice"
+      ]
+    },
+    {
+      "skill_id": "BRAND_GUIDELINES_ANTHROPIC",
+      "filepath": "~/.codex/skills/brand-guidelines-anthropic/SKILL.md",
+      "category": "Archived",
+      "tags": [],
+      "capability_phrases": [
+        "Anthropic Brand Styling",
+        "Overview",
+        "Brand Guidelines"
+      ]
+    },
+    {
+      "skill_id": "BRAND_GUIDELINES_COMMUNITY",
+      "filepath": "~/.codex/skills/brand-guidelines-community/SKILL.md",
+      "category": "Archived",
+      "tags": [],
+      "capability_phrases": [
+        "Anthropic Brand Styling",
+        "Overview",
+        "Brand Guidelines"
+      ]
+    },
+    {
+      "skill_id": "BROWSER_EXTENSION_BUILDER",
+      "filepath": "~/.codex/skills/browser-extension-builder/SKILL.md",
+      "category": "Design",
+      "tags": [
+        "browser",
+        "extension",
+        "builder"
+      ],
+      "capability_phrases": [
+        "Browser Extension Builder",
+        "Expertise",
+        "Capabilities"
+      ]
+    },
+    {
+      "skill_id": "BUILD",
+      "filepath": "~/.codex/skills/build/SKILL.md",
+      "category": "Design",
+      "tags": [
+        "build-system"
+      ],
+      "capability_phrases": [
+        "Feature development pipeline - research, plan, track, and implement major features.",
+        "When to Use",
+        "Instructions"
+      ]
+    },
+    {
+      "skill_id": "BURP_SUITE_TESTING",
+      "filepath": "~/.codex/skills/burp-suite-testing/SKILL.md",
+      "category": "Design",
+      "tags": [
+        "burp",
+        "suite"
+      ],
+      "capability_phrases": [
+        "Burp Suite Web Application Testing",
+        "Purpose",
+        "Inputs / Prerequisites"
+      ]
+    },
+    {
+      "skill_id": "BURPSUITE_PROJECT_PARSER",
+      "filepath": "~/.codex/skills/burpsuite-project-parser/SKILL.md",
+      "category": "Design",
+      "tags": [
+        "burpsuite",
+        "parser"
+      ],
+      "capability_phrases": [
+        "Burp Project Parser",
+        "When to Use",
+        "Prerequisites"
+      ]
+    },
+    {
+      "skill_id": "CC_SKILL_PROJECT_GUIDELINES_EXAMPLE",
+      "filepath": "~/.codex/skills/cc-skill-project-guidelines-example/SKILL.md",
+      "category": "Design",
+      "tags": [
+        "cc",
+        "skill",
+        "guidelines",
+        "example"
+      ],
+      "capability_phrases": [
+        "Project Guidelines Skill (Example)",
+        "When to Use",
+        "Architecture Overview"
+      ]
+    },
+    {
+      "skill_id": "CLAUDE_CODE_GUIDE",
+      "filepath": "~/.codex/skills/claude-code-guide/SKILL.md",
+      "category": "Design",
+      "tags": [
+        "claude",
+        "code",
+        "guide"
+      ],
+      "capability_phrases": [
+        "Claude Code Guide",
+        "Purpose",
+        "Configuration (`CLAUDE.md`)"
+      ]
+    },
+    {
+      "skill_id": "COMFYUI_GATEWAY",
+      "filepath": "~/.codex/skills/comfyui-gateway/SKILL.md",
+      "category": "Design",
+      "tags": [
+        "comfyui",
+        "gateway"
+      ],
+      "capability_phrases": [
+        "ComfyUI Gateway",
+        "Overview",
+        "When to Use This Skill"
+      ]
+    },
+    {
+      "skill_id": "COMPUTER_USE_AGENTS",
+      "filepath": "~/.codex/skills/computer-use-agents/SKILL.md",
+      "category": "Utility",
+      "tags": [
+        "computer",
+        "use",
+        "cua",
+        "operator",
+        "screen-control"
+      ],
+      "capability_phrases": [
+        "Computer Use Agents",
+        "Patterns",
+        "Perception-Reasoning-Action Loop"
+      ]
+    },
+    {
+      "skill_id": "CONTENT_STRATEGY",
+      "filepath": "~/.codex/skills/content-strategy/SKILL.md",
+      "category": "Marketing",
+      "tags": [
+        "strategy"
+      ],
+      "capability_phrases": [
+        "Content Strategy",
+        "When to Use",
+        "Before Planning"
+      ]
+    },
+    {
+      "skill_id": "CONTEXT_AGENT",
+      "filepath": "~/.codex/skills/context-agent/SKILL.md",
+      "category": "Utility",
+      "tags": [
+        "context"
+      ],
+      "capability_phrases": [
+        "Context Agent",
+        "Overview",
+        "When to Use This Skill"
+      ]
+    },
+    {
+      "skill_id": "CRYPTO_BD_AGENT",
+      "filepath": "~/.codex/skills/crypto-bd-agent/SKILL.md",
+      "category": "Utility",
+      "tags": [
+        "crypto",
+        "bd"
+      ],
+      "capability_phrases": [
+        "Crypto BD Agent — Autonomous Business Development for Exchanges",
+        "Overview",
+        "When to Use This Skill"
+      ]
+    },
+    {
+      "skill_id": "DATA_ENGINEER",
+      "filepath": "~/.codex/skills/data-engineer/SKILL.md",
+      "category": "Archived",
+      "tags": [],
+      "capability_phrases": [
+        "Use this skill when",
+        "Do not use this skill when",
+        "Instructions"
+      ]
+    },
+    {
+      "skill_id": "DATA_ENGINEERING_DATA_DRIVEN_FEATURE",
+      "filepath": "~/.codex/skills/data-engineering-data-driven-feature/SKILL.md",
+      "category": "Archived",
+      "tags": [],
+      "capability_phrases": [
+        "Data-Driven Feature Development",
+        "Use this skill when",
+        "Do not use this skill when"
+      ]
+    },
+    {
+      "skill_id": "DATA_ENGINEERING_DATA_PIPELINE",
+      "filepath": "~/.codex/skills/data-engineering-data-pipeline/SKILL.md",
+      "category": "Archived",
+      "tags": [],
+      "capability_phrases": [
+        "Data Pipeline Architecture",
+        "Use this skill when",
+        "Do not use this skill when"
+      ]
+    },
+    {
+      "skill_id": "DATA_QUALITY_FRAMEWORKS",
+      "filepath": "~/.codex/skills/data-quality-frameworks/SKILL.md",
+      "category": "Tech",
+      "tags": [
+        "data",
+        "frameworks"
+      ],
+      "capability_phrases": [
+        "Data Quality Frameworks",
+        "Use this skill when",
+        "Do not use this skill when"
+      ]
+    },
+    {
+      "skill_id": "DATA_SCIENTIST",
+      "filepath": "~/.codex/skills/data-scientist/SKILL.md",
+      "category": "Tech",
+      "tags": [
+        "data",
+        "scientist"
+      ],
+      "capability_phrases": [
+        "Use this skill when",
+        "Do not use this skill when",
+        "Instructions"
+      ]
+    },
+    {
+      "skill_id": "DATA_STORYTELLING",
+      "filepath": "~/.codex/skills/data-storytelling/SKILL.md",
+      "category": "Tech",
+      "tags": [
+        "data",
+        "storytelling"
+      ],
+      "capability_phrases": [
+        "Data Storytelling",
+        "Do not use this skill when",
+        "Instructions"
+      ]
+    },
+    {
+      "skill_id": "DATA_STRUCTURE_PROTOCOL",
+      "filepath": "~/.codex/skills/data-structure-protocol/SKILL.md",
+      "category": "Tech",
+      "tags": [
+        "data",
+        "protocol"
+      ],
+      "capability_phrases": [
+        "Data Structure Protocol (DSP)",
+        "When to Use",
+        "Core Concepts"
+      ]
+    },
+    {
+      "skill_id": "DATADOG_AUTOMATION",
+      "filepath": "~/.codex/skills/datadog-automation/SKILL.md",
+      "category": "Tech",
+      "tags": [
+        "datadog",
+        "automation"
+      ],
+      "capability_phrases": [
+        "Datadog Automation via Rube MCP",
+        "Prerequisites",
+        "Setup"
+      ]
+    },
+    {
+      "skill_id": "DDD_STRATEGIC_DESIGN",
+      "filepath": "~/.codex/skills/ddd-strategic-design/SKILL.md",
+      "category": "Design",
+      "tags": [
+        "ddd",
+        "strategic"
+      ],
+      "capability_phrases": [
+        "DDD Strategic Design",
+        "Use this skill when",
+        "Do not use this skill when"
+      ]
+    },
+    {
+      "skill_id": "DEPLOYMENT_PIPELINE_DESIGN",
+      "filepath": "~/.codex/skills/deployment-pipeline-design/SKILL.md",
+      "category": "Design",
+      "tags": [
+        "deployment",
+        "pipeline"
+      ],
+      "capability_phrases": [
+        "Deployment Pipeline Design",
+        "Do not use this skill when",
+        "Instructions"
+      ]
+    },
+    {
+      "skill_id": "DESIGN_MD",
+      "filepath": "~/.codex/skills/design-md/SKILL.md",
+      "category": "Design",
+      "tags": [
+        "md"
+      ],
+      "capability_phrases": [
+        "Stitch DESIGN.md Skill",
+        "When to Use This Skill",
+        "Overview"
+      ]
+    },
+    {
+      "skill_id": "DESIGN_ORCHESTRATION",
+      "filepath": "~/.codex/skills/design-orchestration/SKILL.md",
+      "category": "Design",
+      "tags": [
+        "orchestration"
+      ],
+      "capability_phrases": [
+        "Design Orchestration (Meta-Skill)",
+        "Purpose",
+        "Operating Model"
+      ]
+    },
+    {
+      "skill_id": "DESIGN_SPELLS",
+      "filepath": "~/.codex/skills/design-spells/SKILL.md",
+      "category": "Design",
+      "tags": [
+        "spells"
+      ],
+      "capability_phrases": [
+        "Design Spells Skill",
+        "Context",
+        "When to Use"
+      ]
+    },
+    {
+      "skill_id": "DESIGN_TASTE_FRONTEND",
+      "filepath": "~/.codex/skills/design-taste-frontend/SKILL.md",
+      "category": "Design",
+      "tags": [
+        "frontend"
+      ],
+      "capability_phrases": [
+        "High-Agency Frontend Skill",
+        "When to Use",
+        "Limitations"
+      ]
+    },
+    {
+      "skill_id": "DISPATCHING_PARALLEL_AGENTS",
+      "filepath": "~/.codex/skills/dispatching-parallel-agents/SKILL.md",
+      "category": "Utility",
+      "tags": [
+        "dispatching"
+      ],
+      "capability_phrases": [
+        "Dispatching Parallel Agents",
+        "Overview",
+        "When to Use"
+      ]
+    },
+    {
+      "skill_id": "DOMAIN_DRIVEN_DESIGN",
+      "filepath": "~/.codex/skills/domain-driven-design/SKILL.md",
+      "category": "Design",
+      "tags": [
+        "domain",
+        "driven"
+      ],
+      "capability_phrases": [
+        "Domain-Driven Design",
+        "Use this skill when",
+        "Do not use this skill when"
+      ]
+    },
+    {
+      "skill_id": "EARLLM_BUILD",
+      "filepath": "~/.codex/skills/earllm-build/SKILL.md",
+      "category": "Design",
+      "tags": [
+        "earllm"
+      ],
+      "capability_phrases": [
+        "EarLLM One — Build & Maintain",
+        "Overview",
+        "When to Use This Skill"
+      ]
+    },
+    {
+      "skill_id": "EMOTIONAL_ARC_DESIGNER",
+      "filepath": "~/.codex/skills/emotional-arc-designer/SKILL.md",
+      "category": "Design",
+      "tags": [
+        "emotional",
+        "arc"
+      ],
+      "capability_phrases": [
+        "When to Use",
+        "CONTEXT GATHERING",
+        "PSYCHOLOGICAL FRAMEWORK: EMOTIONAL ARC SEQUENCING"
+      ]
+    },
+    {
+      "skill_id": "ENVIRONMENT_SETUP_GUIDE",
+      "filepath": "~/.codex/skills/environment-setup-guide/SKILL.md",
+      "category": "Design",
+      "tags": [
+        "environment",
+        "guide"
+      ],
+      "capability_phrases": [
+        "Environment Setup Guide",
+        "Overview",
+        "When to Use This Skill"
+      ]
+    },
+    {
+      "skill_id": "ERROR_DEBUGGING_MULTI_AGENT_REVIEW",
+      "filepath": "~/.codex/skills/error-debugging-multi-agent-review/SKILL.md",
+      "category": "Utility",
+      "tags": [
+        "error",
+        "debugging"
+      ],
+      "capability_phrases": [
+        "Multi-Agent Code Review Orchestration Tool",
+        "Use this skill when",
+        "Do not use this skill when"
+      ]
+    },
+    {
+      "skill_id": "EVENT_STORE_DESIGN",
+      "filepath": "~/.codex/skills/event-store-design/SKILL.md",
+      "category": "Design",
+      "tags": [
+        "event",
+        "store"
+      ],
+      "capability_phrases": [
+        "Event Store Design",
+        "Do not use this skill when",
+        "Instructions"
+      ]
+    },
+    {
+      "skill_id": "EXPO_TAILWIND_SETUP",
+      "filepath": "~/.codex/skills/expo-tailwind-setup/SKILL.md",
+      "category": "Design",
+      "tags": [
+        "expo"
+      ],
+      "capability_phrases": [
+        "Tailwind CSS Setup for Expo with react-native-css",
+        "When to Use",
+        "Overview"
+      ]
+    },
+    {
+      "skill_id": "FIXING_METADATA",
+      "filepath": "~/.codex/skills/fixing-metadata/SKILL.md",
+      "category": "Tech",
+      "tags": [
+        "fixing",
+        "metadata"
+      ],
+      "capability_phrases": [
+        "Workflow",
+        "When to Use",
+        "rule categories by priority"
+      ]
+    },
+    {
+      "skill_id": "FOOD_DATABASE_QUERY",
+      "filepath": "~/.codex/skills/food-database-query/SKILL.md",
+      "category": "Tech",
+      "tags": [
+        "food",
+        "query"
+      ],
+      "capability_phrases": [
+        "食物数据库查询技能",
+        "When to Use",
+        "技能概述"
+      ]
+    },
+    {
+      "skill_id": "FP_DATA_TRANSFORMS",
+      "filepath": "~/.codex/skills/fp-data-transforms/SKILL.md",
+      "category": "Tech",
+      "tags": [
+        "fp",
+        "data",
+        "transforms"
+      ],
+      "capability_phrases": [
+        "Practical Data Transformations",
+        "When to Use",
+        "Table of Contents"
+      ]
+    },
+    {
+      "skill_id": "FREE_TOOL_STRATEGY",
+      "filepath": "~/.codex/skills/free-tool-strategy/SKILL.md",
+      "category": "Utility",
+      "tags": [
+        "free"
+      ],
+      "capability_phrases": [
+        "Free Tool Strategy (Engineering as Marketing)",
+        "Initial Assessment",
+        "Core Principles"
+      ]
+    },
+    {
+      "skill_id": "FRONTEND_DEV_GUIDELINES",
+      "filepath": "~/.codex/skills/frontend-dev-guidelines/SKILL.md",
+      "category": "Design",
+      "tags": [
+        "dev",
+        "guidelines"
+      ],
+      "capability_phrases": [
+        "Frontend Development Guidelines",
+        "1. Frontend Feasibility & Complexity Index (FFCI)",
+        "FFCI Dimensions (1–5)"
+      ]
+    },
+    {
+      "skill_id": "GDPR_DATA_HANDLING",
+      "filepath": "~/.codex/skills/gdpr-data-handling/SKILL.md",
+      "category": "Tech",
+      "tags": [
+        "gdpr",
+        "data",
+        "handling"
+      ],
+      "capability_phrases": [
+        "GDPR Data Handling",
+        "Use this skill when",
+        "Do not use this skill when"
+      ]
+    },
+    {
+      "skill_id": "GLOBAL_CHAT_AGENT_DISCOVERY",
+      "filepath": "~/.codex/skills/global-chat-agent-discovery/SKILL.md",
+      "category": "Utility",
+      "tags": [
+        "global",
+        "chat",
+        "discovery"
+      ],
+      "capability_phrases": [
+        "Global Chat Agent Discovery",
+        "Overview",
+        "When to Use This Skill"
+      ]
+    },
+    {
+      "skill_id": "HIERARCHICAL_AGENT_MEMORY",
+      "filepath": "~/.codex/skills/hierarchical-agent-memory/SKILL.md",
+      "category": "Utility",
+      "tags": [
+        "hierarchical",
+        "memory"
+      ],
+      "capability_phrases": [
+        "Hierarchical Agent Memory (HAM)",
+        "When to Use This Skill",
+        "How It Works"
+      ]
+    },
+    {
+      "skill_id": "HIGH_END_VISUAL_DESIGN",
+      "filepath": "~/.codex/skills/high-end-visual-design/SKILL.md",
+      "category": "Design",
+      "tags": [
+        "high",
+        "end",
+        "visual"
+      ],
+      "capability_phrases": [
+        "Agent Skill: Principal UI/UX Architect & Motion Choreographer (Awwwards-Tier)",
+        "When to Use",
+        "Limitations"
+      ]
+    },
+    {
+      "skill_id": "HOSTED_AGENTS",
+      "filepath": "~/.codex/skills/hosted-agents/SKILL.md",
+      "category": "Utility",
+      "tags": [
+        "hosted",
+        "remote-agent",
+        "sandbox",
+        "hosted-infrastructure"
+      ],
+      "capability_phrases": [
+        "Hosted Agent Infrastructure",
+        "When to Use",
+        "Core Concepts"
+      ]
+    },
+    {
+      "skill_id": "HOSTED_AGENTS_V2_PY",
+      "filepath": "~/.codex/skills/hosted-agents-v2-py/SKILL.md",
+      "category": "Utility",
+      "tags": [
+        "v2"
+      ],
+      "capability_phrases": [
+        "Azure AI Hosted Agents (Python)",
+        "Installation",
+        "Environment Variables"
+      ]
+    },
+    {
+      "skill_id": "HUGGING_FACE_DATASET_VIEWER",
+      "filepath": "~/.codex/skills/hugging-face-dataset-viewer/SKILL.md",
+      "category": "Archived",
+      "tags": [],
+      "capability_phrases": [
+        "Hugging Face Dataset Viewer",
+        "When to Use",
+        "Core workflow"
+      ]
+    },
+    {
+      "skill_id": "HUGGING_FACE_DATASETS",
+      "filepath": "~/.codex/skills/hugging-face-datasets/SKILL.md",
+      "category": "Tech",
+      "tags": [
+        "hugging-face",
+        "dataset-catalog",
+        "dataset-viewer",
+        "model-hub"
+      ],
+      "capability_phrases": [
+        "Overview",
+        "When to Use",
+        "Integration with HF MCP Server"
+      ]
+    },
+    {
+      "skill_id": "HUGGING_FACE_TOOL_BUILDER",
+      "filepath": "~/.codex/skills/hugging-face-tool-builder/SKILL.md",
+      "category": "Archived",
+      "tags": [],
+      "capability_phrases": [
+        "Hugging Face API Tool Builder",
+        "When to Use",
+        "Script Rules"
+      ]
+    },
+    {
+      "skill_id": "IOS_DEBUGGER_AGENT",
+      "filepath": "~/.codex/skills/ios-debugger-agent/SKILL.md",
+      "category": "Utility",
+      "tags": [
+        "ios",
+        "debugger"
+      ],
+      "capability_phrases": [
+        "iOS Debugger Agent",
+        "Overview",
+        "When to Use"
+      ]
+    },
+    {
+      "skill_id": "JSON_CANVAS",
+      "filepath": "~/.codex/skills/json-canvas/SKILL.md",
+      "category": "Design",
+      "tags": [
+        "json",
+        "canvas"
+      ],
+      "capability_phrases": [
+        "JSON Canvas Skill",
+        "When to Use",
+        "File Structure"
+      ]
+    },
+    {
+      "skill_id": "KPI_DASHBOARD_DESIGN",
+      "filepath": "~/.codex/skills/kpi-dashboard-design/SKILL.md",
+      "category": "Design",
+      "tags": [
+        "kpi",
+        "dashboard"
+      ],
+      "capability_phrases": [
+        "KPI Dashboard Design",
+        "Do not use this skill when",
+        "Instructions"
+      ]
+    },
+    {
+      "skill_id": "LAMBDATEST_AGENT_SKILLS",
+      "filepath": "~/.codex/skills/lambdatest-agent-skills/SKILL.md",
+      "category": "Utility",
+      "tags": [
+        "lambdatest"
+      ],
+      "capability_phrases": [
+        "LambdaTest Agent Skills — Test Automation Registry (46 Skills)",
+        "Overview",
+        "When to Use This Skill"
+      ]
+    },
+    {
+      "skill_id": "LAUNCH_STRATEGY",
+      "filepath": "~/.codex/skills/launch-strategy/SKILL.md",
+      "category": "Workflow",
+      "tags": [
+        "launch"
+      ],
+      "capability_phrases": [
+        "Launch Strategy",
+        "Core Philosophy",
+        "The ORB Framework"
+      ]
+    },
+    {
+      "skill_id": "LINUX_PRIVILEGE_ESCALATION",
+      "filepath": "~/.codex/skills/linux-privilege-escalation/SKILL.md",
+      "category": "Design",
+      "tags": [
+        "linux",
+        "privilege",
+        "escalation"
+      ],
+      "capability_phrases": [
+        "Linux Privilege Escalation",
+        "Purpose",
+        "Inputs / Prerequisites"
+      ]
+    },
+    {
+      "skill_id": "LINUX_SHELL_SCRIPTING",
+      "filepath": "~/.codex/skills/linux-shell-scripting/SKILL.md",
+      "category": "Design",
+      "tags": [
+        "linux",
+        "shell",
+        "scripting"
+      ],
+      "capability_phrases": [
+        "Linux Production Shell Scripts",
+        "Purpose",
+        "Prerequisites"
+      ]
+    },
+    {
+      "skill_id": "LINUX_TROUBLESHOOTING",
+      "filepath": "~/.codex/skills/linux-troubleshooting/SKILL.md",
+      "category": "Design",
+      "tags": [
+        "linux",
+        "troubleshooting"
+      ],
+      "capability_phrases": [
+        "Linux Troubleshooting Workflow",
+        "Overview",
+        "When to Use This Workflow"
+      ]
+    },
+    {
+      "skill_id": "LLM_APPLICATION_DEV_LANGCHAIN_AGENT",
+      "filepath": "~/.codex/skills/llm-application-dev-langchain-agent/SKILL.md",
+      "category": "Tech",
+      "tags": [
+        "llm",
+        "application",
+        "dev",
+        "langchain"
+      ],
+      "capability_phrases": [
+        "LangChain/LangGraph Agent Development Expert",
+        "Use this skill when",
+        "Do not use this skill when"
+      ]
+    },
+    {
+      "skill_id": "LOCAL_LEGAL_SEO_AUDIT",
+      "filepath": "~/.codex/skills/local-legal-seo-audit/SKILL.md",
+      "category": "Archived",
+      "tags": [],
+      "capability_phrases": [
+        "Local Legal SEO Audit",
+        "When to Use",
+        "Initial Assessment"
+      ]
+    },
+    {
+      "skill_id": "LOSS_AVERSION_DESIGNER",
+      "filepath": "~/.codex/skills/loss-aversion-designer/SKILL.md",
+      "category": "Design",
+      "tags": [
+        "loss",
+        "aversion"
+      ],
+      "capability_phrases": [
+        "When to Use",
+        "CONTEXT GATHERING",
+        "PSYCHOLOGICAL FRAMEWORK: REFERENCE-POINT FRAMING"
+      ]
+    },
+    {
+      "skill_id": "M365_AGENTS_DOTNET",
+      "filepath": "~/.codex/skills/m365-agents-dotnet/SKILL.md",
+      "category": "Utility",
+      "tags": [
+        "m365"
+      ],
+      "capability_phrases": [
+        "Microsoft 365 Agents SDK (.NET)",
+        "Overview",
+        "Before implementation"
+      ]
+    },
+    {
+      "skill_id": "M365_AGENTS_PY",
+      "filepath": "~/.codex/skills/m365-agents-py/SKILL.md",
+      "category": "Archived",
+      "tags": [],
+      "capability_phrases": [
+        "Microsoft 365 Agents SDK (Python)",
+        "Before implementation",
+        "Important Notice - Import Changes"
+      ]
+    },
+    {
+      "skill_id": "M365_AGENTS_TS",
+      "filepath": "~/.codex/skills/m365-agents-ts/SKILL.md",
+      "category": "Archived",
+      "tags": [],
+      "capability_phrases": [
+        "Microsoft 365 Agents SDK (TypeScript)",
+        "Before implementation",
+        "Installation"
+      ]
+    },
+    {
+      "skill_id": "MACOS_MENUBAR_TUIST_APP",
+      "filepath": "~/.codex/skills/macos-menubar-tuist-app/SKILL.md",
+      "category": "Design",
+      "tags": [
+        "macos",
+        "menubar",
+        "tuist",
+        "app"
+      ],
+      "capability_phrases": [
+        "macos-menubar-tuist-app",
+        "When to Use",
+        "Core Rules"
+      ]
+    },
+    {
+      "skill_id": "MARKETING_IDEAS",
+      "filepath": "~/.codex/skills/marketing-ideas/SKILL.md",
+      "category": "Marketing",
+      "tags": [
+        "ideas"
+      ],
+      "capability_phrases": [
+        "Marketing Ideas for SaaS (with Feasibility Scoring)",
+        "1. How This Skill Should Be Used",
+        "2. Marketing Feasibility Score (MFS)"
+      ]
+    },
+    {
+      "skill_id": "MARKETING_PSYCHOLOGY",
+      "filepath": "~/.codex/skills/marketing-psychology/SKILL.md",
+      "category": "Marketing",
+      "tags": [
+        "psychology"
+      ],
+      "capability_phrases": [
+        "Marketing Psychology & Mental Models",
+        "1. How This Skill Should Be Used",
+        "2. Psychological Leverage & Feasibility Score (PLFS)"
+      ]
+    },
+    {
+      "skill_id": "MCP_BUILDER_MS",
+      "filepath": "~/.codex/skills/mcp-builder-ms/SKILL.md",
+      "category": "Archived",
+      "tags": [],
+      "capability_phrases": [
+        "MCP Server Development Guide",
+        "When to Use",
+        "Overview"
+      ]
+    },
+    {
+      "skill_id": "MOBILE_DESIGN",
+      "filepath": "~/.codex/skills/mobile-design/SKILL.md",
+      "category": "Design",
+      "tags": [
+        "mobile"
+      ],
+      "capability_phrases": [
+        "Mobile Design System",
+        "1. Mobile Feasibility & Risk Index (MFRI)",
+        "MFRI Dimensions (1–5)"
+      ]
+    },
+    {
+      "skill_id": "MULTI_AGENT_ARCHITECT",
+      "filepath": "~/.codex/skills/multi-agent-architect/SKILL.md",
+      "category": "Utility",
+      "tags": [
+        "architect"
+      ],
+      "capability_phrases": [
+        "Multi-Agent Architect & Updater Skill",
+        "Overview",
+        "When to Use This Skill"
+      ]
+    },
+    {
+      "skill_id": "MULTI_AGENT_BRAINSTORMING",
+      "filepath": "~/.codex/skills/multi-agent-brainstorming/SKILL.md",
+      "category": "Utility",
+      "tags": [
+        "multi-agent-brainstorm"
+      ],
+      "capability_phrases": [
+        "Multi-Agent Brainstorming (Structured Design Review)",
+        "Purpose",
+        "Operating Model"
+      ]
+    },
+    {
+      "skill_id": "MULTI_AGENT_PATTERNS",
+      "filepath": "~/.codex/skills/multi-agent-patterns/SKILL.md",
+      "category": "Utility",
+      "tags": [
+        "patterns"
+      ],
+      "capability_phrases": [
+        "Multi-Agent Architecture Patterns",
+        "When to Use",
+        "Core Concepts"
+      ]
+    },
+    {
+      "skill_id": "NATIVE_DATA_FETCHING",
+      "filepath": "~/.codex/skills/native-data-fetching/SKILL.md",
+      "category": "Tech",
+      "tags": [
+        "data",
+        "fetching"
+      ],
+      "capability_phrases": [
+        "Expo Networking",
+        "References",
+        "When to Use"
+      ]
+    },
+    {
+      "skill_id": "ODOO_BACKUP_STRATEGY",
+      "filepath": "~/.codex/skills/odoo-backup-strategy/SKILL.md",
+      "category": "Utility",
+      "tags": [
+        "odoo",
+        "backup"
+      ],
+      "capability_phrases": [
+        "Odoo Backup Strategy",
+        "Overview",
+        "When to Use This Skill"
+      ]
+    },
+    {
+      "skill_id": "ODOO_XML_VIEWS_BUILDER",
+      "filepath": "~/.codex/skills/odoo-xml-views-builder/SKILL.md",
+      "category": "Design",
+      "tags": [
+        "odoo",
+        "xml",
+        "views",
+        "builder"
+      ],
+      "capability_phrases": [
+        "Odoo XML Views Builder",
+        "Overview",
+        "When to Use This Skill"
+      ]
+    },
+    {
+      "skill_id": "OSTERWALDER_CANVAS_ARCHITECT",
+      "filepath": "~/.codex/skills/osterwalder-canvas-architect/SKILL.md",
+      "category": "Design",
+      "tags": [
+        "osterwalder",
+        "canvas"
+      ],
+      "capability_phrases": [
+        "Osterwalder Business Model Canvas Architect",
+        "Overview",
+        "When to Use This Skill"
+      ]
+    },
+    {
+      "skill_id": "PARALLEL_AGENTS",
+      "filepath": "~/.codex/skills/parallel-agents/SKILL.md",
+      "category": "Utility",
+      "tags": [
+        "parallel",
+        "parallel-dispatch",
+        "independent-tasks"
+      ],
+      "capability_phrases": [
+        "Native Parallel Agents",
+        "Overview",
+        "When to Use Orchestration"
+      ]
+    },
+    {
+      "skill_id": "PDF_TO_EXCEL_EXPORT",
+      "filepath": "~/.codex/skills/pdf-to-excel-export/SKILL.md",
+      "category": "Utility",
+      "tags": [
+        "pdf",
+        "to",
+        "excel",
+        "export"
+      ],
+      "capability_phrases": [
+        "Workflow: Bursa PDF to Excel Registry Export",
+        "Prerequisites",
+        "Steps"
+      ]
+    },
+    {
+      "skill_id": "PERFORMANCE_TESTING_REVIEW_MULTI_AGENT_REVIEW",
+      "filepath": "~/.codex/skills/performance-testing-review-multi-agent-review/SKILL.md",
+      "category": "Utility",
+      "tags": [
+        "testing"
+      ],
+      "capability_phrases": [
+        "Multi-Agent Code Review Orchestration Tool",
+        "Use this skill when",
+        "Do not use this skill when"
+      ]
+    },
+    {
+      "skill_id": "PERSONAL_TOOL_BUILDER",
+      "filepath": "~/.codex/skills/personal-tool-builder/SKILL.md",
+      "category": "Design",
+      "tags": [
+        "personal"
+      ],
+      "capability_phrases": [
+        "Personal Tool Builder",
+        "Expertise",
+        "Capabilities"
+      ]
+    },
+    {
+      "skill_id": "PINE_STRATEGY_ARCHITECT",
+      "filepath": "~/.codex/skills/pine-strategy-architect/SKILL.md",
+      "category": "Utility",
+      "tags": [
+        "pine"
+      ],
+      "capability_phrases": [
+        "Pine Strategy Architect",
+        "Overview",
+        "Core Capabilities"
+      ]
+    },
+    {
+      "skill_id": "PIPECAT_FRIDAY_AGENT",
+      "filepath": "~/.codex/skills/pipecat-friday-agent/SKILL.md",
+      "category": "Utility",
+      "tags": [
+        "pipecat",
+        "friday"
+      ],
+      "capability_phrases": [
+        "Pipecat Friday Agent",
+        "Overview",
+        "When to Use This Skill"
+      ]
+    },
+    {
+      "skill_id": "PRICING_STRATEGY",
+      "filepath": "~/.codex/skills/pricing-strategy/SKILL.md",
+      "category": "Financial",
+      "tags": [
+        "pricing"
+      ],
+      "capability_phrases": [
+        "Pricing Strategy",
+        "1. Required Context (Ask If Missing)",
+        "1. Business Model"
+      ]
+    },
+    {
+      "skill_id": "PRIVACY_BY_DESIGN",
+      "filepath": "~/.codex/skills/privacy-by-design/SKILL.md",
+      "category": "Design",
+      "tags": [
+        "privacy",
+        "by"
+      ],
+      "capability_phrases": [
+        "Privacy by Design",
+        "Overview",
+        "When to Use This Skill"
+      ]
+    },
+    {
+      "skill_id": "PRODUCT_DESIGN",
+      "filepath": "~/.codex/skills/product-design/SKILL.md",
+      "category": "Design",
+      "tags": [
+        "product"
+      ],
+      "capability_phrases": [
+        "PRODUCT DESIGN — Nivel Apple",
+        "Overview",
+        "When to Use This Skill"
+      ]
+    },
+    {
+      "skill_id": "PRODUCT_MARKETING_CONTEXT",
+      "filepath": "~/.codex/skills/product-marketing-context/SKILL.md",
+      "category": "Marketing",
+      "tags": [
+        "product-marketing"
+      ],
+      "capability_phrases": [
+        "Product Marketing Context",
+        "When to Use",
+        "Workflow"
+      ]
+    },
+    {
+      "skill_id": "PROGRAMMATIC_SEO",
+      "filepath": "~/.codex/skills/programmatic-seo/SKILL.md",
+      "category": "Archived",
+      "tags": [],
+      "capability_phrases": [
+        "Programmatic SEO",
+        "Phase 0: Programmatic SEO Feasibility Index (Required)",
+        "Purpose"
+      ]
+    },
+    {
+      "skill_id": "PROJECT_LAUNCH",
+      "filepath": "~/.codex/skills/project-launch/SKILL.md",
+      "category": "Workflow",
+      "tags": [
+        "project-launch"
+      ],
+      "capability_phrases": []
+    },
+    {
+      "skill_id": "PUBMED_DATABASE",
+      "filepath": "~/.codex/skills/pubmed-database/SKILL.md",
+      "category": "Tech",
+      "tags": [
+        "pubmed"
+      ],
+      "capability_phrases": [
+        "PubMed Database",
+        "Overview",
+        "When to Use This Skill"
+      ]
+    },
+    {
+      "skill_id": "REDESIGN_EXISTING_PROJECTS",
+      "filepath": "~/.codex/skills/redesign-existing-projects/SKILL.md",
+      "category": "Design",
+      "tags": [
+        "redesign",
+        "existing-projects"
+      ],
+      "capability_phrases": [
+        "Redesign Skill",
+        "When to Use",
+        "Limitations"
+      ]
+    },
+    {
+      "skill_id": "REFERENCE_BUILDER",
+      "filepath": "~/.codex/skills/reference-builder/SKILL.md",
+      "category": "Design",
+      "tags": [
+        "reference",
+        "builder"
+      ],
+      "capability_phrases": [
+        "Use this skill when",
+        "Do not use this skill when",
+        "Instructions"
+      ]
+    },
+    {
+      "skill_id": "RUN_INVESTMENT_COMMITTEE",
+      "filepath": "~/.codex/skills/run-investment-committee/SKILL.md",
+      "category": "Financial",
+      "tags": [
+        "run",
+        "investment",
+        "committee"
+      ],
+      "capability_phrases": [
+        "聯合投資委員會 (Joint Investment Committee)",
+        "執行管線 (Pipeline)",
+        "Phase 1: 宏觀環境掃描"
+      ]
+    },
+    {
+      "skill_id": "RUN_PLACEMENT_DRIVE",
+      "filepath": "~/.codex/skills/run-placement-drive/SKILL.md",
+      "category": "Utility",
+      "tags": [
+        "run",
+        "placement",
+        "drive"
+      ],
+      "capability_phrases": [
+        "企業招聘會統籌 (Corporate Placement Drive)",
+        "執行管線 (Pipeline)",
+        "Phase 1: 逆向需求偵測 (Inversion)"
+      ]
+    },
+    {
+      "skill_id": "SECURITY_BLUEBOOK_BUILDER",
+      "filepath": "~/.codex/skills/security-bluebook-builder/SKILL.md",
+      "category": "Design",
+      "tags": [
+        "security",
+        "bluebook",
+        "builder"
+      ],
+      "capability_phrases": [
+        "Security Bluebook Builder",
+        "When to Use",
+        "Overview"
+      ]
+    },
+    {
+      "skill_id": "SECURITY_REQUIREMENT_EXTRACTION",
+      "filepath": "~/.codex/skills/security-requirement-extraction/SKILL.md",
+      "category": "Design",
+      "tags": [
+        "security",
+        "requirement",
+        "extraction"
+      ],
+      "capability_phrases": [
+        "Security Requirement Extraction",
+        "Use this skill when",
+        "Do not use this skill when"
+      ]
+    },
+    {
+      "skill_id": "SEO",
+      "filepath": "~/.codex/skills/seo/SKILL.md",
+      "category": "Archived",
+      "tags": [],
+      "capability_phrases": [
+        "SEO: Universal SEO Analysis Skill",
+        "When to Use",
+        "Quick Reference"
+      ]
+    },
+    {
+      "skill_id": "SIMPLE_WORKFLOW",
+      "filepath": "~/.codex/skills/simple-workflow/SKILL.md",
+      "category": "Workflow",
+      "tags": [
+        "simple"
+      ],
+      "capability_phrases": []
+    },
+    {
+      "skill_id": "SLACK_BOT_BUILDER",
+      "filepath": "~/.codex/skills/slack-bot-builder/SKILL.md",
+      "category": "Design",
+      "tags": [
+        "slack"
+      ],
+      "capability_phrases": [
+        "Slack Bot Builder",
+        "Patterns",
+        "Bolt App Foundation Pattern"
+      ]
+    },
+    {
+      "skill_id": "SOCIAL_POST_WRITER_SEO",
+      "filepath": "~/.codex/skills/social-post-writer-seo/SKILL.md",
+      "category": "Archived",
+      "tags": [],
+      "capability_phrases": [
+        "Social Media Strategist and Content Writer",
+        "Overview",
+        "When to Use This Skill"
+      ]
+    },
+    {
+      "skill_id": "SQLMAP_DATABASE_PENTESTING",
+      "filepath": "~/.codex/skills/sqlmap-database-pentesting/SKILL.md",
+      "category": "Tech",
+      "tags": [
+        "sqlmap",
+        "pentesting"
+      ],
+      "capability_phrases": [
+        "SQLMap Database Penetration Testing",
+        "Purpose",
+        "Inputs / Prerequisites"
+      ]
+    },
+    {
+      "skill_id": "SQUIRREL",
+      "filepath": "~/.codex/skills/squirrel/SKILL.md",
+      "category": "Design",
+      "tags": [
+        "squirrel"
+      ],
+      "capability_phrases": [
+        "Squirrel — Full-Cycle Software Development Skill",
+        "Overview",
+        "When to Use This Skill"
+      ]
+    },
+    {
+      "skill_id": "STITCH_DESIGN_TASTE",
+      "filepath": "~/.codex/skills/stitch-design-taste/SKILL.md",
+      "category": "Design",
+      "tags": [
+        "taste"
+      ],
+      "capability_phrases": [
+        "Stitch Design Taste — Semantic Design System Skill",
+        "When to Use",
+        "Limitations"
+      ]
+    },
+    {
+      "skill_id": "STITCH_LOOP",
+      "filepath": "~/.codex/skills/stitch-loop/SKILL.md",
+      "category": "Design",
+      "tags": [
+        "loop"
+      ],
+      "capability_phrases": [
+        "Stitch Build Loop",
+        "When to Use",
+        "Overview"
+      ]
+    },
+    {
+      "skill_id": "SWIFTUI_EXPERT_SKILL",
+      "filepath": "~/.codex/skills/swiftui-expert-skill/SKILL.md",
+      "category": "Design",
+      "tags": [
+        "expert",
+        "skill"
+      ],
+      "capability_phrases": [
+        "SwiftUI Expert Skill",
+        "When to Use",
+        "Overview"
+      ]
+    },
+    {
+      "skill_id": "SWIFTUI_LIQUID_GLASS",
+      "filepath": "~/.codex/skills/swiftui-liquid-glass/SKILL.md",
+      "category": "Design",
+      "tags": [
+        "liquid",
+        "glass"
+      ],
+      "capability_phrases": [
+        "SwiftUI Liquid Glass",
+        "Overview",
+        "When to Use"
+      ]
+    },
+    {
+      "skill_id": "SWIFTUI_PERFORMANCE_AUDIT",
+      "filepath": "~/.codex/skills/swiftui-performance-audit/SKILL.md",
+      "category": "Design",
+      "tags": [
+        "performance"
+      ],
+      "capability_phrases": [
+        "SwiftUI Performance Audit",
+        "Quick start",
+        "When to Use"
+      ]
+    },
+    {
+      "skill_id": "SWIFTUI_VIEW_REFACTOR",
+      "filepath": "~/.codex/skills/swiftui-view-refactor/SKILL.md",
+      "category": "Design",
+      "tags": [
+        "view",
+        "refactor"
+      ],
+      "capability_phrases": [
+        "SwiftUI View Refactor",
+        "Overview",
+        "When to Use"
+      ]
+    },
+    {
+      "skill_id": "TAILWIND_DESIGN_SYSTEM",
+      "filepath": "~/.codex/skills/tailwind-design-system/SKILL.md",
+      "category": "Design",
+      "tags": [
+        "tailwind"
+      ],
+      "capability_phrases": [
+        "Tailwind Design System",
+        "Use this skill when",
+        "Do not use this skill when"
+      ]
+    },
+    {
+      "skill_id": "TAILWIND_PATTERNS",
+      "filepath": "~/.codex/skills/tailwind-patterns/SKILL.md",
+      "category": "Archived",
+      "tags": [],
+      "capability_phrases": [
+        "Tailwind CSS Patterns (v4 - 2025)",
+        "When to Use",
+        "1. Tailwind v4 Architecture"
+      ]
+    },
+    {
+      "skill_id": "TELEGRAM_BOT_BUILDER",
+      "filepath": "~/.codex/skills/telegram-bot-builder/SKILL.md",
+      "category": "Design",
+      "tags": [
+        "telegram",
+        "bot",
+        "builder"
+      ],
+      "capability_phrases": [
+        "Telegram Bot Builder",
+        "Expertise",
+        "Capabilities"
+      ]
+    },
+    {
+      "skill_id": "TMUX",
+      "filepath": "~/.codex/skills/tmux/SKILL.md",
+      "category": "Design",
+      "tags": [
+        "tmux"
+      ],
+      "capability_phrases": [
+        "tmux — Terminal Multiplexer",
+        "Overview",
+        "When to Use This Skill"
+      ]
+    },
+    {
+      "skill_id": "TOOL_DESIGN",
+      "filepath": "~/.codex/skills/tool-design/SKILL.md",
+      "category": "Design",
+      "tags": [
+        "tool"
+      ],
+      "capability_phrases": [
+        "When to Use This Skill",
+        "Tool Design for Agents",
+        "When to Use"
+      ]
+    },
+    {
+      "skill_id": "UNIPROT_DATABASE",
+      "filepath": "~/.codex/skills/uniprot-database/SKILL.md",
+      "category": "Tech",
+      "tags": [
+        "uniprot"
+      ],
+      "capability_phrases": [
+        "UniProt Database",
+        "Overview",
+        "When to Use This Skill"
+      ]
+    },
+    {
+      "skill_id": "UX_AUDIT",
+      "filepath": "~/.codex/skills/ux-audit/SKILL.md",
+      "category": "Archived",
+      "tags": [],
+      "capability_phrases": [
+        "UX Audit",
+        "Overview",
+        "When to Use"
+      ]
+    },
+    {
+      "skill_id": "UX_COPY",
+      "filepath": "~/.codex/skills/ux-copy/SKILL.md",
+      "category": "Archived",
+      "tags": [],
+      "capability_phrases": [
+        "UX Copy",
+        "Overview",
+        "When to Use"
+      ]
+    },
+    {
+      "skill_id": "UX_FEEDBACK",
+      "filepath": "~/.codex/skills/ux-feedback/SKILL.md",
+      "category": "Archived",
+      "tags": [],
+      "capability_phrases": [
+        "UX Feedback",
+        "Overview",
+        "When to Use"
+      ]
+    },
+    {
+      "skill_id": "UX_FLOW",
+      "filepath": "~/.codex/skills/ux-flow/SKILL.md",
+      "category": "Archived",
+      "tags": [],
+      "capability_phrases": [
+        "UX Flow",
+        "Overview",
+        "When to Use"
+      ]
+    },
+    {
+      "skill_id": "UX_PERSUASION_ENGINEER",
+      "filepath": "~/.codex/skills/ux-persuasion-engineer/SKILL.md",
+      "category": "Archived",
+      "tags": [],
+      "capability_phrases": [
+        "When to Use",
+        "CONTEXT GATHERING",
+        "PSYCHOLOGICAL FRAMEWORK: CHOICE ARCHITECTURE FLOW"
+      ]
+    },
+    {
+      "skill_id": "VECTOR_DATABASE_ENGINEER",
+      "filepath": "~/.codex/skills/vector-database-engineer/SKILL.md",
+      "category": "Tech",
+      "tags": [
+        "vector",
+        "engineer"
+      ],
+      "capability_phrases": [
+        "Vector Database Engineer",
+        "Do not use this skill when",
+        "Instructions"
+      ]
+    },
+    {
+      "skill_id": "VIRAL_GENERATOR_BUILDER",
+      "filepath": "~/.codex/skills/viral-generator-builder/SKILL.md",
+      "category": "Design",
+      "tags": [
+        "viral",
+        "builder"
+      ],
+      "capability_phrases": [
+        "Viral Generator Builder",
+        "Expertise",
+        "Capabilities"
+      ]
+    },
+    {
+      "skill_id": "VOICE_AGENTS",
+      "filepath": "~/.codex/skills/voice-agents/SKILL.md",
+      "category": "Utility",
+      "tags": [
+        "voice",
+        "realtime",
+        "stt",
+        "tts",
+        "vad"
+      ],
+      "capability_phrases": [
+        "Voice Agents",
+        "Principles",
+        "Capabilities"
+      ]
+    },
+    {
+      "skill_id": "VSCODE_EXTENSION_GUIDE_EN",
+      "filepath": "~/.codex/skills/vscode-extension-guide-en/SKILL.md",
+      "category": "Design",
+      "tags": [
+        "vscode",
+        "extension",
+        "guide",
+        "en"
+      ],
+      "capability_phrases": [
+        "VS Code Extension Guide (English)",
+        "Overview",
+        "When to Use This Skill"
+      ]
+    },
+    {
+      "skill_id": "WORDPRESS_CENTRIC_HIGH_SEO_OPTIMIZED_BLOGWRITING_SKILL",
+      "filepath": "~/.codex/skills/wordpress-centric-high-seo-optimized-blogwriting-skill/SKILL.md",
+      "category": "Marketing",
+      "tags": [
+        "wordpress",
+        "centric",
+        "high",
+        "optimized",
+        "blogwriting",
+        "skill"
+      ],
+      "capability_phrases": [
+        "WordPress Centric High SEO Optimized Blog Writing Skill",
+        "Overview",
+        "When to Use This Skill"
+      ]
+    },
+    {
+      "skill_id": "MACRO_COMMODITY_RATIO_ANALYST",
+      "filepath": "~/.codex/skills/macro-commodity-ratio-analyst/SKILL.md",
+      "category": "Utility",
+      "tags": [
+        "commodity",
+        "ratio"
+      ],
+      "capability_phrases": [
+        "\"分析大宗商品比率 (銅金比, 油金比) 以衡量全球工業需求擴張與避險情緒的強弱對比。\"",
+        "宏觀大宗商品比率分析師 (Macro Commodity Ratio Analyst)",
+        "1. 職責與邊界 (Scope & Boundaries)"
+      ]
+    },
+    {
+      "skill_id": "MACRO_CREDIT_SPREAD_ANALYST",
+      "filepath": "~/.codex/skills/macro-credit-spread-analyst/SKILL.md",
+      "category": "Utility",
+      "tags": [
+        "credit",
+        "spread"
+      ],
+      "capability_phrases": [
+        "\"分析高收益債信用利差 (BAA10Y, HYG/SPX) 以評估全球流動性風險、違約風險與市場 Risk-on/off 政權。\"",
+        "宏觀信用利差分析師 (Macro Credit Spread Analyst)",
+        "1. 職責與邊界 (Scope & Boundaries)"
+      ]
+    },
+    {
+      "skill_id": "MACRO_YIELD_CURVE_ANALYST",
+      "filepath": "~/.codex/skills/macro-yield-curve-analyst/SKILL.md",
+      "category": "Utility",
+      "tags": [
+        "yield",
+        "curve"
+      ],
+      "capability_phrases": [
+        "\"分析國債利差 (US10Y-2Y, US30Y-5Y 等) 的倒掛與修復，進行經濟衰退預警與 NBER 商業週期極端值判定。\"",
+        "宏觀收益率曲線分析師 (Macro Yield Curve Analyst)",
+        "1. 職責與邊界 (Scope & Boundaries)"
+      ]
+    },
+    {
+      "skill_id": "SEO_SUITE",
+      "filepath": "~/.codex/skills/seo-suite/SKILL.md",
+      "category": "Marketing",
+      "tags": [
+        "aeo",
+        "content",
+        "audit",
+        "technical"
+      ],
+      "capability_phrases": [
+        "Unified Search Engine Optimization Suite. Consolidates auditing, keyword research, on-page schema, competitor analysis, and content structures.",
+        "SEO Suite (Master Skill)",
+        "Reference Chapters"
+      ]
+    },
+    {
+      "skill_id": "DATABASE_SUITE",
+      "filepath": "~/.codex/skills/database-suite/SKILL.md",
+      "category": "Tech",
+      "tags": [
+        "database",
+        "sql",
+        "migration",
+        "query",
+        "perf",
+        "admin"
+      ],
+      "capability_phrases": [
+        "Unified Database Management Suite. Consolidates administration, architecture, design, migration, performance tuning, and SQL optimizations.",
+        "Database Suite (Master Skill)",
+        "Reference Chapters"
+      ]
+    },
+    {
+      "skill_id": "AZURE_SUITE",
+      "filepath": "~/.codex/skills/azure-suite/SKILL.md",
+      "category": "Tech",
+      "tags": [
+        "azure",
+        "cloud",
+        "storage",
+        "datalake",
+        "tables"
+      ],
+      "capability_phrases": [
+        "Unified Azure Cloud Services Suite. Consolidates persistent AI agents, Data Tables integration, and Data Lake Storage API operations.",
+        "Azure Suite (Master Skill)",
+        "Reference Chapters"
+      ]
+    },
+    {
+      "skill_id": "UI_SUITE",
+      "filepath": "~/.codex/skills/ui-suite/SKILL.md",
+      "category": "Design",
+      "tags": [
+        "ui",
+        "design",
+        "component",
+        "styling",
+        "layout"
+      ],
+      "capability_phrases": [
+        "Unified User Interface & Experience Design Suite. Consolidates design systems, framework patterns, UX principles, component libraries, and visual verification.",
+        "UI Suite (Master Skill)",
+        "Reference Chapters"
+      ]
+    },
+    {
+      "skill_id": "GEMINI_CODEX_SKILL_SYNC",
+      "filepath": "~/.codex/skills/gemini-codex-skill-sync/SKILL.md",
+      "category": "Workflow",
+      "tags": [
+        "codex",
+        "gemini",
+        "mosa-sync",
+        "skills",
+        "registry",
+        "migration"
+      ],
+      "capability_phrases": [
+        "Convert Gemini Antigravity skills and registries into Codex-compatible skills, validate deployment, and evaluate shared-skill layouts for running Gemini and Codex from one source.",
+        "Gemini Codex Skill Sync",
+        "Goals"
+      ]
+    },
+    {
+      "skill_id": "HSWING_SETUP_EDGE_SYSTEM",
+      "filepath": "~/.codex/skills/hswing-setup-edge-system/SKILL.md",
+      "category": "Financial",
+      "tags": [
+        "hswing",
+        "setup-edge",
+        "trading",
+        "pinescript",
+        "python-screener",
+        "telegram-alerts",
+        "backtest"
+      ],
+      "capability_phrases": [
+        "\"Maintain the HS-SWING setup-edge system across Hswing.txt, Python screener, PineScript, backtests, automation, and Telegram alerts.\"",
+        "HS-SWING Setup Edge System",
+        "Trigger Phrases"
+      ]
+    },
+    {
+      "skill_id": "STATIC_CSV_MAP_APP_BUILDER",
+      "filepath": "~/.codex/skills/static-csv-map-app-builder/SKILL.md",
+      "category": "Frontend",
+      "tags": [
+        "csv",
+        "static-site",
+        "map",
+        "excel-bom",
+        "json-fallback",
+        "github-pages",
+        "netlify"
+      ],
+      "capability_phrases": [
+        "Build CSV-first static web apps that run without backend or login, load public CSV data in the browser, generate JSON fallback files, handle Windows Excel UTF-8 BOM issues, and deploy cleanly to GitHub Pages or Netlify. Use when creating or repairing static data-driven websites, civic maps, route guides, public directories, or spreadsheet-backed frontend demos.",
+        "Static CSV Map App Builder",
+        "Core Pattern"
+      ]
+    },
+    {
+      "skill_id": "LEAFLET_ROUTE_EXPLORER_UX",
+      "filepath": "~/.codex/skills/leaflet-route-explorer-ux/SKILL.md",
+      "category": "Frontend",
+      "tags": [
+        "leaflet",
+        "map-ux",
+        "route-graph",
+        "nearby",
+        "markers",
+        "travel",
+        "card-map-sync"
+      ],
+      "capability_phrases": [
+        "Design and implement interactive Leaflet route explorers where users choose a place, see nearby recommended places by distance and time suitability, click map icons or cards to switch focus, and avoid confusing auto-zoom or marker clutter. Use for travel guides, civic maps, route graphs, nearby-place discovery, bus-stop overlays, and card-map synchronization.",
+        "Leaflet Route Explorer UX",
+        "UX Goal"
+      ]
+    },
+    {
+      "skill_id": "PLAYWRIGHT",
+      "filepath": "~/.codex/skills/playwright/SKILL.md",
+      "category": "Tooling",
+      "tags": [
+        "browser-automation",
+        "playwright",
+        "cli",
+        "screenshots",
+        "ui-debugging"
+      ],
+      "capability_phrases": [
+        "\"Use when the task requires automating a real browser from the terminal (navigation, form filling, snapshots, screenshots, data extraction, UI-flow debugging) via `playwright-cli` or the bundled wrapper script.\"",
+        "Playwright CLI Skill",
+        "Prerequisite check (required)"
+      ]
+    },
+    {
+      "skill_id": "UTARIAN_MAGAZINE_CANVA",
+      "filepath": "~/.codex/skills/utarian-magazine-canva/SKILL.md",
+      "category": "content-production",
+      "tags": [
+        "utar",
+        "magazine",
+        "alumni",
+        "student-achievement",
+        "canva",
+        "editorial",
+        "story-flow"
+      ],
+      "capability_phrases": [
+        "\"Turn UTAR News links into a simple professional UTARian magazine story flow and Canva-ready review draft.\"",
+        "UTARian Magazine Canva",
+        "Purpose"
+      ]
+    }
+  ],
+  "collision_sample": []
+}

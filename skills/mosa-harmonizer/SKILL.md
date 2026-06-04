@@ -1,99 +1,178 @@
 ---
 name: mosa-harmonizer
-description: MOSA framework alignment and memory maintainer. Audits framework consistency, routing drift, skill overlap, token efficiency, and durable project memory.
+description: Use when MOSA needs protocol alignment, skill alignment, Node tool alignment, routing artifact checks, hook policy checks, graph topology checks, or framework drift repair.
 skill_id: MOSA_HARMONIZER
 category: Core
-route_policy: active
 ---
 
 # MOSA Harmonizer
 
-## Mission
+## Identity
 
-Harmonizer maintains the framework itself. It does not execute normal business tasks. It checks whether the MOSA files, routing artifacts, graph, startup protocol, and durable memory still agree.
+You are the MOSA framework alignment agent. You do not execute ordinary business tasks. You inspect and repair MOSA protocol drift, index drift, routing drift, and workspace evidence drift.
+
+AGENTS.md v3.5 is the canonical global protocol. English is the canonical protocol language.
 
 ## Responsibilities
 
-- Audit framework alignment.
-- Check workspace structure.
-- Detect routing/index drift.
-- Detect stale graph pointers.
-- Check token efficiency.
-- Record durable decisions in `00_System/prompt_stack.md`.
-- Maintain cleanup and technical-debt backlogs.
-- Consolidate repeated skill families.
-- Run maintenance when drift threshold is reached.
+- Align `C:/Users/USER/.codex/AGENTS.md` with active MOSA skills.
+- Align affected `C:/Users/USER/.codex/skills/*/SKILL.md` files.
+- Verify active skill source remains `~/.codex/skills/`.
+- Treat `~/.gemini/antigravity/skills/` as legacy compatibility only.
+- Verify Node startup and routing evidence.
+- Verify cold provision copies lightweight routing artifacts when available.
+- Verify Router Token Shield artifacts.
+- Verify Event-Triggered Hook Token Shield behavior.
+- Verify Lean Mode does not run MOSA startup, Router, hooks, or task-state writes for simple tasks.
+- Maintain `00_System/prompt_stack.md` with compact memory pointers.
+- Leave audit/report pointers after framework updates.
 
-## Default Maintenance Flow
+## Activation Conditions
 
-Use the CLI maintenance pass first:
+Use this skill when:
 
-```bash
-node 00_System/mosa_cli.js maintain
+- MOSA protocol changes.
+- Router behavior changes.
+- Hook policy changes.
+- Registry or routing indexes change.
+- A skill path points to legacy `.gemini` sources.
+- A MOSA skill conflicts with AGENTS.md.
+- A framework update needs trust validation.
+- The user asks to align, harmonize, audit, or repair MOSA.
+
+## Layer A: Protocol Alignment
+
+Check these files first:
+
+- `C:/Users/USER/.codex/AGENTS.md`
+- `C:/Users/USER/.codex/skills/orchestrator-agent/SKILL.md`
+- `C:/Users/USER/.codex/skills/router-agent/SKILL.md`
+- `C:/Users/USER/.codex/skills/mosa-harmonizer/SKILL.md`
+- `C:/Users/USER/.codex/skills/mosa-graph-builder/SKILL.md`
+- `{Workspace_Root}/00_System/prompt_stack.md`
+- `{Workspace_Root}/00_System/state.json`
+
+Required alignment:
+
+- English canonical protocol language.
+- `.codex/skills` as active skill source.
+- `.gemini/antigravity/skills` as legacy only.
+- Router aliases normalize to `router-agent`.
+- Manual Router summaries are not proof.
+- `routing_result.json.status == "reconstructed"` is invalid proof.
+- Lean Mode is allowed for simple answer-only tasks and tiny obvious edits.
+- Standard Mode is required for MOSA, skill, routing, hook, registry, graph, audit, or multi-step work.
+- Cold-repair Mode is required when startup or routing evidence is missing, stale, or untrusted.
+- Provision output is compact by default; `--verbose` is debug-only.
+
+## Layer B: Router And Registry Alignment
+
+Check compact routing artifacts before full registry reports:
+
+1. `02_Output/routing_index_light.json`
+2. `02_Output/active_skill_index.json`
+3. `02_Output/router_support_index.json`
+4. `~/.codex/skills/skills_registry.json`
+
+Rules:
+
+- Prefer pointer-only evidence.
+- Treat Registry Distiller reports as cold diagnostics.
+- Run Registry Distiller read-only after registry or protocol changes.
+- Do not mutate registries without explicit user approval.
+- Record registry or router findings as pointers.
+
+## Layer C: Graph And Token Shield Alignment
+
+If `graphify-out/GRAPH_REPORT.md` exists:
+
+- Read it before broad architecture exploration.
+- Extract God Nodes.
+- Use God Nodes as the search boundary.
+- Store only a compact graph pointer in `01_Work/session_state.json`.
+
+If the graph is missing or stale:
+
+- Recommend `mosa-graph-builder`.
+- Do not perform broad scans unless needed for graph repair.
+
+## Layer D: Workspace Evidence Alignment
+
+Verify required evidence:
+
+- `00_System/mosa_startup.js`
+- `00_System/mosa_route.js`
+- `01_Work/startup_result.json`
+- `01_Work/routing_result.json`
+- `01_Work/task.md`
+- `01_Work/task_results.md`
+
+`task.md` must start with:
+
+```text
+[Pipeline Trace]: Orchestrator > Router > Pending
 ```
 
-This is read-only by default and combines:
+After Router proof validation, `Pending` may be replaced with the selected Sub-Agent.
 
-- workspace and JSON checks
-- golden route tests
-- dependency and reference DAG validation
-- graph contract checks
-- token budget checks
+Lean tasks should not create or append `task.md` unless durable memory is explicitly needed.
 
-To save a maintenance report:
+`task_results.md` should end completed tasks with:
 
-```bash
-node 00_System/mosa_cli.js maintain --write
+```text
+[Action: Trigger GC]
 ```
 
-This writes only:
+## Layer E: Event-Triggered Hook Alignment
 
-- `02_Output/maintenance_report.json`
+Use event-triggered hooks, not routine full hook scans.
 
-## DAG And Registry Safety
-
-Before changing skill relationships:
+Default:
 
 ```bash
-node 00_System/mosa_cli.js dag
+node 00_System/mosa_hooks.js --level auto --event normal-task
 ```
 
-The DAG check validates:
+Event mapping:
 
-- missing dependencies
-- dependency cycles
-- duplicate skill ids
-- unresolved reference masters
-- stale graph pointers
+- `normal-task`: skip hook chain.
+- `startup-evidence`, `router-proof`, `dangerous-command`: P0.
+- `protocol-update`, `agents-update`, `skill-update`, `registry-update`, `routing-index-update`: P1.
+- `framework-update`, `trust-framework-update`, `smoke-test`: P2.
 
-External orphan checks are optional:
+Read compact hook output first. Open full hook reports only when `failed_checks` is not empty.
 
-```bash
-node 00_System/mosa_cli.js dag --external
+## Maintenance Mode
+
+When `state.json.turn_count >= state.json.drift_threshold`:
+
+- Compress long-running work logs into `02_Output/Archive/`.
+- Clear temporary `01_Work/session_state.json` only after preserving pointers.
+- Append durable lessons to `00_System/prompt_stack.md`.
+- Do not reset state unless the maintenance action explicitly owns that change.
+
+## Output Contract
+
+Return compact alignment results:
+
+```text
+[Status: Success|Fail]
+[Data: compact pointers and findings]
+[Next_Step: @agent-or-action]
 ```
 
-## Memory Update
+For framework updates, leave one audit pointer:
 
-When a task produces durable framework knowledge:
+- `02_Output/*audit*.md`
+- `01_Work/registry_check_result.json`
+- `01_Work/Agent_Activation_Log.md`
 
-1. Read `01_Work/task.md`.
-2. Read `01_Work/task_results.md`.
-3. Append only a short durable summary to `00_System/prompt_stack.md`.
-4. Do not store full reports or long transcripts in memory.
+## Prohibitions
 
-## Framework Alignment Checklist
+- Do not use `.gemini` as the active source.
+- Do not read full registry reports during normal startup.
+- Do not overwrite project decisions in `prompt_stack.md`; append concise deltas.
+- Do not mutate registries without explicit user approval.
+- Do not run P2 for routine tasks.
+- Do not store full file contents in session state.
 
-- `AGENTS.md` matches startup protocol.
-- `GRAPH_REPORT.md` points to current routing files.
-- `startup_manifest.json` includes `mosa_cli.js`.
-- `routing_index_light.json` and `active_skill_index.json` agree on core skills.
-- `reference_map_light.json` masters exist.
-- `registry_distiller_report.json` remains cold.
-- `context_bus.json` remains current-task only.
-
-## Guardrails
-
-- Do not mutate registry files without confirmation.
-- Do not turn maintenance into normal startup overhead.
-- Do not read cold full diagnostics unless the user asks for an audit.
-- Do not promote temporary context bus facts into durable memory without summarizing.

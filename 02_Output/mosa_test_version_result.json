@@ -1,0 +1,88 @@
+{
+  "generated_at": "2026-06-02T08:25:11.767Z",
+  "status": "pass",
+  "passed": 13,
+  "total": 13,
+  "startup": {
+    "status": "ok",
+    "turn_count": 4,
+    "estimated_hot_tokens": 5769
+  },
+  "top_skill": {
+    "skill_id": "GEMINI_CODEX_SKILL_SYNC",
+    "confidence": 0.99,
+    "category": "Workflow",
+    "resolved_path": "C:\\Users\\USER\\.codex\\skills\\gemini-codex-skill-sync\\SKILL.md",
+    "match_reasons": [
+      "tag-partial:mosa",
+      "metadata:mosa",
+      "skill_id:codex",
+      "tag:codex",
+      "metadata:codex"
+    ]
+  },
+  "registry": {
+    "registered": 212,
+    "legacy": 0,
+    "codex": 212
+  },
+  "distiller": {
+    "missing_files": 0,
+    "collisions": 0,
+    "orphans": 0
+  },
+  "assertions": [
+    {
+      "name": "startup status ok",
+      "pass": true
+    },
+    {
+      "name": "startup workspace root correct",
+      "pass": true
+    },
+    {
+      "name": "startup result file exists",
+      "pass": true
+    },
+    {
+      "name": "routing status success",
+      "pass": true
+    },
+    {
+      "name": "routing proof not reconstructed",
+      "pass": true
+    },
+    {
+      "name": "routing resolved path uses .codex",
+      "pass": true
+    },
+    {
+      "name": "routing result file exists",
+      "pass": true
+    },
+    {
+      "name": "registry has 212 entries",
+      "pass": true
+    },
+    {
+      "name": "registry legacy paths zero",
+      "pass": true
+    },
+    {
+      "name": "registry codex paths 212",
+      "pass": true
+    },
+    {
+      "name": "distiller missing files zero",
+      "pass": true
+    },
+    {
+      "name": "distiller collisions zero",
+      "pass": true
+    },
+    {
+      "name": "distiller orphans zero",
+      "pass": true
+    }
+  ]
+}

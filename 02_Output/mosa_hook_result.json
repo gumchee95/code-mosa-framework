@@ -1,0 +1,88 @@
+{
+  "generated_at": "2026-06-04T10:14:19.703Z",
+  "workspace_root": "C:\\Users\\USER\\Documents\\MosaFramework",
+  "requested_level": "auto",
+  "effective_level": "p2",
+  "event": "framework-update",
+  "status": "pass",
+  "passed": 16,
+  "total": 16,
+  "failed_checks": [],
+  "report_pointer": "02_Output/mosa_hook_result.json",
+  "checks": [
+    {
+      "name": "smoke command: node 00_System\\mosa_startup.js --intent MOSA P2 smoke test",
+      "stdout": "{\n  \"status\": \"ok\",\n  \"generated_at\": \"2026-06-04T10:14:19.310Z\",\n  \"workspace_root\": \"C:\\\\Users\\\\USER\\\\Documents\\\\MosaFramework\",\n  \"mode\": \"startup\",\n  \"intent\": \"MOSA P2 smoke test\",\n  \"atomic_keywords\": [\n    \"mosa\",\n    \"p2\",\n    \"smoke\",\n    \"test\"\n  ],\n  \"turn_count\": 19,\n  \"drift_threshold\": 20,\n  \"drift_check\": \"ok\",\n  \"graph_available\": false,\n  \"hot_artifacts\": {\n    \"startup_manifest\": {\n      \"path\": \"02_Output/startup_manifest.json\",\n      \"exists\": true,\n      \"bytes\": 2044\n    },",
+      "status": "pass"
+    },
+    {
+      "name": "smoke command: node 00_System\\mosa_route.js --domain workflow --capability MOSA P2 smoke test --keywords mosa,codex,skills,router,registry,hook --intent MOSA P2 smoke test",
+      "stdout": "{\n  \"schema_version\": \"mosa.routing_result.v1\",\n  \"status\": \"success\",\n  \"created_at\": \"2026-06-04T10:14:19.493Z\",\n  \"generated_at\": \"2026-06-04T10:14:19.493Z\",\n  \"source\": \"mosa_route.js\",\n  \"engine_source\": \"routing_index_light\",\n  \"intent_hash\": \"b2de827ed9e3e1ffb7ed7344900b37ccd3c96a26\",\n  \"input\": {\n    \"intent_summary\": \"MOSA P2 smoke test\",\n    \"atomic_keywords\": [\n      \"mosa\",\n      \"codex\",\n      \"skills\",\n      \"router\",\n      \"registry\",\n      \"hook\"\n    ],\n    \"preferred_domain\": \"w",
+      "status": "pass"
+    },
+    {
+      "name": "smoke command: node ..\\..\\.codex\\skills\\base-distiller\\scripts\\distill_logic.js",
+      "stdout": "{\n  \"status\": \"success\",\n  \"mode\": \"read-only\",\n  \"report_json\": \"C:\\\\Users\\\\USER\\\\Documents\\\\MosaFramework\\\\02_Output\\\\registry_distiller_report.json\",\n  \"report_markdown\": \"C:\\\\Users\\\\USER\\\\Documents\\\\MosaFramework\\\\02_Output\\\\registry_distiller_report.md\",\n  \"router_support_light\": \"C:\\\\Users\\\\USER\\\\Documents\\\\MosaFramework\\\\02_Output\\\\router_support_light.json\",\n  \"router_support_index\": \"C:\\\\Users\\\\USER\\\\Documents\\\\MosaFramework\\\\02_Output\\\\router_support_index.json\",\n  \"active_skill_index\"",
+      "status": "pass"
+    },
+    {
+      "name": "startup tool exists",
+      "status": "pass"
+    },
+    {
+      "name": "router tool exists",
+      "status": "pass"
+    },
+    {
+      "name": "startup result exists",
+      "status": "pass"
+    },
+    {
+      "name": "routing result exists",
+      "status": "pass"
+    },
+    {
+      "name": "startup status ok",
+      "value": "ok",
+      "status": "pass"
+    },
+    {
+      "name": "startup workspace root",
+      "status": "pass"
+    },
+    {
+      "name": "routing status success",
+      "value": "success",
+      "status": "pass"
+    },
+    {
+      "name": "routing not reconstructed",
+      "status": "pass"
+    },
+    {
+      "name": "routing uses codex skills",
+      "status": "pass"
+    },
+    {
+      "name": "registry legacy paths zero",
+      "legacyPaths": 0,
+      "status": "pass"
+    },
+    {
+      "name": "registry missing files zero",
+      "missing": 0,
+      "status": "pass"
+    },
+    {
+      "name": "registry codex paths present",
+      "codexPaths": 427,
+      "entries": 427,
+      "status": "pass"
+    },
+    {
+      "name": "core workflow encoding clean",
+      "status": "pass"
+    }
+  ],
+  "level": "p2"
+}

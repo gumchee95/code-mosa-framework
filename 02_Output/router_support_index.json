@@ -1,8 +1,7 @@
 {
-  "generated_at": "2026-06-04T10:14:19.626Z",
+  "generated_at": "2026-06-04T10:14:19.634Z",
   "summary": {
-    "active_skills": 182,
-    "total_registered": 216,
+    "registered": 216,
     "missing_files": 0,
     "collisions": 0,
     "orphans": 0
@@ -550,6 +549,12 @@
       ]
     },
     {
+      "skill_id": "WF_AGENT_OS_SETUP",
+      "filepath": "~/.codex/skills/agent-os-setup/SKILL.md",
+      "category": "Archived",
+      "tags": []
+    },
+    {
       "skill_id": "BOOTSTRAP_AGENT",
       "filepath": "~/.codex/skills/bootstrap-agent/SKILL.md",
       "category": "Workflow",
@@ -557,6 +562,12 @@
         "bootstrap",
         "initialization"
       ]
+    },
+    {
+      "skill_id": "WF_PROJECT_LAUNCH",
+      "filepath": "~/.codex/skills/project-launch/SKILL.md",
+      "category": "Archived",
+      "tags": []
     },
     {
       "skill_id": "WF_SIMPLE_TASK",
@@ -573,6 +584,18 @@
       "tags": [
         "workflow"
       ]
+    },
+    {
+      "skill_id": "WF_PLACEMENT_DRIVE",
+      "filepath": "~/.codex/skills/run-placement-drive/SKILL.md",
+      "category": "Archived",
+      "tags": []
+    },
+    {
+      "skill_id": "WF_PDF_TO_EXCEL",
+      "filepath": "~/.codex/skills/pdf-to-excel-export/SKILL.md",
+      "category": "Archived",
+      "tags": []
     },
     {
       "skill_id": "IMAGE_THUMBNAIL_GENERATOR",
@@ -640,6 +663,23 @@
       ]
     },
     {
+      "skill_id": "AGENT_ORCHESTRATION_IMPROVE_AGENT",
+      "filepath": "~/.codex/skills/agent-orchestration-improve-agent/SKILL.md",
+      "category": "Utility",
+      "tags": [
+        "improve"
+      ]
+    },
+    {
+      "skill_id": "AGENT_ORCHESTRATION_MULTI_AGENT_OPTIMIZE",
+      "filepath": "~/.codex/skills/agent-orchestration-multi-agent-optimize/SKILL.md",
+      "category": "Utility",
+      "tags": [
+        "multi",
+        "optimize"
+      ]
+    },
+    {
       "skill_id": "AGENT_OS_SETUP",
       "filepath": "~/.codex/skills/agent-os-setup/SKILL.md",
       "category": "Workflow",
@@ -673,17 +713,13 @@
         "multi-agent-architecture",
         "langgraph",
         "langchain"
-      ],
-      "route_policy": "specialized",
-      "mosa_reference_target": "ORCHESTRATOR_AGENT",
-      "exact_triggers": [
-        "agent architecture",
-        "ai agent architecture",
-        "multi agent architecture",
-        "langgraph",
-        "langchain",
-        "agent system design"
       ]
+    },
+    {
+      "skill_id": "AI_SEO",
+      "filepath": "~/.codex/skills/ai-seo/SKILL.md",
+      "category": "Archived",
+      "tags": []
     },
     {
       "skill_id": "AKF_TRUST_METADATA",
@@ -749,6 +785,12 @@
       ]
     },
     {
+      "skill_id": "AUTONOMOUS_AGENTS",
+      "filepath": "~/.codex/skills/autonomous-agents/SKILL.md",
+      "category": "Archived",
+      "tags": []
+    },
+    {
       "skill_id": "BACKEND_DEV_GUIDELINES",
       "filepath": "~/.codex/skills/backend-dev-guidelines/SKILL.md",
       "category": "Design",
@@ -782,6 +824,18 @@
         "writing",
         "guide"
       ]
+    },
+    {
+      "skill_id": "BRAND_GUIDELINES_ANTHROPIC",
+      "filepath": "~/.codex/skills/brand-guidelines-anthropic/SKILL.md",
+      "category": "Archived",
+      "tags": []
+    },
+    {
+      "skill_id": "BRAND_GUIDELINES_COMMUNITY",
+      "filepath": "~/.codex/skills/brand-guidelines-community/SKILL.md",
+      "category": "Archived",
+      "tags": []
     },
     {
       "skill_id": "BROWSER_EXTENSION_BUILDER",
@@ -859,15 +913,6 @@
         "cua",
         "operator",
         "screen-control"
-      ],
-      "route_policy": "specialized",
-      "exact_triggers": [
-        "computer use",
-        "cua",
-        "operator",
-        "screen control",
-        "click agent",
-        "vision control"
       ]
     },
     {
@@ -894,6 +939,24 @@
         "crypto",
         "bd"
       ]
+    },
+    {
+      "skill_id": "DATA_ENGINEER",
+      "filepath": "~/.codex/skills/data-engineer/SKILL.md",
+      "category": "Archived",
+      "tags": []
+    },
+    {
+      "skill_id": "DATA_ENGINEERING_DATA_DRIVEN_FEATURE",
+      "filepath": "~/.codex/skills/data-engineering-data-driven-feature/SKILL.md",
+      "category": "Archived",
+      "tags": []
+    },
+    {
+      "skill_id": "DATA_ENGINEERING_DATA_PIPELINE",
+      "filepath": "~/.codex/skills/data-engineering-data-pipeline/SKILL.md",
+      "category": "Archived",
+      "tags": []
     },
     {
       "skill_id": "DATA_QUALITY_FRAMEWORKS",
@@ -967,6 +1030,14 @@
       ]
     },
     {
+      "skill_id": "DESIGN_ORCHESTRATION",
+      "filepath": "~/.codex/skills/design-orchestration/SKILL.md",
+      "category": "Design",
+      "tags": [
+        "orchestration"
+      ]
+    },
+    {
       "skill_id": "DESIGN_SPELLS",
       "filepath": "~/.codex/skills/design-spells/SKILL.md",
       "category": "Design",
@@ -980,6 +1051,14 @@
       "category": "Design",
       "tags": [
         "frontend"
+      ]
+    },
+    {
+      "skill_id": "DISPATCHING_PARALLEL_AGENTS",
+      "filepath": "~/.codex/skills/dispatching-parallel-agents/SKILL.md",
+      "category": "Utility",
+      "tags": [
+        "dispatching"
       ]
     },
     {
@@ -1136,16 +1215,21 @@
         "remote-agent",
         "sandbox",
         "hosted-infrastructure"
-      ],
-      "route_policy": "specialized",
-      "exact_triggers": [
-        "hosted agents",
-        "remote agent",
-        "sandboxed agents",
-        "background coding agents",
-        "azure hosted agents",
-        "agent sandbox"
       ]
+    },
+    {
+      "skill_id": "HOSTED_AGENTS_V2_PY",
+      "filepath": "~/.codex/skills/hosted-agents-v2-py/SKILL.md",
+      "category": "Utility",
+      "tags": [
+        "v2"
+      ]
+    },
+    {
+      "skill_id": "HUGGING_FACE_DATASET_VIEWER",
+      "filepath": "~/.codex/skills/hugging-face-dataset-viewer/SKILL.md",
+      "category": "Archived",
+      "tags": []
     },
     {
       "skill_id": "HUGGING_FACE_DATASETS",
@@ -1157,6 +1241,12 @@
         "dataset-viewer",
         "model-hub"
       ]
+    },
+    {
+      "skill_id": "HUGGING_FACE_TOOL_BUILDER",
+      "filepath": "~/.codex/skills/hugging-face-tool-builder/SKILL.md",
+      "category": "Archived",
+      "tags": []
     },
     {
       "skill_id": "IOS_DEBUGGER_AGENT",
@@ -1242,6 +1332,12 @@
       ]
     },
     {
+      "skill_id": "LOCAL_LEGAL_SEO_AUDIT",
+      "filepath": "~/.codex/skills/local-legal-seo-audit/SKILL.md",
+      "category": "Archived",
+      "tags": []
+    },
+    {
       "skill_id": "LOSS_AVERSION_DESIGNER",
       "filepath": "~/.codex/skills/loss-aversion-designer/SKILL.md",
       "category": "Design",
@@ -1257,6 +1353,18 @@
       "tags": [
         "m365"
       ]
+    },
+    {
+      "skill_id": "M365_AGENTS_PY",
+      "filepath": "~/.codex/skills/m365-agents-py/SKILL.md",
+      "category": "Archived",
+      "tags": []
+    },
+    {
+      "skill_id": "M365_AGENTS_TS",
+      "filepath": "~/.codex/skills/m365-agents-ts/SKILL.md",
+      "category": "Archived",
+      "tags": []
     },
     {
       "skill_id": "MACOS_MENUBAR_TUIST_APP",
@@ -1286,11 +1394,41 @@
       ]
     },
     {
+      "skill_id": "MCP_BUILDER_MS",
+      "filepath": "~/.codex/skills/mcp-builder-ms/SKILL.md",
+      "category": "Archived",
+      "tags": []
+    },
+    {
       "skill_id": "MOBILE_DESIGN",
       "filepath": "~/.codex/skills/mobile-design/SKILL.md",
       "category": "Design",
       "tags": [
         "mobile"
+      ]
+    },
+    {
+      "skill_id": "MULTI_AGENT_ARCHITECT",
+      "filepath": "~/.codex/skills/multi-agent-architect/SKILL.md",
+      "category": "Utility",
+      "tags": [
+        "architect"
+      ]
+    },
+    {
+      "skill_id": "MULTI_AGENT_BRAINSTORMING",
+      "filepath": "~/.codex/skills/multi-agent-brainstorming/SKILL.md",
+      "category": "Utility",
+      "tags": [
+        "multi-agent-brainstorm"
+      ]
+    },
+    {
+      "skill_id": "MULTI_AGENT_PATTERNS",
+      "filepath": "~/.codex/skills/multi-agent-patterns/SKILL.md",
+      "category": "Utility",
+      "tags": [
+        "patterns"
       ]
     },
     {
@@ -1339,17 +1477,6 @@
         "parallel",
         "parallel-dispatch",
         "independent-tasks"
-      ],
-      "route_policy": "specialized",
-      "mosa_reference_target": "ORCHESTRATOR_AGENT",
-      "exact_triggers": [
-        "parallel agents",
-        "parallel dispatch",
-        "dispatching parallel agents",
-        "one agent per problem domain",
-        "independent failures",
-        "parallel task dispatch",
-        "mosa parallel task dispatch"
       ]
     },
     {
@@ -1430,6 +1557,12 @@
       ]
     },
     {
+      "skill_id": "PROGRAMMATIC_SEO",
+      "filepath": "~/.codex/skills/programmatic-seo/SKILL.md",
+      "category": "Archived",
+      "tags": []
+    },
+    {
       "skill_id": "PROJECT_LAUNCH",
       "filepath": "~/.codex/skills/project-launch/SKILL.md",
       "category": "Workflow",
@@ -1504,6 +1637,12 @@
       ]
     },
     {
+      "skill_id": "SEO",
+      "filepath": "~/.codex/skills/seo/SKILL.md",
+      "category": "Archived",
+      "tags": []
+    },
+    {
       "skill_id": "SIMPLE_WORKFLOW",
       "filepath": "~/.codex/skills/simple-workflow/SKILL.md",
       "category": "Workflow",
@@ -1518,6 +1657,12 @@
       "tags": [
         "slack"
       ]
+    },
+    {
+      "skill_id": "SOCIAL_POST_WRITER_SEO",
+      "filepath": "~/.codex/skills/social-post-writer-seo/SKILL.md",
+      "category": "Archived",
+      "tags": []
     },
     {
       "skill_id": "SQLMAP_DATABASE_PENTESTING",
@@ -1596,6 +1741,12 @@
       ]
     },
     {
+      "skill_id": "TAILWIND_PATTERNS",
+      "filepath": "~/.codex/skills/tailwind-patterns/SKILL.md",
+      "category": "Archived",
+      "tags": []
+    },
+    {
       "skill_id": "TELEGRAM_BOT_BUILDER",
       "filepath": "~/.codex/skills/telegram-bot-builder/SKILL.md",
       "category": "Design",
@@ -1630,6 +1781,36 @@
       ]
     },
     {
+      "skill_id": "UX_AUDIT",
+      "filepath": "~/.codex/skills/ux-audit/SKILL.md",
+      "category": "Archived",
+      "tags": []
+    },
+    {
+      "skill_id": "UX_COPY",
+      "filepath": "~/.codex/skills/ux-copy/SKILL.md",
+      "category": "Archived",
+      "tags": []
+    },
+    {
+      "skill_id": "UX_FEEDBACK",
+      "filepath": "~/.codex/skills/ux-feedback/SKILL.md",
+      "category": "Archived",
+      "tags": []
+    },
+    {
+      "skill_id": "UX_FLOW",
+      "filepath": "~/.codex/skills/ux-flow/SKILL.md",
+      "category": "Archived",
+      "tags": []
+    },
+    {
+      "skill_id": "UX_PERSUASION_ENGINEER",
+      "filepath": "~/.codex/skills/ux-persuasion-engineer/SKILL.md",
+      "category": "Archived",
+      "tags": []
+    },
+    {
       "skill_id": "VECTOR_DATABASE_ENGINEER",
       "filepath": "~/.codex/skills/vector-database-engineer/SKILL.md",
       "category": "Tech",
@@ -1657,16 +1838,6 @@
         "stt",
         "tts",
         "vad"
-      ],
-      "route_policy": "specialized",
-      "exact_triggers": [
-        "voice",
-        "voice agents",
-        "realtime",
-        "stt",
-        "tts",
-        "vad",
-        "speech to speech"
       ]
     },
     {
