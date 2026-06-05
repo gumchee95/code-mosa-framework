@@ -40,13 +40,21 @@ node 00_System/mosa_cli.js start --mode standard --intent "<user intent>" --writ
 - `01_Work/context_bus.json`
 
 4. Atomize the user intent and write `01_Work/task.md` when durable planning is needed.
-5. For cross-skill work, generate a Dynamic Capability DAG:
+5. For broad or underspecified work, run an Orchestrator clarification gate before DAG dispatch:
+
+- Identify the likely deliverable domain, such as event, website, dashboard, report, automation, or research.
+- Extract known constraints, missing assumptions, success criteria, and likely output artifacts.
+- Ask concise clarifying questions when missing information would materially change the route.
+- If the user asks for planning help and details are missing, include a `clarification` DAG node instead of forcing Router to guess.
+- Router must receive the clarified Intent Profile or the generated DAG hints. Router must not perform this analysis itself.
+
+6. For cross-skill work, generate a Dynamic Capability DAG:
 
 ```bash
 node 00_System/mosa_cli.js plan --intent "<user intent>" --write
 ```
 
-6. Route:
+7. Route:
 
 ```bash
 node 00_System/mosa_cli.js route --intent "<user intent>"
@@ -58,9 +66,9 @@ or:
 node 00_System/mosa_cli.js route --intent "<user intent>" --workflow-plan 01_Work/workflow_plan.json
 ```
 
-7. Validate `01_Work/routing_result.json`.
-8. Load only the selected execution skill.
-9. Write compact result pointers to `01_Work/task_results.md`.
+8. Validate `01_Work/routing_result.json`.
+9. Load only the selected execution skill.
+10. Write compact result pointers to `01_Work/task_results.md`.
 
 ## Cold Repair
 
@@ -106,6 +114,8 @@ If `graphify-out/GRAPH_REPORT.md` exists, read it before broad architecture expl
 - `missing_skills`
 
 The DAG is a routing aid. It must not be a rigid workflow template.
+
+For complex domains, the first DAG node may be `clarification`. This node belongs to Orchestrator and may contain concise questions. It exists to prevent premature skill selection when the task needs missing constraints, not to make Router ask questions.
 
 ## Router Proof Guard
 

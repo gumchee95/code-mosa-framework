@@ -170,8 +170,52 @@ function runSearch(scriptPath, workspaceRoot, intent) {
   return JSON.parse(raw);
 }
 
+function loadRoutingIndex(workspaceRoot) {
+  const index = readJson(path.join(workspaceRoot, '02_Output/routing_index_light.json'), null);
+  return Array.isArray(index?.skills) ? index.skills : [];
+}
+
+function skillIdToPath(skillId) {
+  const folder = String(skillId || '').toLowerCase().replace(/_/g, '-');
+  return path.join(os.homedir(), '.codex', 'skills', folder, 'SKILL.md');
+}
+
+function applyWorkflowPreferredBoost(routed, preferredSkillIds = [], indexSkills = []) {
+  const preferred = new Set((preferredSkillIds || []).map(skillId => String(skillId || '').toUpperCase()));
+  if (!preferred.size || !Array.isArray(routed?.results)) return routed;
+  const existing = new Set(routed.results.map(skill => String(skill.skill_id || '').toUpperCase()));
+  const injected = indexSkills
+    .filter(skill => preferred.has(String(skill.skill_id || '').toUpperCase()) && !existing.has(String(skill.skill_id || '').toUpperCase()))
+    .map(skill => ({
+      ...skill,
+      confidence: 0.8,
+      confidence_tier: 'strong',
+      resolved_path: skillIdToPath(skill.skill_id),
+      match_reasons: ['workflow-preferred-skill']
+    }))
+    .filter(skill => fs.existsSync(skill.resolved_path));
+  return {
+    ...routed,
+    results: [...routed.results, ...injected]
+      .map(skill => {
+        const skillId = String(skill.skill_id || '').toUpperCase();
+        if (!preferred.has(skillId)) return skill;
+        const matchReasons = Array.from(new Set(['workflow-preferred-skill', ...(skill.match_reasons || [])]));
+        const confidence = Math.min(0.99, Math.max(skill.confidence || 0, 0.8));
+        return {
+          ...skill,
+          confidence,
+          confidence_tier: confidenceTier(confidence),
+          match_reasons: matchReasons
+        };
+      })
+      .sort((a, b) => (b.confidence || 0) - (a.confidence || 0))
+  };
+}
+
 function routeDag(scriptPath, workspaceRoot, baseIntent, workflowPlan) {
   if (!workflowPlan?.matches_intent || !Array.isArray(workflowPlan.plan.router_hints)) return [];
+  const indexSkills = loadRoutingIndex(workspaceRoot);
   return workflowPlan.plan.router_hints.map(hint => {
     const nodeIntent = {
       intent_summary: `${hint.node_id}: ${hint.required_capability || ''}`,
@@ -181,7 +225,7 @@ function routeDag(scriptPath, workspaceRoot, baseIntent, workflowPlan) {
       exclusions: baseIntent.exclusions || [],
       preferred_skill_ids: hint.preferred_skill_ids || []
     };
-    const routed = runSearch(scriptPath, workspaceRoot, nodeIntent);
+    const routed = applyWorkflowPreferredBoost(runSearch(scriptPath, workspaceRoot, nodeIntent), hint.preferred_skill_ids || [], indexSkills);
     const route = buildRouteFromRouted(routed, {
       node_id: hint.node_id,
       capability: hint.required_capability || hint.node_id

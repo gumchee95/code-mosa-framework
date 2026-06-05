@@ -35,6 +35,53 @@ const CAPABILITY_TAXONOMY = [
   suggested_skill_id: suggestedSkillId
 }));
 
+const DOMAIN_RULES = [
+  {
+    id: 'event',
+    label: 'Event / Gathering',
+    triggers: ['event', 'dinner', 'alumni', 'gathering', 'rsvp', 'venue', 'catering', '聚餐', '校友', '活动', '活動', '报名', '報名', '场地', '場地'],
+    questions: [
+      'Who is the target attendee group and expected headcount?',
+      'Which city/country, date range, and timezone should the event use?',
+      'What budget range, payment model, and sponsorship assumptions are allowed?',
+      'What RSVP channel and attendee tracking format should be used?',
+      'What tone should invitations and follow-up messages use?'
+    ],
+    capabilities: [
+      ['clarification', 'Orchestrator Clarification', 'Clarify missing event assumptions before routing execution work', ['ORCHESTRATOR_AGENT', 'PROJECT_PLANNER'], 'planning-clarifier-agent'],
+      ['goal_scope', 'Goal And Scope', 'Define event objective, attendee persona, constraints, success criteria, and decision owner', ['ORCHESTRATOR_AGENT', 'PROJECT_PLANNER', 'PROJECT_MANAGEMENT_CORE'], 'event-strategy-agent'],
+      ['budget_model', 'Budget Model', 'Estimate venue, food, deposits, ticketing, sponsorship, contingency, and approval thresholds', ['ADMIN_AGENT', 'PROJECT_MANAGEMENT_CORE', 'STRATEGIC_FINANCE'], 'event-budget-agent'],
+      ['venue_catering', 'Venue And Catering', 'Shortlist venue/catering requirements, dietary constraints, location fit, and booking dependencies', ['ADMIN_AGENT', 'PROJECT_MANAGEMENT_CORE'], 'venue-catering-agent'],
+      ['registration_rsvp', 'Registration And RSVP', 'Design RSVP capture, attendee list, reminders, capacity tracking, and check-in source of truth', ['GOOGLE_AGENT', 'XLSX', 'ADMIN_AGENT'], 'rsvp-registration-agent'],
+      ['promotion_invitation', 'Promotion And Invitation', 'Prepare invitation copy, alumni outreach, reminders, and announcement cadence', ['INTERNAL_COMMS', 'DESIGN_AGENT', 'GOOGLE_AGENT'], 'alumni-outreach-agent'],
+      ['agenda_program', 'Agenda And Program', 'Create dinner agenda, host script, welcome remarks, seating logic, and networking moments', ['PROJECT_PLANNER', 'INTERNAL_COMMS', 'ADMIN_AGENT'], 'event-program-agent'],
+      ['onsite_operations', 'Onsite Operations', 'Plan run-of-show, check-in, signage, payment handling, vendor timing, and escalation ownership', ['ADMIN_AGENT', 'PROJECT_MANAGEMENT_CORE'], 'onsite-ops-agent'],
+      ['risk_control', 'Risk And Compliance', 'Check cancellation risk, deposits, safety, dietary/allergy handling, privacy, and payment records', ['AUDIT_AGENT', 'COMPLIANCE_FRAMEWORK', 'ADMIN_AGENT'], 'event-risk-agent'],
+      ['follow_up', 'Follow Up And Retention', 'Prepare thank-you notes, photos/recap, feedback form, finance reconciliation, and next-event leads', ['INTERNAL_COMMS', 'GOOGLE_AGENT', 'REPORT_GENERATOR'], 'event-follow-up-agent'],
+      ['review', 'Delivery Review', 'Verify deliverables, unresolved assumptions, missing skills, and final handoff readiness', ['AUDIT_AGENT', 'PROJECT_MANAGEMENT_CORE'], 'delivery-qa-agent']
+    ],
+    edges: [
+      ['clarification', 'goal_scope'],
+      ['goal_scope', 'budget_model'],
+      ['goal_scope', 'venue_catering'],
+      ['goal_scope', 'registration_rsvp'],
+      ['goal_scope', 'promotion_invitation'],
+      ['goal_scope', 'agenda_program'],
+      ['goal_scope', 'risk_control'],
+      ['budget_model', 'venue_catering'],
+      ['budget_model', 'registration_rsvp'],
+      ['venue_catering', 'onsite_operations'],
+      ['registration_rsvp', 'onsite_operations'],
+      ['promotion_invitation', 'onsite_operations'],
+      ['agenda_program', 'onsite_operations'],
+      ['risk_control', 'onsite_operations'],
+      ['onsite_operations', 'follow_up'],
+      ['follow_up', 'review']
+    ],
+    parallelGroups: [['venue_catering', 'registration_rsvp', 'promotion_invitation', 'agenda_program']]
+  }
+];
+
 function findWorkspaceRoot(startDir = process.cwd()) {
   let current = path.resolve(startDir);
   const root = path.parse(current).root;
@@ -206,6 +253,36 @@ function inferCapabilities(intent) {
   return order.map(id => selected.get(id)).filter(Boolean);
 }
 
+function domainScore(rule, intentText, intentWords) {
+  return rule.triggers.reduce((sum, trigger) => {
+    const value = String(trigger).toLowerCase();
+    const hit = /[^\x00-\x7F]/.test(value) ? intentText.includes(value) : intentWords.has(value) || intentText.includes(value);
+    return hit ? sum + 1 : sum;
+  }, 0);
+}
+
+function detectDomain(intent) {
+  const text = String(intent || '').toLowerCase();
+  const words = new Set(tokenize(text));
+  const matches = DOMAIN_RULES
+    .map(rule => ({ ...rule, score: domainScore(rule, text, words) }))
+    .filter(rule => rule.score > 0)
+    .sort((a, b) => b.score - a.score);
+  return matches[0] || null;
+}
+
+function buildDomainCapabilities(domainRule) {
+  return domainRule.capabilities.map(([id, label, requiredCapability, preferredSkillIds, suggestedSkillId]) => ({
+    id,
+    label,
+    triggers: [],
+    required_capability: requiredCapability,
+    preferred_skill_ids: preferredSkillIds,
+    suggested_skill_id: suggestedSkillId,
+    domain: domainRule.id
+  }));
+}
+
 function skillById(skills) {
   return new Map((skills || []).map(skill => [String(skill.skill_id || '').toUpperCase(), skill]));
 }
@@ -223,7 +300,9 @@ function buildNodes(capabilities, skills) {
       label: capability.label,
       capability: capability.required_capability,
       candidate_agents: candidates,
-      sequence: index + 1
+      sequence: index + 1,
+      ...(capability.domain ? { domain: capability.domain } : {}),
+      ...(capability.questions ? { questions: capability.questions } : {})
     };
   });
 }
@@ -251,7 +330,9 @@ function buildParallelGroups(nodes) {
 
 function buildWorkflowPlan(root, intent) {
   const index = loadSkillIndex(root);
-  const capabilities = inferCapabilities(intent);
+  const domain = detectDomain(intent);
+  const capabilities = domain ? buildDomainCapabilities(domain) : inferCapabilities(intent);
+  if (domain && capabilities[0]?.id === 'clarification') capabilities[0].questions = domain.questions;
   const nodes = buildNodes(capabilities, index.skills);
   const missingSkills = nodes
     .filter(node => node.candidate_agents.length === 0)
@@ -268,12 +349,12 @@ function buildWorkflowPlan(root, intent) {
     goal: intent,
     intent_hash: stableIntentHashForPlan(intent),
     nodes,
-    edges: buildEdges(nodes),
-    parallel_groups: buildParallelGroups(nodes),
+    edges: domain ? domain.edges.map(([from, to]) => ({ from, to })) : buildEdges(nodes),
+    parallel_groups: domain ? domain.parallelGroups : buildParallelGroups(nodes),
     router_hints: nodes.map(node => ({
       node_id: node.id,
       required_capability: node.capability,
-      atomic_keywords: tokenize(`${node.label} ${node.capability}`).slice(0, 10),
+      atomic_keywords: tokenize(`${node.label} ${node.capability} ${node.domain || ''}`).slice(0, 10),
       preferred_skill_ids: node.candidate_agents.map(candidate => candidate.skill_id)
     })),
     missing_skills: missingSkills
@@ -285,6 +366,9 @@ function renderWorkflowMarkdown(plan) {
   for (const node of plan.nodes) {
     lines.push(`- ${node.sequence}. ${node.id}: ${node.capability}`);
     lines.push(`  - candidates: ${node.candidate_agents.map(item => item.skill_id).join(', ') || 'none'}`);
+    if (Array.isArray(node.questions) && node.questions.length) {
+      lines.push(`  - orchestrator questions: ${node.questions.join(' | ')}`);
+    }
   }
   lines.push('', '## Edges');
   for (const edge of plan.edges) lines.push(`- ${edge.from} -> ${edge.to}`);

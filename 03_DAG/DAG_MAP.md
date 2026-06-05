@@ -2,6 +2,14 @@
 
 DAG is not a fixed event or website template. It is a dynamic capability graph used by Orchestrator and Router.
 
+The correct order is:
+
+```text
+User Intent -> Orchestrator clarification/atomization -> Dynamic Capability DAG -> Router skill selection -> Execution
+```
+
+Router should not be the first component to understand a broad task. If the request is underspecified, Orchestrator adds a `clarification` capability node with compact questions before Router receives DAG hints.
+
 ## Where The DAG Function Lives
 
 ```text
@@ -49,7 +57,7 @@ node 00_System/mosa_cli.js route --intent "<task intent>" --workflow-plan 01_Wor
 | Layer | File | Responsibility |
 | --- | --- | --- |
 | Orchestrator | `skills/orchestrator-agent/SKILL.md` | Decides whether the task needs a DAG |
-| Planner | `00_System/mosa_cli.js` | Builds `workflow_plan.json` |
+| Planner | `00_System/mosa_cli.js` | Builds `workflow_plan.json` from clarified intent and domain hints |
 | Router | `00_System/mosa_route.js` | Reads `router_hints` and returns `dag_routes` |
 | Router skill | `skills/router-agent/SKILL.md` | Documents selector-only behavior |
 | Harmonizer | `skills/mosa-harmonizer/SKILL.md` | Validates schema and drift |
@@ -64,3 +72,13 @@ Generated only when needed:
 - `01_Work/routing_result.json` with `dag_routes`
 
 Lean mode must not write these files.
+
+## Clarification Gate
+
+For broad goals like events, websites, dashboards, reports, automation, and research tasks:
+
+- Orchestrator detects the deliverable domain.
+- Orchestrator extracts missing assumptions and success criteria.
+- The DAG may start with a `clarification` node.
+- Router consumes only the resulting `router_hints`.
+- Missing or weak skills become `missing_skills`, not forced low-confidence dispatch.
