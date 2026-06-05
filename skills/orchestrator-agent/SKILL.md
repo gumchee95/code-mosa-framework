@@ -7,365 +7,149 @@ category: Workflow
 
 # Orchestrator Agent
 
-## Identity
+Orchestrator coordinates MOSA workflows. Router selects skills only; Router does not decompose tasks.
 
-You are the MOSA Logic Orchestrator, the coordination node for MOSA workflows.
+## Modes
 
-Router retrieves skills only. Router must not decompose requirements.
+Use the lightest mode that preserves correctness:
 
-## Lean Mode Principle
+- `lean`: simple Q&A, one-off check, or tiny obvious edit. No startup loop, Router, hooks, or task artifacts.
+- `standard`: multi-step work, file changes, cross-skill work, MOSA changes, audit-sensitive work, or durable state.
+- `cold-repair`: missing `00_System`, missing startup/router tools, missing proof JSON, or stale/untrusted evidence.
 
-Do not orchestrate work that does not need orchestration.
+Legacy inputs map as:
 
-Use Lean Mode when the task is simple, answer-only, or a tiny obvious edit:
+- `micro` -> `lean`
+- `full` -> `standard`
+- `maintenance` -> `standard`
 
-- No MOSA startup.
-- No Router call.
-- No hook.
-- No task state writes.
-- Answer or execute directly.
+Maintenance is a CLI command, not a runtime mode.
 
-Use Standard Mode when the task is multi-step, file-changing, cross-skill, audit-sensitive, or MOSA-related.
+## Standard Flow
 
-Use Cold-Repair Mode when MOSA evidence is missing, stale, or untrusted.
-
-## Responsibilities
-
-- Bootstrap the workspace.
-- Run startup evidence tools.
-- Apply auto-skill Meta-Logic.
-- Extract Atomic Keywords.
-- Create the Intent Profile.
-- Generate a Dynamic Capability DAG for cross-skill work.
-- Call Router through the official evidence chain.
-- Dispatch the selected execution skill.
-- Track failures and trigger audit when needed.
-- Coordinate GC and memory consolidation.
-
-## Step 0: Mode Selection
-
-Choose one mode before touching MOSA artifacts:
-
-- `lean`: one-step Q&A, direct command, or tiny obvious edit.
-- `standard`: multi-step work, file changes, framework/skill/routing work, or durable task state.
-- `cold-repair`: missing `00_System`, missing startup/router tools, missing proof JSON, or reconstructed/stale proof.
-
-If mode is `lean`, do the task directly and stop. Do not create or append MOSA artifacts.
-
-If mode is `standard` or `cold-repair`, continue to Step 1.
-
-## Step 1: Workspace Root
-
-Find the nearest parent directory containing `00_System`.
-
-If none exists, initialize the current workspace root with:
-
-- `00_System/state.json`
-- `00_System/prompt_stack.md`
-- `00_System/routing_cache.json`
-- `01_Work/task.md`
-- `01_Work/session_state.json`
-- `01_Work/context_bus.json`
-- `02_Output/`
-
-Initial `state.json`:
-
-```json
-{"turn_count": 0, "drift_threshold": 20}
-```
-
-## Step 2: Workspace Startup Evidence
-
-After Workspace Root is known, prefer the workspace Node startup tool for standard and cold-repair tasks:
+1. Find workspace root by nearest `00_System`.
+2. Run startup proof:
 
 ```bash
-node 00_System/mosa_startup.js --intent "<user intent>"
+node 00_System/mosa_cli.js start --mode standard --intent "<user intent>" --write
 ```
 
-If `00_System/mosa_startup.js` exists, run it first and read only:
+3. Read only:
 
 - `01_Work/startup_result.json`
 - `01_Work/context_bus.json`
 
-If `00_System/mosa_startup.js` or `00_System/mosa_route.js` is missing and a MOSA framework source is available, run provision first:
-
-```bash
-node <MosaFramework>/00_System/mosa_provision_workspace.js --target "<workspace>" --run --intent "<user intent>"
-```
-
-Provision output is compact by default. Use `--verbose` only for debugging nested startup and route JSON.
-
-Provision must leave these files:
-
-- `00_System/mosa_startup.js`
-- `00_System/mosa_route.js`
-- `01_Work/startup_result.json`
-- `01_Work/routing_result.json`
-- `01_Work/provision_result.json`
-
-Provision should also copy lightweight routing artifacts when available:
-
-- `02_Output/startup_manifest.json`
-- `02_Output/routing_index_light.json`
-- `02_Output/reference_map_light.json`
-- `02_Output/mode_profiles.json`
-- `02_Output/active_skill_index.json`
-
-Do not copy full registry diagnostic reports by default.
-
-Do not trust manual startup or routing text as proof.
-
-## Step 3: Token Shield
-
-If `{Workspace_Root}/graphify-out/GRAPH_REPORT.md` exists:
-
-- Read it before routing.
-- Extract God Nodes.
-- Store a compact pointer in `01_Work/session_state.json.graph_context`.
-- Pass graph context to execution skills.
-
-If it does not exist, set `graph_context = null`.
-
-## Step 4: Meta-Logic
-
-Run the active `auto-skill/SKILL.md` Meta-Logic:
-
-- Clarify the task objective.
-- Extract 3 to 8 Atomic Keywords.
-- Detect topic switch.
-- Build the Intent Profile.
-
-Write `01_Work/task.md` with:
-
-```markdown
-[Pipeline Trace]: Orchestrator > Router > Pending
-
-## Atomic Keywords
-- ...
-
-## Intent Profile
-```json
-{
-  "intent_summary": "...",
-  "atomic_keywords": ["..."],
-  "preferred_domain": "...",
-  "required_capability": "...",
-  "exclusions": []
-}
-```
-```
-
-## Step 5: State Check
-
-- Read `00_System/state.json` after `mosa_startup.js` runs.
-- Do not increment `turn_count` manually; the startup tool owns that write.
-- If `turn_count >= drift_threshold`, dispatch `@mosa-harmonizer --maintenance`.
-
-## Step 5.5: Dynamic Capability DAG
-
-For multi-step or cross-skill work, generate a compact workflow DAG before Router retrieval:
+4. Atomize the user intent and write `01_Work/task.md` when durable planning is needed.
+5. For cross-skill work, generate a Dynamic Capability DAG:
 
 ```bash
 node 00_System/mosa_cli.js plan --intent "<user intent>" --write
 ```
 
-Read only the compact pointer:
-
-- `01_Work/workflow_plan.json`
-
-Rules:
-
-- The DAG is dynamic and capability-based; do not force a rigid template.
-- Orchestrator owns DAG generation.
-- Router consumes `router_hints`; Router must not decompose the request.
-- Missing capabilities become `skill_growth_suggestions`.
-- Do not auto-create missing skills without explicit user approval.
-
-## Step 6: Router Invocation Normalization
-
-Canonical Router skill name:
-
-- `router-agent`
-
-Normalize these aliases before routing:
-
-- `router_agent` -> `router-agent`
-- `@router_agent` -> `@router-agent`
-- `/router_agent` -> `/router-agent`
-
-The normalized Router skill path is always:
-
-- `C:/Users/USER/.codex/skills/router-agent/SKILL.md`
-
-Do not create or load this duplicate path:
-
-- `C:/Users/USER/.codex/skills/router_agent`
-
-## Step 7: Router Request
-
-Prefer the workspace Router wrapper:
+6. Route:
 
 ```bash
-node 00_System/mosa_route.js --domain "<domain>" --capability "<capability>" --keywords "<comma keywords>" --intent "<intent>"
+node 00_System/mosa_cli.js route --intent "<user intent>"
 ```
 
-If `01_Work/workflow_plan.json` exists for the current intent, include it:
+or:
 
 ```bash
-node 00_System/mosa_route.js --domain "<domain>" --capability "<capability>" --keywords "<comma keywords>" --intent "<intent>" --workflow-plan "01_Work/workflow_plan.json"
+node 00_System/mosa_cli.js route --intent "<user intent>" --workflow-plan 01_Work/workflow_plan.json
 ```
 
-Then read:
+7. Validate `01_Work/routing_result.json`.
+8. Load only the selected execution skill.
+9. Write compact result pointers to `01_Work/task_results.md`.
 
+## Cold Repair
+
+When startup or router tools are missing, provision first:
+
+```bash
+node <MosaFramework>/00_System/mosa_provision_workspace.js --target "<workspace>" --run --intent "<user intent>"
+```
+
+Provision should leave:
+
+- `00_System/mosa_startup.js`
+- `00_System/mosa_route.js`
+- `01_Work/provision_result.json`
+- `01_Work/startup_result.json`
 - `01_Work/routing_result.json`
 
-Only load a full selected `SKILL.md` when execution requires that skill.
+## Context And Graph
 
-If `routing_result.json.status == "reconstructed"`, it is not formal proof. Rerun `mosa_route.js`.
+Use:
 
-Fallback only:
+- `01_Work/context_bus.json`
 
-```bash
-node "$HOME/.codex/skills/router-agent/mosa_search.js" '<Intent Profile JSON>'
-```
+Graph context lives at:
 
-The fallback is valid only when written to:
+- `01_Work/context_bus.json._meta.graph_context`
 
-- `01_Work/routing_result.json`
+`01_Work/session_state.json` is not required.
 
-## Step 8: Router Response Handling
+If `graphify-out/GRAPH_REPORT.md` exists, read it before broad architecture exploration.
 
-Router returns:
+## Dynamic Capability DAG
 
-- top candidates
-- workflow node routes when a workflow plan is supplied
-- missing skill suggestions when a capability has no medium-confidence route
-- confidence
-- confidence tier
-- match reasons
-- fallback code
-- fallback recommendation
+`workflow_plan.json` must contain only:
 
-Rules:
+- `schema_version`
+- `goal`
+- `intent_hash`
+- `nodes`
+- `edges`
+- `parallel_groups`
+- `router_hints`
+- `missing_skills`
 
-- `confidence >= 0.80` and `confidence_tier == "strong"`: dispatch Top 1 after proof and hook validation.
-- `0.50 <= confidence < 0.80`: review the selected path, domain, and capability before dispatch.
-- `0.35 <= confidence < 0.50`: do not auto-dispatch; run Registry Distiller read-only or ask Router to re-rank with clearer atomization.
-- `confidence < 0.35`: rerun Router, run Registry Distiller read-only, or clarify intent.
-- no candidates: return `NO_CANDIDATE`; do not invent a selected skill.
+The DAG is a routing aid. It must not be a rigid workflow template.
 
-Update the `task.md` pipeline trace from `Pending` to the selected Sub-Agent only after proof validation succeeds.
+## Router Proof Guard
 
-## Step 9: Registry Distiller Fallback
-
-For low confidence or registry/protocol updates, run read-only diagnostics:
-
-```bash
-node "$HOME/.codex/skills/base-distiller/scripts/distill_logic.js"
-```
-
-Expected outputs:
-
-- `02_Output/registry_distiller_report.json`
-- `02_Output/registry_distiller_report.md`
-- router support artifacts
-
-Distiller output is diagnostic unless the user explicitly approves registry mutation.
-
-## Step 10: Pre-Dispatch Router Proof Guard
-
-Before dispatching an execution Skill, Orchestrator must verify Router proof is tool-generated and current.
-
-Valid proof:
+Valid Router proof:
 
 - `01_Work/routing_result.json` exists.
-- `schema_version` is present.
-- `status` is `success` or another explicit non-reconstructed terminal status.
+- `schema_version == "mosa.routing_result.v2"`.
 - `source == "mosa_route.js"`.
-- `intent_hash` matches the current Intent Profile.
-- `top_skill.resolved_path` exists.
+- `intent_hash` is present.
 - `validation.passed == true`.
+- Exactly one route authority exists: `single_route` or `dag_routes`.
 
 Invalid proof:
 
+- Manual chat summaries.
 - `status == "reconstructed"`.
-- Router choice appears only in `task.md`.
-- Candidate list was manually summarized in chat.
-- `routing_result.json` is stale for the current intent.
-- `fallback_code` is `LOW_CONFIDENCE`, `NO_CANDIDATE`, `MISSING_INDEX`, `STALE_CACHE`, or `INVALID_SKILL_PATH`.
+- Missing or stale intent hash.
+- Missing selected skill path.
+- Top-level `top_skill`, `candidates`, `flat_candidates`, `effectiveTop`, or `node_routes`.
 
-If invalid:
+## Hooks
 
-1. Rerun `node 00_System/mosa_route.js` with domain, capability, keywords, and intent.
-2. Read the generated `01_Work/routing_result.json`.
-3. If confidence is weak or failed, run Registry Distiller read-only.
-4. Only then dispatch the selected execution Skill.
-
-This guard prevents generic route words, such as `guide`, `graph`, or `route`, from overpowering the intended execution domain.
-
-## Step 11: Pre-Dispatch Hook Gate
-
-Run hooks by event before dispatch when the task touches MOSA trust boundaries.
-
-Default routine check:
+Run hooks only for triggered trust events:
 
 ```bash
-node 00_System/mosa_hooks.js --level auto --event normal-task
+node 00_System/mosa_cli.js hook --event router-proof
+node 00_System/mosa_cli.js maintain --write
 ```
 
-Event routing:
+Do not run hooks for lean mode or routine normal tasks.
 
-- `normal-task`: skip hook chain; keep compact pass evidence.
-- `startup-evidence`, `router-proof`, `dangerous-command`: run P0.
-- `protocol-update`, `agents-update`, `skill-update`, `registry-update`, `routing-index-update`: run P1.
-- `framework-update`, `trust-framework-update`, `smoke-test`: run P2.
+## Audit Triggers
 
-Read compact hook output first. Open full hook reports only when `failed_checks` is not empty.
+Audit when the task changes:
 
-## Step 12: Dispatch
+- `AGENTS.md`
+- startup, router, hook, provision, or CLI scripts
+- routing indexes or registry diagnostics
+- core MOSA skills
+- credential handling, deletion behavior, or cross-workspace behavior
 
-Load only the selected execution skill and pass compact context:
+## Output
 
-- task pointer
-- routing result pointer
-- graph context pointer, if available
-- required deliverables
-- audit trigger conditions
-
-Do not pass large full files through chat context.
-
-## Step 13: Audit Trigger
-
-Trigger audit when any condition is true:
-
-- 5 or more files were written.
-- The task is critical.
-- The task involves finance, compliance, or regulated data.
-- The user explicitly requests audit.
-- The same sub-agent fails twice consecutively.
-- The task changes `AGENTS.md`, registries, routing indexes, startup scripts, router scripts, hooks, or core MOSA skills.
-- The task deletes files, changes credential handling, or touches secrets/tokens.
-- The task creates a large diff or changes cross-workspace behavior.
-
-Audit pointers may include:
-
-- `01_Work/Agent_Activation_Log.md`
-- `01_Work/registry_check_result.json`
-- `02_Output/*audit*.md`
-
-## Step 14: Wrap-Up And GC
-
-At completion:
-
-- Write result pointers to `01_Work/task_results.md`.
-- Append `[Action: Trigger GC]`.
-- Update `00_System/prompt_stack.md` when reusable memory exists.
-- Ask auto-skill promotion logic whether reusable experience should be recorded.
-- Clear temporary session state after final pointers are preserved.
-
-## Output Contract
-
-Use compact agent protocol when communicating between MOSA nodes:
+Use compact pointer protocol:
 
 ```text
 [Status: Success|Fail]
@@ -375,9 +159,8 @@ Use compact agent protocol when communicating between MOSA nodes:
 
 ## Prohibitions
 
-- Do not bypass Router before loading execution skills.
+- Do not orchestrate lean work.
 - Do not trust manual Router text as formal proof.
 - Do not read full registry reports during normal startup.
-- Do not scan all skills when Router evidence exists.
-- Do not create duplicate Router skill folders.
+- Do not load full skill files before Router proof.
 - Do not mutate registries without explicit user approval.

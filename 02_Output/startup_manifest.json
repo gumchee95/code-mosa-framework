@@ -49,7 +49,7 @@
     "Router confidence < 0.35",
     "User requests registry audit",
     "missing_files/collisions/orphans > 0",
-    "mosa-harmonizer maintenance mode"
+    "mosa_cli.js maintain"
   ],
   "token_budget_limits_bytes": {
     "graphify-out/GRAPH_REPORT.md": 3072,

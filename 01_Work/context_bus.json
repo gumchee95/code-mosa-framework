@@ -1,21 +1,40 @@
 {
+  "generated_at": "2026-06-05T13:05:52.196Z",
+  "mode": "lean",
+  "intent": "quick status",
+  "atomic_keywords": [
+    "quick",
+    "status"
+  ],
+  "workspace_root": "C:\\tmp\\code-mosa-framework-remote",
+  "pointers": {
+    "state": "00_System/state.json",
+    "startup_result": "01_Work/startup_result.json",
+    "routing_result": "01_Work/routing_result.json",
+    "workflow_plan": "01_Work/workflow_plan.json",
+    "routing_index_light": "02_Output/routing_index_light.json",
+    "startup_manifest": "02_Output/startup_manifest.json"
+  },
+  "constraints": {
+    "cold_reads_forbidden": [
+      "02_Output/registry_distiller_report.json",
+      "02_Output/registry_distiller_report.full.json",
+      "02_Output/Archive/registry_distiller_report.full.json"
+    ],
+    "registry_mutation_allowed": false
+  },
   "_meta": {
-    "version": "1.1",
-    "task_id": "current",
+    "version": "mosa.context_bus.v2",
     "lifecycle": "ephemeral",
-    "max_tokens": 2000,
-    "updated_at": null,
-    "policy": "Current-task cross-agent context only. Do not use as long-term memory."
-  },
-  "shared_facts": {},
-  "agent_outputs": {},
-  "handoff": {
-    "next_agent": null,
-    "needed_inputs": []
-  },
-  "gc_policy": {
-    "clear_after_task": true,
-    "promote_to_prompt_stack": false,
-    "promote_summary_only": true
+    "graph_context": {
+      "report": "graphify-out/GRAPH_REPORT.md",
+      "god_nodes": [
+        "00_System",
+        "01_Work",
+        "02_Output",
+        "graphify-out/GRAPH_REPORT.md"
+      ],
+      "generated_at": "2026-06-05T13:05:52.196Z"
+    }
   }
 }

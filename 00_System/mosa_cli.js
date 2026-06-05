@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
@@ -9,116 +10,30 @@ const STOP_WORDS = new Set([
   'project', 'skill', 'system', 'the', 'to', 'tool', 'web', 'with'
 ]);
 
+const RUNTIME_MODES = new Set(['lean', 'standard', 'cold-repair']);
+const LEGACY_MODE_MAP = { micro: 'lean', full: 'standard', maintenance: 'standard' };
+
 const CAPABILITY_TAXONOMY = [
-  {
-    id: 'planning',
-    label: 'Planning',
-    triggers: ['plan', 'prepare', 'organize', 'scope', 'goal', 'requirement', '活动', '准备', '规划', '计划', '需求'],
-    required_capability: 'Clarify goal, scope, constraints, success criteria, and execution sequence',
-    deliverables: ['scope summary', 'success criteria', 'task sequence'],
-    preferred_skill_ids: ['ORCHESTRATOR_AGENT', 'PROJECT_PLANNER', 'PROJECT_MANAGEMENT_CORE'],
-    suggested_skill_id: 'planning-clarifier-agent'
-  },
-  {
-    id: 'research',
-    label: 'Research',
-    triggers: ['research', 'market', 'competitor', 'benchmark', 'investigate', 'study', '资料', '调研', '市场', '竞品'],
-    required_capability: 'Gather source-backed context and synthesize findings',
-    deliverables: ['research notes', 'source summary'],
-    preferred_skill_ids: ['MARKET_AGENT', 'BRAINSTORMING_AGENT', 'THOUGHT_DISTILLER', 'KYC_DATA_FETCHER'],
-    suggested_skill_id: 'research-synthesis-agent'
-  },
-  {
-    id: 'design',
-    label: 'Design',
-    triggers: ['design', 'ui', 'ux', 'visual', 'brand', 'poster', 'asset', 'webpage', 'website', 'chart', 'visualization', 'dashboard', '网页', '设计', '海报', '视觉', '图表', '看板'],
-    required_capability: 'Create visual direction, layout, interaction, or production assets',
-    deliverables: ['design direction', 'visual assets or UI plan'],
-    preferred_skill_ids: ['DESIGN_AGENT', 'FRONTEND_DESIGN', 'UI_SUITE', 'THEME_FACTORY', 'CANVAS_DESIGN'],
-    suggested_skill_id: 'visual-production-agent'
-  },
-  {
-    id: 'coding',
-    label: 'Coding',
-    triggers: ['code', 'build', 'implement', 'app', 'frontend', 'backend', 'api', '网页', '网站', '实现', '开发', '修复'],
-    required_capability: 'Implement or modify software safely with local project patterns',
-    deliverables: ['code changes', 'implementation notes'],
-    preferred_skill_ids: ['CODER_AGENT', 'API_EXPERT', 'WEB_ARTIFACTS_BUILDER', 'GAS_WEBAPP_ARCHITECT', 'MCP_BUILDER'],
-    suggested_skill_id: 'implementation-agent'
-  },
-  {
-    id: 'data',
-    label: 'Data',
-    triggers: ['data', 'dashboard', 'analytics', 'metric', 'csv', 'excel', 'sheet', 'reporting', '数据', '看板', '指标', '分析'],
-    required_capability: 'Clean, analyze, model, visualize, or validate data',
-    deliverables: ['cleaned data', 'analysis', 'charts or dashboard'],
-    preferred_skill_ids: ['DATA_ANALYTICS_CORE', 'XLSX', 'AUTOMATED_DATA_CLEANER', 'KPI_DASHBOARD_DESIGN'],
-    suggested_skill_id: 'metric-contract-agent'
-  },
-  {
-    id: 'document',
-    label: 'Document',
-    triggers: ['document', 'doc', 'memo', 'report', 'proposal', 'ppt', 'slides', 'readme', '文档', '报告', '简报', '提案'],
-    required_capability: 'Produce structured written output, deck, report, or documentation',
-    deliverables: ['document draft', 'structured report'],
-    preferred_skill_ids: ['REPORT_GENERATOR', 'DOC_COAUTHORING', 'DOCX', 'PPTX', 'PDF'],
-    suggested_skill_id: 'document-production-agent'
-  },
-  {
-    id: 'communication',
-    label: 'Communication',
-    triggers: ['email', 'announce', 'invite', 'message', 'newsletter', 'follow-up', 'marketing', '邀请', '通知', '宣传', '跟进', '邮件'],
-    required_capability: 'Prepare announcements, invitations, follow-up, or stakeholder communication',
-    deliverables: ['communication copy', 'recipient/action plan'],
-    preferred_skill_ids: ['INTERNAL_COMMS', 'MARKETING_IDEAS', 'MARKETING_PSYCHOLOGY', 'PRODUCT_MARKETING_CONTEXT'],
-    suggested_skill_id: 'communication-sequence-agent'
-  },
-  {
-    id: 'calendar',
-    label: 'Calendar',
-    triggers: ['calendar', 'schedule', 'meeting', 'invite', 'rsvp', 'registration', 'event', '活动', '日历', '报名', '出席'],
-    required_capability: 'Coordinate time, invites, attendance, RSVP, and scheduling artifacts',
-    deliverables: ['calendar plan', 'registration or attendance tracker'],
-    preferred_skill_ids: ['GOOGLE_AGENT', 'ADMIN_AGENT', 'XLSX', 'PROJECT_MANAGEMENT_CORE'],
-    suggested_skill_id: 'rsvp-registration-agent'
-  },
-  {
-    id: 'automation',
-    label: 'Automation',
-    triggers: ['automation', 'workflow', 'script', 'bot', 'integrate', 'pipeline', '自动化', '流程', '脚本', '机器人'],
-    required_capability: 'Automate repeated workflow steps or connect tools',
-    deliverables: ['automation design', 'script or integration plan'],
-    preferred_skill_ids: ['MCP_BUILDER', 'GAS_WEBAPP_ARCHITECT', 'DOC_PIPELINE', 'DATABASE_SUITE', 'AZURE_SUITE'],
-    suggested_skill_id: 'workflow-automation-agent'
-  },
-  {
-    id: 'compliance',
-    label: 'Compliance',
-    triggers: ['compliance', 'risk', 'security', 'privacy', 'audit', 'regulated', '合规', '风险', '隐私', '安全'],
-    required_capability: 'Check policy, security, privacy, compliance, and risk constraints',
-    deliverables: ['risk checklist', 'compliance notes'],
-    preferred_skill_ids: ['AUDIT_AGENT', 'COMPLIANCE_FRAMEWORK', 'CODE_REVIEW'],
-    suggested_skill_id: 'risk-policy-agent'
-  },
-  {
-    id: 'review',
-    label: 'Review',
-    triggers: ['review', 'test', 'verify', 'qa', 'validate', 'audit', '检查', '测试', '验证', '复盘'],
-    required_capability: 'Verify output quality, correctness, regressions, and completion',
-    deliverables: ['verification result', 'open issues'],
-    preferred_skill_ids: ['AUDIT_AGENT', 'CODE_REVIEW', 'WEBAPP_TESTING', 'PLAYWRIGHT'],
-    suggested_skill_id: 'delivery-qa-agent'
-  },
-  {
-    id: 'deployment',
-    label: 'Deployment',
-    triggers: ['deploy', 'release', 'publish', 'github', 'site', '上线', '发布', '部署'],
-    required_capability: 'Prepare release, publishing, deployment, or handoff steps',
-    deliverables: ['release checklist', 'deployment notes'],
-    preferred_skill_ids: ['CODER_AGENT', 'DEPLOYMENT_PIPELINE_DESIGN', 'PROJECT_LAUNCH'],
-    suggested_skill_id: 'deployment-release-agent'
-  }
-];
+  ['planning', 'Planning', ['plan', 'prepare', 'organize', 'scope', 'goal', 'requirement'], 'Clarify goal, scope, constraints, success criteria, and execution sequence', ['ORCHESTRATOR_AGENT', 'PROJECT_PLANNER', 'PROJECT_MANAGEMENT_CORE'], 'planning-clarifier-agent'],
+  ['research', 'Research', ['research', 'market', 'competitor', 'benchmark', 'investigate', 'study'], 'Gather source-backed context and synthesize findings', ['MARKET_AGENT', 'BRAINSTORMING_AGENT', 'THOUGHT_DISTILLER', 'KYC_DATA_FETCHER'], 'research-synthesis-agent'],
+  ['design', 'Design', ['design', 'ui', 'ux', 'visual', 'brand', 'poster', 'asset', 'webpage', 'website', 'chart', 'visualization', 'dashboard'], 'Create visual direction, layout, interaction, or production assets', ['DESIGN_AGENT', 'FRONTEND_DESIGN', 'UI_SUITE', 'THEME_FACTORY', 'CANVAS_DESIGN'], 'visual-production-agent'],
+  ['coding', 'Coding', ['code', 'build', 'implement', 'app', 'frontend', 'backend', 'api', 'refactor', 'fix'], 'Implement or modify software safely with local project patterns', ['CODER_AGENT', 'API_EXPERT', 'WEB_ARTIFACTS_BUILDER', 'GAS_WEBAPP_ARCHITECT', 'MCP_BUILDER'], 'implementation-agent'],
+  ['data', 'Data', ['data', 'dashboard', 'analytics', 'metric', 'csv', 'excel', 'sheet', 'reporting'], 'Clean, analyze, model, visualize, or validate data', ['DATA_ANALYTICS_CORE', 'XLSX', 'AUTOMATED_DATA_CLEANER'], 'metric-contract-agent'],
+  ['document', 'Document', ['document', 'doc', 'memo', 'report', 'proposal', 'ppt', 'slides', 'readme'], 'Produce structured written output, deck, report, or documentation', ['REPORT_GENERATOR', 'DOC_COAUTHORING', 'DOCX', 'PPTX', 'PDF'], 'document-production-agent'],
+  ['communication', 'Communication', ['email', 'announce', 'invite', 'message', 'newsletter', 'follow-up', 'marketing'], 'Prepare announcements, invitations, follow-up, or stakeholder communication', ['INTERNAL_COMMS', 'MARKETING_IDEAS'], 'communication-sequence-agent'],
+  ['calendar', 'Calendar', ['calendar', 'schedule', 'meeting', 'invite', 'rsvp', 'registration', 'event'], 'Coordinate time, invites, attendance, RSVP, and scheduling artifacts', ['GOOGLE_AGENT', 'ADMIN_AGENT', 'XLSX', 'PROJECT_MANAGEMENT_CORE'], 'rsvp-registration-agent'],
+  ['automation', 'Automation', ['automation', 'workflow', 'script', 'bot', 'integrate', 'pipeline'], 'Automate repeated workflow steps or connect tools', ['MCP_BUILDER', 'GAS_WEBAPP_ARCHITECT', 'DOC_PIPELINE', 'DATABASE_SUITE', 'AZURE_SUITE'], 'workflow-automation-agent'],
+  ['compliance', 'Compliance', ['compliance', 'risk', 'security', 'privacy', 'audit', 'regulated'], 'Check policy, security, privacy, compliance, and risk constraints', ['AUDIT_AGENT', 'COMPLIANCE_FRAMEWORK', 'CODE_REVIEW'], 'risk-policy-agent'],
+  ['review', 'Review', ['review', 'test', 'verify', 'qa', 'validate', 'audit'], 'Verify output quality, correctness, regressions, and completion', ['AUDIT_AGENT', 'CODE_REVIEW', 'WEBAPP_TESTING', 'PLAYWRIGHT'], 'delivery-qa-agent'],
+  ['deployment', 'Deployment', ['deploy', 'release', 'publish', 'github', 'site'], 'Prepare release, publishing, deployment, or handoff steps', ['CODER_AGENT', 'PROJECT_LAUNCH'], 'deployment-release-agent']
+].map(([id, label, triggers, requiredCapability, preferredSkillIds, suggestedSkillId]) => ({
+  id,
+  label,
+  triggers,
+  required_capability: requiredCapability,
+  preferred_skill_ids: preferredSkillIds,
+  suggested_skill_id: suggestedSkillId
+}));
 
 function findWorkspaceRoot(startDir = process.cwd()) {
   let current = path.resolve(startDir);
@@ -151,9 +66,9 @@ function readJson(filePath, fallback = null) {
 }
 
 function writeJsonAtomic(filePath, data) {
-  const dir = path.dirname(filePath);
-  const temp = path.join(dir, `.${path.basename(filePath)}.${process.pid}.tmp`);
-  fs.writeFileSync(temp, JSON.stringify(data, null, 2));
+  fs.mkdirSync(path.dirname(filePath), { recursive: true });
+  const temp = path.join(path.dirname(filePath), `.${path.basename(filePath)}.${process.pid}.tmp`);
+  fs.writeFileSync(temp, `${JSON.stringify(data, null, 2)}\n`, 'utf8');
   fs.renameSync(temp, filePath);
 }
 
@@ -183,13 +98,10 @@ function tokenize(text) {
 function requiredFiles(root) {
   return [
     'AGENTS.md',
-    'graphify-out/GRAPH_REPORT.md',
     '00_System/state.json',
     '00_System/prompt_stack.md',
-    '00_System/routing_cache.json',
     '00_System/mosa_startup.js',
-    '01_Work/task.md',
-    '01_Work/session_state.json',
+    '00_System/mosa_route.js',
     '01_Work/context_bus.json',
     '02_Output/startup_manifest.json',
     '02_Output/routing_index_light.json',
@@ -207,9 +119,10 @@ function validate(root) {
 
   for (const file of [
     '00_System/state.json',
-    '00_System/routing_cache.json',
-    '01_Work/session_state.json',
     '01_Work/context_bus.json',
+    '01_Work/startup_result.json',
+    '01_Work/routing_result.json',
+    '01_Work/workflow_plan.json',
     '02_Output/startup_manifest.json',
     '02_Output/routing_index_light.json',
     '02_Output/mode_profiles.json',
@@ -219,174 +132,56 @@ function validate(root) {
     if (fs.existsSync(full) && readJson(full) === null) issues.push(`invalid json: ${file}`);
   }
 
-  const state = readJson(path.join(root, '00_System/state.json'), {});
-  if (typeof state.turn_count !== 'number') warnings.push('state.json missing numeric turn_count');
-  if (typeof state.drift_threshold !== 'number') warnings.push('state.json missing numeric drift_threshold');
-
-  const bus = readJson(path.join(root, '01_Work/context_bus.json'), {});
-  if (bus?._meta?.max_tokens && bus._meta.max_tokens > 3000) {
-    warnings.push('context_bus max_tokens is high for solo workflow');
+  if (fs.existsSync(path.join(root, '02_Output/startup_packet.json'))) {
+    warnings.push('legacy startup_packet.json exists; startup_result.json is authoritative');
   }
 
-  const report = path.join(root, '02_Output/registry_distiller_report.json');
-  if (fs.existsSync(report)) warnings.push('cold report exists; keep it out of normal startup');
-
-  return {
-    status: issues.length ? 'fail' : 'ok',
-    issues,
-    warnings,
-    checked_files: requiredFiles(root).length
-  };
+  return { status: issues.length ? 'fail' : 'ok', issues, warnings, checked_files: requiredFiles(root).length };
 }
 
-function fallbackPacket(root, intent, reason) {
-  const files = requiredFiles(root)
-    .filter(file => fs.existsSync(file))
-    .map(file => rel(root, file));
-  return {
-    status: 'fallback',
-    reason,
-    mode: 'micro',
-    intent,
-    message: 'Safe startup used. Read AGENTS.md, GRAPH_REPORT.md, and the nearest relevant task file only.',
-    available_files: files
-  };
+function normalizeMode(mode) {
+  const lower = String(mode || 'auto').toLowerCase();
+  const mapped = LEGACY_MODE_MAP[lower] || lower;
+  return RUNTIME_MODES.has(mapped) ? mapped : mapped === 'auto' || mapped === 'ask' ? mapped : 'standard';
 }
 
 function safeStart(root, args) {
-  const health = validate(root);
-  if (health.issues.length) {
-    return { ...fallbackPacket(root, args.intent || '', 'workspace validation failed'), health };
-  }
-
   const script = path.join(root, '00_System/mosa_startup.js');
-  const childArgs = [script, '--mode', args.mode || 'ask'];
+  const childArgs = [script, '--mode', args.mode || 'auto'];
   if (args.intent) childArgs.push('--intent', args.intent);
+  if (args.write) childArgs.push('--write');
   const result = spawnSync(process.execPath, childArgs, { cwd: root, encoding: 'utf8' });
   if (result.status !== 0) {
-    return { ...fallbackPacket(root, args.intent || '', 'startup script failed'), stderr: result.stderr, health };
+    return { status: 'fallback', mode: 'lean', reason: 'startup script failed', stderr: result.stderr };
   }
-  try {
-    const packet = JSON.parse(result.stdout);
-    return { ...packet, preflight: health };
-  } catch (_) {
-    return { ...fallbackPacket(root, args.intent || '', 'startup output was not json'), raw: result.stdout, health };
-  }
+  return JSON.parse(result.stdout);
 }
 
-function detectMode(intent, modeProfiles) {
-  const text = String(intent || '').toLowerCase();
-  const words = new Set(tokenize(text));
-  let best = { name: 'generic', score: 0 };
-  for (const [name, profile] of Object.entries(modeProfiles.profiles || {})) {
-    const score = (profile.triggers || []).reduce((sum, trigger) => {
-      const value = String(trigger).toLowerCase();
-      const hit = value.includes(' ')
-        ? text.includes(value)
-        : words.has(value);
-      return hit ? sum + 1 : sum;
-    }, 0);
-    if (score > best.score) best = { name, score };
-  }
-  return best;
+function loadSkillIndex(root) {
+  const light = readJson(path.join(root, '02_Output/routing_index_light.json'), null);
+  if (Array.isArray(light?.skills)) return { source: '02_Output/routing_index_light.json', skills: light.skills };
+  const active = readJson(path.join(root, '02_Output/active_skill_index.json'), null);
+  if (Array.isArray(active?.skills)) return { source: '02_Output/active_skill_index.json', skills: active.skills };
+  return { source: null, skills: [] };
 }
 
 function route(root, intent, options = {}) {
-  const routingPath = path.join(root, '02_Output/routing_index_light.json');
-  const modePath = path.join(root, '02_Output/mode_profiles.json');
-  const refPath = path.join(root, '02_Output/reference_map_light.json');
-  const routing = readJson(routingPath, {});
-  const modes = readJson(modePath, {});
-  const refs = readJson(refPath, { references: {} }).references || {};
-  const words = new Set(tokenize(intent));
-  const detectedMode = detectMode(intent, modes);
-  const modeBoosts = modes.profiles?.[detectedMode.name]?.boosts || {};
-
-  const candidates = (routing.skills || []).map(skill => {
-    const haystack = [
-      skill.skill_id,
-      skill.category,
-      ...(skill.tags || [])
-    ].join(' ');
-    const skillWords = new Set(tokenize(haystack));
-    const matched = [...words].filter(word => skillWords.has(word));
-    const tagScore = matched.length * 10;
-    const skillIdTokens = tokenize(skill.skill_id);
-    const exactScore = skillIdTokens.length && String(intent).toUpperCase().includes(skill.skill_id) ? 50 : 0;
-    const boost = modeBoosts[skill.skill_id] || 0;
-    const score = tagScore + exactScore + boost;
-    return {
-      skill_id: refs[skill.skill_id] || skill.skill_id,
-      original_skill_id: skill.skill_id,
-      score,
-      reasons: [
-        matched.length ? `matched: ${matched.join(', ')}` : null,
-        boost ? `mode boost(${detectedMode.name}): ${boost}` : null,
-        exactScore ? 'exact skill id match' : null,
-        refs[skill.skill_id] ? `reference -> ${refs[skill.skill_id]}` : null
-      ].filter(Boolean)
-    };
-  })
-    .filter(item => item.score > 0)
-    .sort((a, b) => b.score - a.score);
-
-  const deduped = [];
-  const seen = new Set();
-  for (const item of candidates) {
-    if (!seen.has(item.skill_id)) {
-      seen.add(item.skill_id);
-      deduped.push(item);
-    }
-  }
-
-  const top = deduped.slice(0, Number(options.top || 3));
-  const maxScore = top[0]?.score || 0;
-  const confidence = maxScore >= 60 ? 'high' : maxScore >= 25 ? 'medium' : maxScore > 0 ? 'low' : 'none';
-  const output = {
-    intent,
-    detected_mode: detectedMode,
-    confidence,
-    top,
-    fallback: confidence === 'none' || confidence === 'low'
-      ? 'Use maintenance mode or rebuild routing_index_light.json.'
-      : null
-  };
-
-  if (options.write) {
-    const lines = [
-      '# Last Route Decision',
-      '',
-      `- Intent: ${intent}`,
-      `- Detected mode: ${detectedMode.name} (${detectedMode.score})`,
-      `- Confidence: ${confidence}`,
-      '',
-      '## Top Candidates',
-      ...top.map((item, index) => `${index + 1}. ${item.skill_id} - ${item.score} - ${item.reasons.join('; ')}`)
-    ];
-    fs.writeFileSync(path.join(root, '02_Output/last_route_decision.md'), `${lines.join('\n')}\n`);
-  }
-  return output;
+  const script = path.join(root, '00_System/mosa_route.js');
+  const args = [script, '--intent', intent || ''];
+  if (options.workflowPlan) args.push('--workflow-plan', options.workflowPlan);
+  const result = spawnSync(process.execPath, args, { cwd: root, encoding: 'utf8' });
+  if (result.status !== 0) return { status: 'fail', stderr: result.stderr };
+  return JSON.parse(result.stdout);
 }
 
-function stableIntentHashForPlan(intent, args = {}) {
-  return crypto
-    .createHash('sha1')
-    .update(JSON.stringify({
-      intent_summary: intent || '',
-      atomic_keywords: args.keywords ? String(args.keywords).split(',').map(item => item.trim()).filter(Boolean) : [],
-      preferred_domain: args.domain || '',
-      required_capability: args.capability || 'route to the most relevant skill with compact JSON output',
-      exclusions: []
-    }))
-    .digest('hex');
+function stableIntentHashForPlan(intent) {
+  return crypto.createHash('sha1').update(intent || '').digest('hex');
 }
 
 function capabilityScore(capability, intentText, intentWords) {
   return capability.triggers.reduce((sum, trigger) => {
     const value = String(trigger).toLowerCase();
-    const hit = value.includes(' ')
-      ? intentText.includes(value)
-      : intentWords.has(value) || intentText.includes(value);
+    const hit = value.includes(' ') ? intentText.includes(value) : intentWords.has(value) || intentText.includes(value);
     return hit ? sum + 1 : sum;
   }, 0);
 }
@@ -394,23 +189,18 @@ function capabilityScore(capability, intentText, intentWords) {
 function inferCapabilities(intent) {
   const text = String(intent || '').toLowerCase();
   const intentWords = new Set(tokenize(text));
-  const scored = CAPABILITY_TAXONOMY
-    .map(capability => ({ ...capability, score: capabilityScore(capability, text, intentWords) }))
-    .filter(capability => capability.score > 0);
+  const selected = new Map(
+    CAPABILITY_TAXONOMY
+      .map(capability => ({ ...capability, score: capabilityScore(capability, text, intentWords) }))
+      .filter(capability => capability.score > 0)
+      .sort((a, b) => b.score - a.score)
+      .map(item => [item.id, item])
+  );
 
-  const selected = new Map(scored.sort((a, b) => b.score - a.score).map(item => [item.id, item]));
   if (!selected.has('planning')) selected.set('planning', CAPABILITY_TAXONOMY.find(item => item.id === 'planning'));
-  if (selected.has('data') && /dashboard|chart|visualization|图表|看板/.test(text) && !selected.has('design')) {
-    selected.set('design', CAPABILITY_TAXONOMY.find(item => item.id === 'design'));
-  }
-  if (selected.has('automation') && /email|message|邮件|通知/.test(text) && !selected.has('communication')) {
-    selected.set('communication', CAPABILITY_TAXONOMY.find(item => item.id === 'communication'));
-  }
   if ((selected.has('coding') || selected.has('design') || selected.has('data') || selected.has('document') || selected.has('automation')) && !selected.has('review')) {
     selected.set('review', CAPABILITY_TAXONOMY.find(item => item.id === 'review'));
   }
-  if (selected.has('calendar') && !selected.has('communication')) selected.set('communication', CAPABILITY_TAXONOMY.find(item => item.id === 'communication'));
-  if (selected.has('deployment') && !selected.has('review')) selected.set('review', CAPABILITY_TAXONOMY.find(item => item.id === 'review'));
 
   const order = ['planning', 'research', 'data', 'design', 'document', 'communication', 'calendar', 'automation', 'coding', 'compliance', 'review', 'deployment'];
   return order.map(id => selected.get(id)).filter(Boolean);
@@ -420,387 +210,165 @@ function skillById(skills) {
   return new Map((skills || []).map(skill => [String(skill.skill_id || '').toUpperCase(), skill]));
 }
 
-function availableCandidates(capability, skills) {
+function buildNodes(capabilities, skills) {
   const byId = skillById(skills);
-  return capability.preferred_skill_ids.map(skillId => {
-    const skill = byId.get(skillId);
-    if (!skill) return { skill_id: skillId, status: 'missing', reason: 'preferred skill is not in active routing index' };
-    return {
-      skill_id: skill.skill_id,
-      status: 'available',
-      category: skill.category || null,
-      filepath: skill.filepath || null,
-      reason: 'preferred capability match'
-    };
-  });
-}
-
-function buildCapabilityNodes(capabilities, skills) {
   return capabilities.map((capability, index) => {
-    const candidates = availableCandidates(capability, skills);
-    const available = candidates.filter(candidate => candidate.status === 'available');
+    const candidates = capability.preferred_skill_ids
+      .map(skillId => byId.get(skillId))
+      .filter(Boolean)
+      .slice(0, 3)
+      .map(skill => ({ skill_id: skill.skill_id, filepath: skill.filepath || null, category: skill.category || null }));
     return {
-      node_id: capability.id,
+      id: capability.id,
       label: capability.label,
-      required_capability: capability.required_capability,
-      deliverables: capability.deliverables,
-      candidate_agents: candidates.slice(0, 5),
-      missing: available.length === 0,
-      suggested_skill_id: capability.suggested_skill_id,
+      capability: capability.required_capability,
+      candidate_agents: candidates,
       sequence: index + 1
     };
   });
 }
 
 function buildEdges(nodes) {
-  const ids = nodes.map(node => node.node_id);
-  const edges = [];
+  const ids = nodes.map(node => node.id);
   const planning = ids.includes('planning') ? 'planning' : ids[0];
+  const edges = [];
   for (const id of ids) {
-    if (id !== planning && id !== 'review' && id !== 'deployment') edges.push([planning, id]);
+    if (id !== planning && id !== 'review' && id !== 'deployment') edges.push({ from: planning, to: id });
   }
-  const reviewDeps = ids.filter(id => !['planning', 'review', 'deployment', 'compliance'].includes(id));
   if (ids.includes('review')) {
-    for (const id of reviewDeps) edges.push([id, 'review']);
+    for (const id of ids.filter(item => !['planning', 'review', 'deployment', 'compliance'].includes(item))) {
+      edges.push({ from: id, to: 'review' });
+    }
   }
-  if (ids.includes('compliance')) edges.push([planning, 'compliance']);
-  if (ids.includes('deployment')) edges.push([ids.includes('review') ? 'review' : planning, 'deployment']);
+  if (ids.includes('deployment')) edges.push({ from: ids.includes('review') ? 'review' : planning, to: 'deployment' });
   return edges;
 }
 
 function buildParallelGroups(nodes) {
-  const parallel = nodes
-    .map(node => node.node_id)
-    .filter(id => !['planning', 'review', 'deployment', 'compliance'].includes(id));
-  return parallel.length > 1 ? [parallel] : [];
+  const group = nodes.map(node => node.id).filter(id => !['planning', 'review', 'deployment', 'compliance'].includes(id));
+  return group.length > 1 ? [group] : [];
 }
 
-function buildWorkflowPlan(root, intent, args = {}) {
+function buildWorkflowPlan(root, intent) {
   const index = loadSkillIndex(root);
-  const skills = index.skills || [];
   const capabilities = inferCapabilities(intent);
-  const nodes = buildCapabilityNodes(capabilities, skills);
-  const edges = buildEdges(nodes);
-  const missing = nodes
-    .filter(node => node.missing)
+  const nodes = buildNodes(capabilities, index.skills);
+  const missingSkills = nodes
+    .filter(node => node.candidate_agents.length === 0)
     .map(node => ({
-      missing_capability: node.node_id,
-      suggested_skill_id: node.suggested_skill_id,
-      reason: `No active skill in the lightweight index covers ${node.label}.`,
+      node_id: node.id,
+      missing_capability: node.capability,
+      suggested_skill_id: capabilities.find(item => item.id === node.id)?.suggested_skill_id || `${node.id}-agent`,
       recommended_action: 'suggest_create_skill',
-      priority: node.node_id === 'planning' ? 'high' : 'medium'
+      priority: node.id === 'planning' ? 'high' : 'medium'
     }));
 
   return {
     schema_version: 'mosa.workflow_dag.v1',
-    plan_id: crypto.createHash('sha1').update(`${intent}:${Date.now()}`).digest('hex').slice(0, 12),
-    created_at: new Date().toISOString(),
-    source: 'mosa_cli.js plan',
-    intent_hash: stableIntentHashForPlan(intent, args),
-    intent_fingerprint: crypto.createHash('sha1').update(intent || '').digest('hex'),
     goal: intent,
-    deliverables: [...new Set(nodes.flatMap(node => node.deliverables))],
-    capability_nodes: nodes,
-    edges,
+    intent_hash: stableIntentHashForPlan(intent),
+    nodes,
+    edges: buildEdges(nodes),
     parallel_groups: buildParallelGroups(nodes),
     router_hints: nodes.map(node => ({
-      node_id: node.node_id,
-      required_capability: node.required_capability,
-      atomic_keywords: tokenize(`${node.label} ${node.required_capability} ${node.deliverables.join(' ')}`).slice(0, 12),
-      preferred_skill_ids: node.candidate_agents.map(candidate => candidate.skill_id),
-      suggested_skill_id: node.suggested_skill_id
+      node_id: node.id,
+      required_capability: node.capability,
+      atomic_keywords: tokenize(`${node.label} ${node.capability}`).slice(0, 10),
+      preferred_skill_ids: node.candidate_agents.map(candidate => candidate.skill_id)
     })),
-    collaboration_order: nodes.map(node => node.node_id),
-    missing_capabilities: missing.map(item => item.missing_capability),
-    skill_growth_suggestions: missing,
-    token_policy: {
-      model_reads: ['01_Work/workflow_plan.json summary fields', '01_Work/routing_result.json'],
-      node_reads: ['02_Output/routing_index_light.json', '02_Output/active_skill_index.json'],
-      full_skill_files: 'load only after Router selects execution skill'
-    },
-    index_source: index.source
+    missing_skills: missingSkills
   };
 }
 
 function renderWorkflowMarkdown(plan) {
-  const lines = [
-    '# MOSA Workflow Capability DAG',
-    '',
-    `- Intent: ${plan.goal}`,
-    `- Plan ID: ${plan.plan_id}`,
-    `- Source: ${plan.source}`,
-    '',
-    '## Capability Nodes'
-  ];
-  for (const node of plan.capability_nodes) {
-    const available = node.candidate_agents.filter(candidate => candidate.status === 'available').map(candidate => candidate.skill_id);
-    lines.push(`- ${node.sequence}. ${node.node_id}: ${node.required_capability}`);
-    lines.push(`  - candidates: ${available.length ? available.join(', ') : 'none'}`);
-    if (node.missing) lines.push(`  - missing suggestion: ${node.suggested_skill_id}`);
+  const lines = ['# MOSA Workflow Capability DAG', '', `- Intent: ${plan.goal}`, '', '## Nodes'];
+  for (const node of plan.nodes) {
+    lines.push(`- ${node.sequence}. ${node.id}: ${node.capability}`);
+    lines.push(`  - candidates: ${node.candidate_agents.map(item => item.skill_id).join(', ') || 'none'}`);
   }
   lines.push('', '## Edges');
-  for (const edge of plan.edges) lines.push(`- ${edge[0]} -> ${edge[1]}`);
-  lines.push('', '## Skill Growth Suggestions');
-  if (!plan.skill_growth_suggestions.length) lines.push('- none');
-  for (const item of plan.skill_growth_suggestions) {
-    lines.push(`- ${item.suggested_skill_id}: ${item.reason}`);
-  }
+  for (const edge of plan.edges) lines.push(`- ${edge.from} -> ${edge.to}`);
+  lines.push('', '## Missing Skills');
+  if (!plan.missing_skills.length) lines.push('- none');
+  for (const item of plan.missing_skills) lines.push(`- ${item.suggested_skill_id}: ${item.missing_capability}`);
   return `${lines.join('\n')}\n`;
 }
 
 function runPlan(root, args = {}) {
   const intent = args.intent || args._.slice(1).join(' ');
   if (!intent) return { status: 'fail', message: 'Missing --intent for workflow plan.' };
-  const plan = buildWorkflowPlan(root, intent, args);
+  const plan = buildWorkflowPlan(root, intent);
   if (args.write) {
     writeJsonAtomic(path.join(root, '01_Work/workflow_plan.json'), plan);
     fs.writeFileSync(path.join(root, '01_Work/workflow_plan.md'), renderWorkflowMarkdown(plan), 'utf8');
   }
-  return {
-    status: 'ok',
-    workflow_plan: args.write ? '01_Work/workflow_plan.json' : null,
-    workflow_summary: args.write ? '01_Work/workflow_plan.md' : null,
-    plan
-  };
+  return { status: 'ok', workflow_plan: args.write ? '01_Work/workflow_plan.json' : null, workflow_summary: args.write ? '01_Work/workflow_plan.md' : null, plan };
+}
+
+function runHook(root, args = {}) {
+  const script = path.join(root, '00_System/mosa_hooks.js');
+  if (!fs.existsSync(script)) return { status: 'fail', message: 'mosa_hooks.js missing' };
+  const hookArgs = [script, '--level', args.level || 'auto', '--event', args.event || 'maintain'];
+  const result = spawnSync(process.execPath, hookArgs, { cwd: root, encoding: 'utf8' });
+  if (result.status !== 0) return { status: 'fail', stderr: result.stderr };
+  return JSON.parse(result.stdout);
+}
+
+function assert(condition, message, issues) {
+  if (!condition) issues.push(message);
 }
 
 function runTests(root) {
-  const cases = [
-    ['google apps script web app sheet cache quota', 'GAS_WEBAPP_ARCHITECT'],
-    ['mosa graph token shield project startup', 'MOSA_GRAPH_BUILDER'],
-    ['build an mcp server tool integration', 'MCP_BUILDER'],
-    ['frontend ux component layout', 'UI_SUITE'],
-    ['mosa maintenance dag framework contract', 'MOSA_HARMONIZER']
-  ];
-  const results = cases.map(([intent, expected]) => {
-    const result = route(root, intent);
-    return {
-      intent,
-      expected,
-      actual: result.top[0]?.skill_id || null,
-      pass: result.top[0]?.skill_id === expected,
-      confidence: result.confidence
-    };
-  });
-  return {
-    status: results.every(item => item.pass) ? 'ok' : 'fail',
-    results
-  };
-}
-
-function loadSkillIndex(root) {
-  const active = readJson(path.join(root, '02_Output/active_skill_index.json'), null);
-  if (Array.isArray(active?.skills)) return { source: '02_Output/active_skill_index.json', skills: active.skills };
-  const light = readJson(path.join(root, '02_Output/routing_index_light.json'), null);
-  if (Array.isArray(light?.skills)) return { source: '02_Output/routing_index_light.json', skills: light.skills };
-  return { source: null, skills: [] };
-}
-
-function loadReferenceMap(root) {
-  return readJson(path.join(root, '02_Output/reference_map_light.json'), { references: {} }).references || {};
-}
-
-function dependencyList(skill) {
-  if (Array.isArray(skill.requires)) return skill.requires;
-  if (Array.isArray(skill.dependencies)) return skill.dependencies;
-  if (Array.isArray(skill.dependencies?.requires)) return skill.dependencies.requires;
-  return [];
-}
-
-function detectSkillRoots(args) {
-  const roots = [];
-  if (args.skill_root) roots.push(args.skill_root);
-  if (process.env.MOSA_SKILL_ROOT) roots.push(process.env.MOSA_SKILL_ROOT);
-  const home = process.env.HOME || process.env.USERPROFILE;
-  if (home) {
-    roots.push(path.join(home, '.codex', 'skills'));
-    roots.push(path.join(home, '.gemini', 'antigravity', 'skills'));
-    roots.push(path.join(home, '.gemini', 'config', 'skills'));
-  }
-  return [...new Set(roots.map(item => path.resolve(item)))].filter(item => fs.existsSync(item));
-}
-
-function skillFolderFromPath(filepath) {
-  if (!filepath || typeof filepath !== 'string') return null;
-  const normalized = filepath.replace(/\\/g, '/');
-  const parts = normalized.split('/').filter(Boolean);
-  const skillIndex = parts.lastIndexOf('skills');
-  if (skillIndex >= 0 && parts[skillIndex + 1]) return parts[skillIndex + 1];
-  if (parts.length >= 2 && parts[parts.length - 1].toLowerCase() === 'skill.md') return parts[parts.length - 2];
-  return null;
-}
-
-function checkExternalOrphans(skillRoots, skills) {
-  const registeredFolders = new Set(
-    skills
-      .map(skill => skillFolderFromPath(skill.filepath))
-      .filter(Boolean)
-  );
-  const orphans = [];
-  for (const rootDir of skillRoots) {
-    const ignore = new Set(['.system', 'archive', 'registry']);
-    const folders = fs.readdirSync(rootDir, { withFileTypes: true })
-      .filter(entry => entry.isDirectory() && !ignore.has(entry.name))
-      .map(entry => entry.name);
-    for (const folder of folders) {
-      const skillFile = path.join(rootDir, folder, 'SKILL.md');
-      if (fs.existsSync(skillFile) && registeredFolders.size && !registeredFolders.has(folder)) {
-        orphans.push({ skill_root: rootDir, folder });
-      }
-    }
-  }
-  return orphans;
-}
-
-function runDag(root, args = {}) {
-  const index = loadSkillIndex(root);
-  const skills = index.skills;
   const issues = [];
-  const warnings = [];
-  const skillIds = new Set();
-  const duplicates = new Set();
+  const startupPath = path.join(root, '01_Work/startup_result.json');
+  const routingPath = path.join(root, '01_Work/routing_result.json');
+  const planPath = path.join(root, '01_Work/workflow_plan.json');
+  const taskPath = path.join(root, '01_Work/task.md');
+  const taskBefore = fs.existsSync(taskPath) ? fs.statSync(taskPath).mtimeMs : null;
+  const routeBefore = fs.existsSync(routingPath) ? fs.statSync(routingPath).mtimeMs : null;
+  const planBefore = fs.existsSync(planPath) ? fs.statSync(planPath).mtimeMs : null;
 
-  for (const skill of skills) {
-    if (!skill.skill_id) {
-      issues.push({ type: 'missing_skill_id', skill });
-      continue;
-    }
-    if (skillIds.has(skill.skill_id)) duplicates.add(skill.skill_id);
-    skillIds.add(skill.skill_id);
-    if (skill.filepath && !fs.existsSync(path.join(root, skill.filepath))) {
-      issues.push({ type: 'missing_skill_file', skill_id: skill.skill_id, filepath: skill.filepath });
-    }
+  const lean = safeStart(root, { mode: 'micro', intent: 'quick status', write: true });
+  assert(lean.mode === 'lean', 'legacy micro should map to lean', issues);
+  assert(fs.existsSync(startupPath), 'start --write should create 01_Work/startup_result.json', issues);
+  const taskAfter = fs.existsSync(taskPath) ? fs.statSync(taskPath).mtimeMs : null;
+  const routeAfter = fs.existsSync(routingPath) ? fs.statSync(routingPath).mtimeMs : null;
+  const planAfter = fs.existsSync(planPath) ? fs.statSync(planPath).mtimeMs : null;
+  assert(taskBefore === taskAfter, 'lean start should not write task.md', issues);
+  assert(routeBefore === routeAfter, 'lean start should not write routing_result.json', issues);
+  assert(planBefore === planAfter, 'lean start should not write workflow_plan.json', issues);
+
+  const planResult = runPlan(root, { intent: 'build a data dashboard', write: true });
+  assert(planResult.status === 'ok' && fs.existsSync(planPath), 'plan --write should create workflow_plan.json', issues);
+  const plan = readJson(planPath, {});
+  const allowedPlanKeys = ['schema_version', 'goal', 'intent_hash', 'nodes', 'edges', 'parallel_groups', 'router_hints', 'missing_skills'];
+  assert(Object.keys(plan).every(key => allowedPlanKeys.includes(key)), 'workflow_plan.json should use simplified schema only', issues);
+
+  const routeResult = route(root, 'build a data dashboard', { workflowPlan: '01_Work/workflow_plan.json' });
+  assert(routeResult.schema_version === 'mosa.routing_result.v2' && fs.existsSync(routingPath), 'route should write routing_result.json v2', issues);
+  assert(Boolean(routeResult.single_route) !== Boolean(routeResult.dag_routes), 'routing_result should have single_route or dag_routes authority', issues);
+  for (const forbidden of ['top_skill', 'candidates', 'flat_candidates', 'effectiveTop', 'node_routes']) {
+    assert(!Object.prototype.hasOwnProperty.call(routeResult, forbidden), `routing_result should not include ${forbidden}`, issues);
   }
 
-  for (const skillId of duplicates) {
-    issues.push({ type: 'duplicate_skill_id', skill_id: skillId });
-  }
-
-  const adj = {};
-  for (const skill of skills) {
-    if (!skill.skill_id) continue;
-    adj[skill.skill_id] = dependencyList(skill);
-    for (const dep of adj[skill.skill_id]) {
-      if (!skillIds.has(dep)) issues.push({ type: 'missing_dependency', skill_id: skill.skill_id, dependency: dep });
-    }
-  }
-
-  const visited = new Set();
-  const stack = new Set();
-  const cycles = [];
-  function visit(node, trail = []) {
-    if (stack.has(node)) {
-      cycles.push([...trail, node]);
-      return;
-    }
-    if (visited.has(node)) return;
-    visited.add(node);
-    stack.add(node);
-    for (const next of adj[node] || []) {
-      if (skillIds.has(next)) visit(next, [...trail, node]);
-    }
-    stack.delete(node);
-  }
-
-  for (const skillId of skillIds) visit(skillId);
-  for (const cycle of cycles) {
-    issues.push({ type: 'dependency_cycle', path: cycle });
-  }
-
-  const references = loadReferenceMap(root);
-  for (const [reference, master] of Object.entries(references)) {
-    if (!skillIds.has(master)) warnings.push({ type: 'reference_master_not_in_active_index', reference, master });
-  }
-
-  const graph = readText(path.join(root, 'graphify-out/GRAPH_REPORT.md'));
-  for (const required of ['orchestrator-agent', 'router-agent', 'routing_index_light.json', 'mosa_cli.js']) {
-    if (!graph.includes(required)) warnings.push({ type: 'graph_contract_missing_pointer', pointer: required });
-  }
-  if (graph.includes('router_support_light.json')) {
-    issues.push({ type: 'stale_graph_pointer', pointer: 'router_support_light.json' });
-  }
-
-  const skillRoots = detectSkillRoots(args);
-  const orphans = args.external ? checkExternalOrphans(skillRoots, skills) : [];
-  for (const orphan of orphans) warnings.push({ type: 'external_orphan_skill_folder', ...orphan });
-
-  return {
-    status: issues.length ? 'fail' : 'ok',
-    source: index.source,
-    skill_count: skills.length,
-    skill_roots_checked: args.external ? skillRoots : [],
-    issues,
-    warnings
-  };
-}
-
-function checkTokenBudget(root) {
-  const budget = readJson(path.join(root, '02_Output/token_budget_report.json'), {});
-  const files = Array.isArray(budget.files) ? budget.files : [];
-  const issues = files
-    .filter(item => item.status && !['ok', 'cold-only'].includes(item.status))
-    .map(item => ({ type: 'token_budget_status', file: item.file, status: item.status }));
-  return {
-    status: issues.length ? 'fail' : 'ok',
-    files_checked: files.length,
-    issues
-  };
-}
-
-function checkFrameworkContract(root) {
-  const manifest = readJson(path.join(root, '02_Output/startup_manifest.json'), {});
-  const startupOrder = manifest.startup_order || [];
-  const issues = [];
-  const warnings = [];
-  if (!startupOrder.includes('00_System/mosa_cli.js')) issues.push('startup_manifest missing mosa_cli.js');
-  if (!startupOrder.includes('02_Output/routing_index_light.json')) issues.push('startup_manifest missing routing_index_light.json');
-  if ((manifest.forbidden_startup_reads || []).some(item => item.includes('registry_distiller_report')) === false) {
-    warnings.push('startup_manifest should forbid cold registry report during startup');
-  }
-  return {
-    status: issues.length ? 'fail' : 'ok',
-    issues,
-    warnings
-  };
+  return { status: issues.length ? 'fail' : 'ok', issues };
 }
 
 function runMaintain(root, args = {}) {
   const report = {
     generated_at: new Date().toISOString(),
-    policy: {
-      mode: 'read-only by default',
-      write_behavior: args.write ? 'wrote maintenance_report.json only' : 'no files changed',
-      registry_mutation: false
-    },
+    status: 'ok',
     check: validate(root),
-    tests: runTests(root),
-    dag: runDag(root, args),
-    token_budget: checkTokenBudget(root),
-    framework_contract: checkFrameworkContract(root)
+    tests: runTests(root)
   };
-  const failed = [
-    report.check,
-    report.tests,
-    report.dag,
-    report.token_budget,
-    report.framework_contract
-  ].some(item => item.status !== 'ok');
-  report.status = failed ? 'fail' : 'ok';
-
-  if (args.write) {
-    writeJsonAtomic(path.join(root, '02_Output/maintenance_report.json'), report);
-  }
+  report.status = report.check.status === 'ok' && report.tests.status === 'ok' ? 'ok' : 'fail';
+  if (args.write) writeJsonAtomic(path.join(root, '02_Output/maintenance_report.json'), report);
   return report;
 }
 
 function updateContext(root, args) {
   const file = path.join(root, '01_Work/context_bus.json');
-  const bus = readJson(file, {
-    _meta: { version: '1.1', lifecycle: 'ephemeral', max_tokens: 2000 },
-    shared_facts: {},
-    agent_outputs: {},
-    handoff: { next_agent: null, needed_inputs: [] }
-  });
+  const bus = readJson(file, { _meta: { version: 'mosa.context_bus.v2', lifecycle: 'ephemeral' }, shared_facts: {}, agent_outputs: {}, handoff: {} });
   if (args.fact && args.value) bus.shared_facts[args.fact] = args.value;
   if (args.next_agent) bus.handoff.next_agent = args.next_agent;
   bus._meta.updated_at = new Date().toISOString();
@@ -819,24 +387,25 @@ function main() {
 
   if (command === 'check') print(validate(root));
   else if (command === 'start') print(safeStart(root, args));
-  else if (command === 'route') print(route(root, args.intent || args._.slice(1).join(' '), { write: args.write, top: args.top }));
+  else if (command === 'route') print(route(root, args.intent || args._.slice(1).join(' '), { workflowPlan: args['workflow-plan'] || args.workflowPlan }));
   else if (command === 'plan') print(runPlan(root, args));
+  else if (command === 'hook') print(runHook(root, args));
   else if (command === 'test') print(runTests(root));
-  else if (command === 'dag') print(runDag(root, args));
   else if (command === 'maintain') print(runMaintain(root, args));
   else if (command === 'context') print(updateContext(root, args));
   else {
     print({
       usage: [
         'node 00_System/mosa_cli.js check',
-        'node 00_System/mosa_cli.js start --mode ask --intent "..."',
+        'node 00_System/mosa_cli.js start --mode lean --intent "..." --write',
         'node 00_System/mosa_cli.js plan --intent "..." --write',
-        'node 00_System/mosa_cli.js route --intent "..." --write',
-        'node 00_System/mosa_cli.js test',
-        'node 00_System/mosa_cli.js dag',
+        'node 00_System/mosa_cli.js route --intent "..." --workflow-plan 01_Work/workflow_plan.json',
+        'node 00_System/mosa_cli.js hook --event router-proof',
         'node 00_System/mosa_cli.js maintain --write',
-        'node 00_System/mosa_cli.js context --fact key --value value'
-      ]
+        'node 00_System/mosa_cli.js test'
+      ],
+      runtime_modes: [...RUNTIME_MODES],
+      legacy_mode_map: LEGACY_MODE_MAP
     });
   }
 }

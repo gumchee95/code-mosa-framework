@@ -216,7 +216,7 @@ function p2Checks() {
 }
 
 function parseArgs(argv) {
-  const args = { level: 'auto', event: 'normal-task', command: null, fullOutput: false };
+  const args = { level: 'auto', event: 'maintain', command: null, fullOutput: false };
   for (let i = 2; i < argv.length; i += 1) {
     const token = argv[i];
     if (token === '--level') args.level = argv[++i] || args.level;
@@ -228,7 +228,7 @@ function parseArgs(argv) {
 }
 
 function normalizeEvent(value) {
-  return String(value || 'normal-task').toLowerCase().replace(/_/g, '-');
+  return String(value || 'maintain').toLowerCase().replace(/_/g, '-');
 }
 
 function resolveAutoLevel(args) {
@@ -266,7 +266,7 @@ function main() {
   if (effectiveLevel === 'skip') {
     checks.push(pass('hook event trigger', {
       event: normalizeEvent(args.event),
-      reason: 'normal task; hook chain skipped'
+      reason: 'no triggered trust event; hook chain skipped'
     }));
   } else if (effectiveLevel === 'all') checks.push(...p2Checks());
   else if (effectiveLevel === 'p0') checks.push(...p0Checks());

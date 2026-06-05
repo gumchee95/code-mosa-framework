@@ -122,8 +122,19 @@ function ensureWorkspaceFiles(targetRoot) {
   const routingCachePath = path.join(systemDir, 'routing_cache.json');
   if (!fs.existsSync(routingCachePath)) writeJson(routingCachePath, {});
 
-  const sessionPath = path.join(workDir, 'session_state.json');
-  if (!fs.existsSync(sessionPath)) writeJson(sessionPath, { graph_context: null });
+  const contextPath = path.join(workDir, 'context_bus.json');
+  if (!fs.existsSync(contextPath)) {
+    writeJson(contextPath, {
+      _meta: {
+        version: 'mosa.context_bus.v2',
+        lifecycle: 'ephemeral',
+        graph_context: null
+      },
+      shared_facts: {},
+      agent_outputs: {},
+      handoff: {}
+    });
+  }
 
   const taskPath = path.join(workDir, 'task.md');
   if (!fs.existsSync(taskPath)) {
@@ -177,14 +188,18 @@ function compactRunResult(run) {
     };
   }
   if (run.script === 'mosa_route.js') {
+    const selected = output.single_route?.selected_skill
+      || output.dag_routes?.find(route => route.selected_skill)?.selected_skill
+      || null;
     return {
       script: run.script,
       status: run.status,
       routing_result: '01_Work/routing_result.json',
       router_source: output.engine_source || output.source,
       schema_version: output.schema_version || null,
-      top_skill: output.top_skill?.skill_id || null,
-      confidence_tier: output.top_skill?.confidence_tier || null,
+      route_type: output.route_type || null,
+      selected_skill: selected?.skill_id || null,
+      confidence_tier: selected?.confidence_tier || null,
       validation_passed: output.validation?.passed ?? null
     };
   }
@@ -233,7 +248,7 @@ function main() {
 
   const runResults = [];
   if (args.run) {
-    runResults.push(runNode(targetRoot, 'mosa_startup.js', ['--intent', args.intent || 'MOSA workspace startup']));
+    runResults.push(runNode(targetRoot, 'mosa_startup.js', ['--intent', args.intent || 'MOSA workspace startup', '--write']));
     const routeArgs = [];
     if (args.intent) routeArgs.push('--intent', args.intent);
     if (args.domain) routeArgs.push('--domain', args.domain);
@@ -253,7 +268,7 @@ function main() {
       routing_cache: '00_System/routing_cache.json',
       task: '01_Work/task.md',
       task_results: '01_Work/task_results.md',
-      session_state: '01_Work/session_state.json'
+      context_bus: '01_Work/context_bus.json'
     },
     run_results: runResults,
     cold_start_policy: 'light artifacts copied when available; full registry reports remain cold diagnostics',

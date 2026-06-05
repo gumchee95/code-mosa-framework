@@ -1,5 +1,16 @@
-﻿const fs = require('fs');
+#!/usr/bin/env node
+
+const fs = require('fs');
 const path = require('path');
+const crypto = require('crypto');
+
+const RUNTIME_MODES = new Set(['lean', 'standard', 'cold-repair']);
+const LEGACY_MODE_MAP = {
+  micro: 'lean',
+  full: 'standard',
+  maintenance: 'standard',
+  maintain: 'standard'
+};
 
 function readJson(filePath, fallback = null) {
   try {
@@ -9,24 +20,19 @@ function readJson(filePath, fallback = null) {
   }
 }
 
-function readText(filePath, fallback = '') {
-  try {
-    return fs.readFileSync(filePath, 'utf8').replace(/^\uFEFF/, '');
-  } catch (_) {
-    return fallback;
-  }
+function writeJson(filePath, value) {
+  fs.mkdirSync(path.dirname(filePath), { recursive: true });
+  fs.writeFileSync(filePath, `${JSON.stringify(value, null, 2)}\n`, 'utf8');
 }
 
-function bytes(filePath) {
-  try {
-    return fs.statSync(filePath).size;
-  } catch (_) {
-    return 0;
-  }
+function fileInfo(root, relativePath) {
+  const fullPath = path.join(root, relativePath);
+  if (!fs.existsSync(fullPath)) return { path: relativePath, exists: false, bytes: 0 };
+  return { path: relativePath, exists: true, bytes: fs.statSync(fullPath).size };
 }
 
-function estimateTokens(value) {
-  return Math.ceil(Buffer.byteLength(JSON.stringify(value), 'utf8') / 4);
+function estimateTokens(bytes) {
+  return Math.ceil(bytes / 4);
 }
 
 function findWorkspaceRoot(startDir = process.cwd()) {
@@ -38,231 +44,181 @@ function findWorkspaceRoot(startDir = process.cwd()) {
     if (parent === current) break;
     current = parent;
   }
-  return process.cwd();
+  return path.resolve(startDir);
 }
 
 function parseArgs(argv) {
-  const args = { mode: 'ask', intent: '', write: false };
+  const args = { intent: '', mode: 'auto', write: false };
   for (let i = 0; i < argv.length; i += 1) {
-    const arg = argv[i];
-    if (arg === '--mode') args.mode = argv[++i] || args.mode;
-    else if (arg === '--intent') args.intent = argv[++i] || '';
-    else if (arg === '--write') args.write = true;
+    const item = argv[i];
+    if (item === '--intent') args.intent = argv[++i] || '';
+    else if (item === '--mode') args.mode = argv[++i] || 'auto';
+    else if (item === '--write') args.write = true;
+    else if (!args.intent) args.intent = item;
   }
   return args;
 }
 
-function compactLines(text, maxLines = 8) {
-  return text
-    .split(/\r?\n/)
-    .map(line => line.trim())
-    .filter(Boolean)
-    .slice(-maxLines);
+function keywordList(intent) {
+  return [...new Set(String(intent || '')
+    .toLowerCase()
+    .replace(/[^a-z0-9\u4e00-\u9fff\s-]+/g, ' ')
+    .split(/\s+/)
+    .filter(word => word.length > 1))]
+    .slice(0, 8);
 }
 
-function extractSection(text, heading, maxLines = 10) {
-  const lines = text.split(/\r?\n/);
-  const start = lines.findIndex(line => line.trim().toLowerCase() === heading.toLowerCase());
-  if (start < 0) return [];
-  const result = [];
-  for (let i = start + 1; i < lines.length && result.length < maxLines; i += 1) {
-    if (/^#{1,3}\s+/.test(lines[i]) && result.length) break;
-    const line = lines[i].trim();
-    if (line) result.push(line);
-  }
-  return result;
+function evidenceStatus(root) {
+  const required = [
+    '00_System/mosa_startup.js',
+    '00_System/mosa_route.js',
+    '01_Work/startup_result.json',
+    '01_Work/routing_result.json'
+  ];
+  const missing = required.filter(item => !fs.existsSync(path.join(root, item)));
+  return { required, missing, trusted: missing.length === 0 };
 }
 
-function scoreIntent(intent) {
+function recommendMode(intent, root) {
+  const evidence = evidenceStatus(root);
+  if (evidence.missing.some(item => item.startsWith('00_System/'))) return 'cold-repair';
+
   const text = String(intent || '').toLowerCase();
-  const count = patterns => patterns.reduce((score, pattern) => score + (pattern.test(text) ? 1 : 0), 0);
-  return {
-    maintenance: count([/audit/, /maintenance/, /distiller/, /registry/, /collision/, /orphan/, /harmonizer/, /framework/, /token efficiency/]),
-    routing: count([/skill/, /route/, /router/, /agent/, /apps script/, /\bgas\b/, /frontend/, /\bui\b/, /\bux\b/, /finance/, /document/, /spreadsheet/, /\bmcp\b/]),
-    complexity: count([/build/, /implement/, /system/, /workflow/, /multi[- ]?agent/, /architecture/, /migration/, /refactor/, /full/, /end[- ]?to[- ]?end/, /integrat/]),
-    project: count([/new project/, /start .*project/, /project startup/, /scaffold/, /from scratch/, /setup/]),
-    tiny: count([/quick/, /small/, /minor/, /simple/, /explain/, /status/, /question/, /ask/, /minor change/, /small fix/, /simple/, /explain/])
-  };
+  const simple = /\b(explain|question|quick|small|tiny|status|where|what|why|how)\b/.test(text);
+  const complex = /\b(build|implement|refactor|framework|router|dag|skill|workflow|audit|registry|hook|release|deploy|multi)\b/.test(text);
+  const touchesMosa = /\b(mosa|agents\.md|skill|router|startup|hook|registry|graph)\b/.test(text);
+
+  if (!evidence.trusted) return 'cold-repair';
+  if (complex || touchesMosa) return 'standard';
+  if (simple) return 'lean';
+  return 'lean';
 }
 
-function recommendedMode(intent) {
-  const scores = scoreIntent(intent);
-  if (scores.maintenance >= 1) return { mode: 'maintenance', confidence: scores.maintenance >= 2 ? 'high' : 'medium', scores };
-  if (scores.tiny >= 1 && scores.complexity === 0 && scores.project === 0) return { mode: 'micro', confidence: 'high', scores };
-  if (scores.complexity >= 1 && scores.routing >= 1) return { mode: 'full', confidence: scores.complexity + scores.routing >= 3 ? 'high' : 'medium', scores };
-  if (scores.project >= 1 || scores.routing >= 1 || scores.complexity >= 1) return { mode: 'standard', confidence: 'medium', scores };
-  return { mode: 'micro', confidence: 'low', scores };
-}
-
-function resolveMode(requestedMode, intent) {
-  const validModes = new Set(['micro', 'standard', 'full', 'maintenance']);
-  if (validModes.has(requestedMode)) {
-    return {
-      mode: requestedMode,
-      requested_mode: requestedMode,
-      recommendation: recommendedMode(intent),
-      question: null
-    };
-  }
-
-  const recommendation = recommendedMode(intent);
-  if (requestedMode === 'auto' && recommendation.confidence !== 'low') {
-    return {
-      mode: recommendation.mode,
-      requested_mode: requestedMode,
-      recommendation,
-      question: null
-    };
-  }
-
-  const alternatives = recommendation.mode === 'micro'
-    ? ['standard', 'full']
-    : recommendation.mode === 'maintenance'
-    ? ['micro', 'maintenance']
-    : ['micro', recommendation.mode, 'full'];
+function normalizeMode(inputMode, intent, root) {
+  const requested = String(inputMode || 'auto').toLowerCase();
+  const mapped = LEGACY_MODE_MAP[requested] || requested;
+  const recommended = recommendMode(intent, root);
+  const mode = mapped === 'auto' || mapped === 'ask' || !RUNTIME_MODES.has(mapped)
+    ? recommended
+    : mapped;
 
   return {
-    mode: 'ask',
-    requested_mode: requestedMode,
-    recommendation,
-    alternatives: [...new Set(alternatives)],
-    question: `Recommended mode is ${recommendation.mode}. Use that, or choose another mode before starting?`
-  };
-}
-
-function graphSummary(graphText) {
-  return {
-    god_nodes: extractSection(graphText, '## God Nodes', 12)
-      .map(line => line.replace(/^- /, '')),
-    token_rules: extractSection(graphText, '## Token Shield Rule', 8)
-      .map(line => line.replace(/^- /, '')),
-    active_routing: extractSection(graphText, '## Active Skill Routing', 10)
-  };
-}
-
-function taskSummary(taskText) {
-  return {
-    pipeline_trace: (taskText.match(/^\[Pipeline Trace\]:.*$/m) || [null])[0],
-    atomic_keywords: extractSection(taskText, '## Atomic Keywords', 8)
-      .map(line => line.replace(/^- /, '')),
-    status: extractSection(taskText, '## Status', 5)
-      .map(line => line.replace(/^- /, ''))
-  };
-}
-
-function modeSummary(modeProfiles) {
-  const profiles = modeProfiles.profiles || {};
-  return Object.fromEntries(
-    Object.entries(profiles).map(([name, profile]) => [
-      name,
-      {
-        triggers: (profile.triggers || []).slice(0, 6),
-        top_boosts: Object.entries(profile.boosts || {})
-          .sort((a, b) => b[1] - a[1])
-          .slice(0, 3)
-          .map(([skillId]) => skillId)
-      }
-    ])
-  );
-}
-
-function buildPacket(root, args) {
-  const manifestPath = path.join(root, '02_Output', 'startup_manifest.json');
-  const graphPath = path.join(root, 'graphify-out', 'GRAPH_REPORT.md');
-  const promptStackPath = path.join(root, '00_System', 'prompt_stack.md');
-  const taskPath = path.join(root, '01_Work', 'task.md');
-  const contextBusPath = path.join(root, '01_Work', 'context_bus.json');
-  const tokenBudgetPath = path.join(root, '02_Output', 'token_budget_report.json');
-  const modeProfilesPath = path.join(root, '02_Output', 'mode_profiles.json');
-  const routingLightPath = path.join(root, '02_Output', 'routing_index_light.json');
-  const referenceLightPath = path.join(root, '02_Output', 'reference_map_light.json');
-
-  const manifest = readJson(manifestPath, {});
-  const graphText = readText(graphPath);
-  const promptStack = readText(promptStackPath);
-  const taskText = readText(taskPath);
-  const contextBus = readJson(contextBusPath, {});
-  const tokenBudget = readJson(tokenBudgetPath, {});
-  const modeProfiles = readJson(modeProfilesPath, {});
-  const routingLight = readJson(routingLightPath, {});
-  const referenceLight = readJson(referenceLightPath, {});
-
-  const modeDecision = resolveMode(args.mode, args.intent);
-  const mode = modeDecision.mode;
-  const packet = {
-    status: 'success',
+    requested_mode: requested,
+    legacy_mapped_mode: LEGACY_MODE_MAP[requested] || null,
     mode,
-    mode_decision: modeDecision,
-    workspace_root: root,
+    recommended_mode: recommended,
+    runtime_modes: [...RUNTIME_MODES],
+    maintain_command: 'node 00_System/mosa_cli.js maintain'
+  };
+}
+
+function updateState(root) {
+  const statePath = path.join(root, '00_System/state.json');
+  const current = readJson(statePath, {});
+  const next = {
+    turn_count: Number(current.turn_count || 0) + 1,
+    drift_threshold: Number(current.drift_threshold || 20)
+  };
+  writeJson(statePath, next);
+  return next;
+}
+
+function graphContext(root) {
+  const graphPath = path.join(root, 'graphify-out/GRAPH_REPORT.md');
+  if (!fs.existsSync(graphPath)) return null;
+  return {
+    report: 'graphify-out/GRAPH_REPORT.md',
+    god_nodes: ['00_System', '01_Work', '02_Output', 'graphify-out/GRAPH_REPORT.md'],
+    generated_at: new Date().toISOString()
+  };
+}
+
+function buildContextBus(root, args, modeDecision) {
+  const manifest = readJson(path.join(root, '02_Output/startup_manifest.json'), {});
+  const contextBus = {
     generated_at: new Date().toISOString(),
-    policy: {
-      purpose: 'Lightweight MOSA startup packet. Escalate only when the task needs routing, long execution, or maintenance.',
-      forbidden_startup_reads: manifest.forbidden_startup_reads || ['02_Output/registry_distiller_report.json']
-    },
-    health: manifest.health || null,
+    mode: modeDecision.mode,
+    intent: args.intent,
+    atomic_keywords: keywordList(args.intent),
+    workspace_root: root,
     pointers: {
-      graph_report: 'graphify-out/GRAPH_REPORT.md',
-      startup_manifest: '02_Output/startup_manifest.json',
-      prompt_stack: '00_System/prompt_stack.md',
-      task: '01_Work/task.md',
-      context_bus: '01_Work/context_bus.json',
+      state: '00_System/state.json',
+      startup_result: '01_Work/startup_result.json',
+      routing_result: '01_Work/routing_result.json',
+      workflow_plan: '01_Work/workflow_plan.json',
       routing_index_light: '02_Output/routing_index_light.json',
-      reference_map_light: '02_Output/reference_map_light.json',
-      full_mosa_protocol: '00_System/MOSA_PROJECT_STARTUP_PROTOCOL.md'
+      startup_manifest: '02_Output/startup_manifest.json'
     },
-    graph: graphSummary(graphText),
-    task: taskSummary(taskText),
-    context_bus: {
-      lifecycle: contextBus?._meta?.lifecycle || null,
-      max_tokens: contextBus?._meta?.max_tokens || null,
-      shared_fact_keys: Object.keys(contextBus.shared_facts || {}),
-      agent_output_keys: Object.keys(contextBus.agent_outputs || {}),
-      next_agent: contextBus.handoff?.next_agent || null
+    constraints: {
+      cold_reads_forbidden: manifest.forbidden_startup_reads || ['02_Output/registry_distiller_report.json'],
+      registry_mutation_allowed: false
     },
-    prompt_stack_recent: compactLines(promptStack, 6),
-    escalation: {
-      micro: 'Use LLM + relevant files only. Do not route.',
-      standard: 'Use routing_index_light and mode_profiles if skill selection is needed.',
-      full: 'Use Orchestrator + Router + selected Skill SOP.',
-      maintenance: 'Use Harmonizer or Distiller; full registry report remains cold unless explicitly needed.'
+    _meta: {
+      version: 'mosa.context_bus.v2',
+      lifecycle: 'ephemeral',
+      graph_context: graphContext(root)
     }
   };
+  return contextBus;
+}
 
-  if (mode === 'standard' || mode === 'full' || mode === 'maintenance') {
-    packet.routing = {
-      source: '02_Output/routing_index_light.json',
-      active_skills: routingLight.summary?.active_skills || null,
-      mode_profiles: modeSummary(modeProfiles),
-      reference_count: Object.keys(referenceLight.references || {}).length
-    };
-  }
+function buildStartupResult(root, args) {
+  const modeDecision = normalizeMode(args.mode, args.intent, root);
+  const state = updateState(root);
+  const contextBus = buildContextBus(root, args, modeDecision);
+  const hotArtifacts = {
+    startup_manifest: fileInfo(root, '02_Output/startup_manifest.json'),
+    routing_index_light: fileInfo(root, '02_Output/routing_index_light.json'),
+    reference_map_light: fileInfo(root, '02_Output/reference_map_light.json'),
+    mode_profiles: fileInfo(root, '02_Output/mode_profiles.json'),
+    graph_report: fileInfo(root, 'graphify-out/GRAPH_REPORT.md')
+  };
+  const evidence = evidenceStatus(root);
 
-  if (mode === 'full' || mode === 'maintenance') {
-    packet.budget = {
-      report: '02_Output/token_budget_report.json',
-      files: (tokenBudget.files || []).map(item => ({
-        file: item.file,
-        estimated_tokens: item.estimated_tokens,
-        status: item.status
-      }))
-    };
-  }
-
-  packet.estimated_packet_tokens = estimateTokens(packet);
-  return packet;
+  return {
+    schema_version: 'mosa.startup_result.v2',
+    status: 'ok',
+    generated_at: contextBus.generated_at,
+    workspace_root: root,
+    intent_hash: crypto.createHash('sha1').update(args.intent || '').digest('hex'),
+    mode: modeDecision.mode,
+    mode_decision: modeDecision,
+    intent: args.intent,
+    atomic_keywords: contextBus.atomic_keywords,
+    turn_count: state.turn_count,
+    drift_threshold: state.drift_threshold,
+    evidence,
+    hot_artifacts: hotArtifacts,
+    estimated_hot_tokens: Object.values(hotArtifacts)
+      .filter(item => item.exists)
+      .reduce((sum, item) => sum + estimateTokens(item.bytes), 0),
+    pointers: {
+      startup_result: '01_Work/startup_result.json',
+      context_bus: '01_Work/context_bus.json',
+      routing_result: '01_Work/routing_result.json'
+    },
+    next_agent_action: modeDecision.mode === 'lean'
+      ? 'answer directly; do not create task artifacts unless the user asks'
+      : 'read startup_result and context_bus, then continue with Orchestrator/Router as needed'
+  };
 }
 
 function main() {
   const args = parseArgs(process.argv.slice(2));
   const root = findWorkspaceRoot();
-  const packet = buildPacket(root, args);
+  fs.mkdirSync(path.join(root, '00_System'), { recursive: true });
+  fs.mkdirSync(path.join(root, '01_Work'), { recursive: true });
+  fs.mkdirSync(path.join(root, '02_Output'), { recursive: true });
+
+  const startupResult = buildStartupResult(root, args);
+  const contextBus = buildContextBus(root, args, startupResult.mode_decision);
+
   if (args.write) {
-    const outputPath = path.join(root, '02_Output', 'startup_packet.json');
-    fs.writeFileSync(outputPath, JSON.stringify(packet, null, 2));
-    packet.written_to = '02_Output/startup_packet.json';
+    writeJson(path.join(root, '01_Work/context_bus.json'), contextBus);
+    writeJson(path.join(root, '01_Work/startup_result.json'), startupResult);
   }
-  console.log(JSON.stringify(packet, null, 2));
+
+  console.log(JSON.stringify(startupResult, null, 2));
 }
 
 main();
-

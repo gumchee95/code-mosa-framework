@@ -1,223 +1,111 @@
-# MOSA Project Startup Protocol
+# MOSA Light Startup Protocol
 
-## Purpose
-
-Use MOSA as the fixed startup layer for every new project, so each new chat restores project context instead of redesigning the framework.
+This file is a compact project bootstrap reference. `AGENTS.md` remains the canonical protocol.
 
 ## Required Workspace Files
 
-Every project must contain:
-
 - `AGENTS.md`
-- `graphify-out/GRAPH_REPORT.md`
 - `00_System/state.json`
 - `00_System/prompt_stack.md`
-- `00_System/routing_cache.json`
-- `01_Work/task.md`
-- `01_Work/session_state.json`
+- `00_System/mosa_cli.js`
+- `00_System/mosa_startup.js`
+- `00_System/mosa_route.js`
 - `01_Work/context_bus.json`
-- `02_Output/`
-- `skills/` when distributing the public framework package
+- `01_Work/startup_result.json`
+- `02_Output/routing_index_light.json`
+- `graphify-out/GRAPH_REPORT.md`
 
-## Startup Read Order
+`01_Work/session_state.json` is not required.
 
-Preferred lightweight startup:
+## Startup
 
-```bash
-node 00_System/mosa_cli.js start --mode ask --intent "<user intent>"
-```
+Lean work should answer directly and skip MOSA artifacts.
 
-Use the returned startup packet first. If the packet mode is `ask`, confirm the mode with the user before escalating. Escalate to the manual read order only when the chosen mode is `standard`, `full`, or `maintenance`.
-
-If the CLI is unavailable, call the startup script directly:
+For standard work:
 
 ```bash
-node 00_System/mosa_startup.js --mode ask --intent "<user intent>"
+node 00_System/mosa_cli.js start --mode standard --intent "<user intent>" --write
 ```
 
-For every new chat or resumed task:
+Read:
 
-1. Read `AGENTS.md`.
-2. Read `02_Output/startup_manifest.json`.
-3. Read `graphify-out/GRAPH_REPORT.md`.
-4. Read `00_System/prompt_stack.md`.
-5. Read `01_Work/task.md`.
-6. Read `02_Output/routing_index_light.json` if skill routing is needed.
-7. Read `02_Output/mode_profiles.json` and `02_Output/reference_map_light.json` when route disambiguation is needed.
-8. Read `02_Output/active_skill_index.json` only when light routing is insufficient.
-9. Read full Skill files only when routing confidence is low or implementation requires exact SOP details.
+1. `01_Work/startup_result.json`
+2. `01_Work/context_bus.json`
+3. `graphify-out/GRAPH_REPORT.md` when architecture context is needed
+4. `02_Output/routing_index_light.json` only when routing is needed
 
-## Project Creation Sequence
+## Modes
 
-When starting a new project:
+Runtime modes:
 
-1. Create the required workspace files.
-2. Write `00_System/state.json`:
+- `lean`
+- `standard`
+- `cold-repair`
 
-```json
-{"turn_count": 0, "drift_threshold": 20}
-```
+Legacy inputs:
 
-3. Generate `01_Work/task.md` with:
+- `micro` -> `lean`
+- `full` -> `standard`
+- `maintenance` -> `standard`
 
-- `[Pipeline Trace]`
-- `Atomic Keywords`
-- `Intent Profile`
-- `Project Defaults`
-- `Acceptance Criteria`
-
-4. Generate `graphify-out/GRAPH_REPORT.md` with God Nodes.
-5. Generate `AGENTS.md` with Token Shield instructions.
-6. Route skills through `routing_index_light.json` before reading Skill files.
-7. Use `01_Work/context_bus.json` for current-task cross-agent handoff.
-8. Record durable decisions in `00_System/prompt_stack.md`.
-9. Keep public core skills in English under `skills/`.
-
-## Router Contract
-
-Orchestrator must pass structured input:
-
-```json
-{
-  "intent_summary": "short project goal",
-  "atomic_keywords": ["keyword"],
-  "preferred_domain": "workflow",
-  "required_capability": "specific capability",
-  "exclusions": []
-}
-```
-
-Router must return:
-
-- Top 3 candidates
-- confidence
-- match reasons
-- fallback recommendation
-
-## Token Rules
-
-- Run `node 00_System/mosa_cli.js check` before framework maintenance.
-- Run `node 00_System/mosa_cli.js dag` before changing skill dependencies, references, or graph contracts.
-- Run `node 00_System/mosa_cli.js maintain` for full read-only health checks.
-- Prefer `00_System/mosa_startup.js` for lightweight startup.
-- Prefer graph first.
-- Prefer cache second.
-- Prefer `startup_manifest.json` for startup pointers.
-- Prefer `routing_index_light.json` third.
-- Use `mode_profiles.json` for project-mode boosts.
-- Use `reference_map_light.json` to redirect duplicate/reference skills to masters.
-- Use `active_skill_index.json` only when light routing is insufficient.
-- Prefer pointers over full content.
-- Treat full reports as output artifacts, not chat context.
-- Never read `registry_distiller_report.json` during normal startup.
-- Trigger Registry Distiller only for low-confidence routing or registry health checks.
-
-## Maintenance Contract
-
-MOSA maintenance is read-only by default.
-
-Use:
+Maintenance is a command:
 
 ```bash
 node 00_System/mosa_cli.js maintain
 ```
 
-This runs:
+## Planning And Routing
 
-- workspace and JSON checks
-- golden route tests
-- dependency and reference DAG validation
-- graph contract checks
-- token budget checks
-
-To save the maintenance result as an output artifact:
+For cross-skill work:
 
 ```bash
-node 00_System/mosa_cli.js maintain --write
+node 00_System/mosa_cli.js plan --intent "<user intent>" --write
+node 00_System/mosa_cli.js route --intent "<user intent>" --workflow-plan 01_Work/workflow_plan.json
 ```
 
-This writes only `02_Output/maintenance_report.json`. It must not mutate registry files, skill files, or routing indexes.
+`workflow_plan.json` uses only:
 
-Use:
+- `schema_version`
+- `goal`
+- `intent_hash`
+- `nodes`
+- `edges`
+- `parallel_groups`
+- `router_hints`
+- `missing_skills`
+
+`routing_result.json` uses only one route authority:
+
+- `single_route`
+- `dag_routes`
+
+## Context Bus
+
+Use `01_Work/context_bus.json` for current-task handoff and graph context:
+
+```json
+{
+  "_meta": {
+    "graph_context": {
+      "report": "graphify-out/GRAPH_REPORT.md",
+      "god_nodes": ["00_System", "01_Work", "02_Output"]
+    }
+  }
+}
+```
+
+## Hooks
+
+Use hooks only for triggered trust events:
 
 ```bash
-node 00_System/mosa_cli.js dag
+node 00_System/mosa_cli.js hook --event router-proof
 ```
 
-This checks:
+Routine lean work does not run hooks.
 
-- missing skill dependencies
-- dependency cycles
-- duplicate skill ids
-- unresolved reference masters
-- stale graph pointers
+## Cold Diagnostics
 
-External skill folder orphan checks are optional:
+Open full registry diagnostics only for repair, audit, or low-confidence routing:
 
-```bash
-node 00_System/mosa_cli.js dag --external
-```
-
-The default skill root priority is:
-
-1. `--skill_root`
-2. `MOSA_SKILL_ROOT`
-3. `~/.codex/skills`
-4. `~/.gemini/antigravity/skills`
-5. `~/.gemini/config/skills`
-
-## Startup Modes
-
-| Mode | Use case | Read strategy |
-|---|---|---|
-| `ask` | Ambiguous task | Recommend a mode and ask user to choose |
-| `micro` | Simple question or tiny same-project change | Use startup packet and relevant files only |
-| `standard` | New project or likely skill selection | Add light routing and mode profiles |
-| `full` | Long build, multi-agent work, architecture task | Run Orchestrator + Router + selected Skill SOP |
-| `maintenance` | Framework, registry, token, or drift audit | Run Harmonizer or Distiller |
-
-Mode policy:
-
-- User-specified mode wins.
-- Obvious tiny tasks default to `micro`.
-- Obvious framework or registry audits default to `maintenance`.
-- Obvious long implementation with routing needs can use `full`.
-- Ambiguous tasks return `ask` and require user confirmation.
-
-## Context Bus Rules
-
-- Use `01_Work/context_bus.json` for current-task shared facts.
-- Prefer `node 00_System/mosa_cli.js context --fact key --value value` for simple updates.
-- Store summaries, key outputs, confidence, and pointers.
-- Do not store full source files or long drafts.
-- Clear it after task completion unless explicitly promoted.
-- Promote only short durable decisions to `prompt_stack.md`.
-- Keep it under about 2,000 tokens.
-
-## Google Apps Script Mode
-
-For Google Apps Script projects, default to:
-
-- `gas-webapp-architect`
-- `google-agent`
-- `utar-ops`
-- `data-analytics-core` when data analysis is needed
-- `audit-agent` when permissions, registration, finance, or compliance are involved
-
-Default GAS project assumptions:
-
-- Google Sheets is the source of truth.
-- Use `google.script.run` for server calls.
-- Use client-side cache for repeated lookups.
-- Batch writes and emails.
-- Add audit logs for state changes.
-- Avoid per-row quota-heavy operations.
-
-## Completion Rule
-
-At task completion:
-
-1. Write `01_Work/task_results.md`.
-2. Add `[Action: Trigger GC]`.
-3. Update `00_System/prompt_stack.md`.
-4. Keep outputs in `02_Output/`.
+- `02_Output/registry_distiller_report.json`

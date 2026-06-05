@@ -6,13 +6,13 @@ Use this checklist after every MOSA protocol, skill, router, or startup-tool upd
 
 ## Token Shield Hook Policy
 
-- [ ] Use `--level auto` by default.
-- [ ] Use `--event normal-task` for routine tasks.
+- [ ] Use `node 00_System/mosa_cli.js hook --event <event>` for triggered checks.
+- [ ] Do not run hooks for lean mode or routine normal tasks.
 - [ ] Use `--event protocol-update` after AGENTS changes.
 - [ ] Use `--event registry-update` after registry changes.
 - [ ] Use `--event framework-update` before trusting MOSA updates.
 - [ ] Read compact hook output first.
-- [ ] Open full hook report only on failure.
+- [ ] Open detailed hook reports only on failure.
 
 ## Mandatory Checks
 

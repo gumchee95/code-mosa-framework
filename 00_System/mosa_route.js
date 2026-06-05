@@ -7,20 +7,21 @@ const crypto = require('crypto');
 const { execFileSync } = require('child_process');
 
 function parseArgs(argv) {
-  const args = { intent: '', verbose: false, domain: '', capability: '', keywords: [], workflowPlan: '' };
+  const args = { intent: '', domain: '', capability: '', keywords: [], workflowPlan: '', verbose: false };
   for (let i = 0; i < argv.length; i += 1) {
-    if (argv[i] === '--verbose') args.verbose = true;
-    else if (argv[i] === '--intent') args.intent = argv[++i] || '';
-    else if (argv[i] === '--domain') args.domain = argv[++i] || '';
-    else if (argv[i] === '--capability') args.capability = argv[++i] || '';
-    else if (argv[i] === '--keywords') args.keywords = (argv[++i] || '').split(',').map(item => item.trim()).filter(Boolean);
-    else if (argv[i] === '--workflow-plan') args.workflowPlan = argv[++i] || '';
-    else if (!args.intent) args.intent = argv[i];
+    const item = argv[i];
+    if (item === '--intent') args.intent = argv[++i] || '';
+    else if (item === '--domain') args.domain = argv[++i] || '';
+    else if (item === '--capability') args.capability = argv[++i] || '';
+    else if (item === '--keywords') args.keywords = (argv[++i] || '').split(',').map(value => value.trim()).filter(Boolean);
+    else if (item === '--workflow-plan') args.workflowPlan = argv[++i] || '';
+    else if (item === '--verbose') args.verbose = true;
+    else if (!args.intent) args.intent = item;
   }
   return args;
 }
 
-function findWorkspaceRoot(startDir) {
+function findWorkspaceRoot(startDir = process.cwd()) {
   let current = path.resolve(startDir);
   const root = path.parse(current).root;
   while (current !== root) {
@@ -32,26 +33,31 @@ function findWorkspaceRoot(startDir) {
   return path.resolve(startDir);
 }
 
-function readJson(filePath, fallback) {
-  if (!fs.existsSync(filePath)) return fallback;
-  return JSON.parse(fs.readFileSync(filePath, 'utf8').replace(/^\uFEFF/, ''));
+function readJson(filePath, fallback = null) {
+  try {
+    return JSON.parse(fs.readFileSync(filePath, 'utf8').replace(/^\uFEFF/, ''));
+  } catch (_) {
+    return fallback;
+  }
 }
 
 function writeJson(filePath, value) {
+  fs.mkdirSync(path.dirname(filePath), { recursive: true });
   fs.writeFileSync(filePath, `${JSON.stringify(value, null, 2)}\n`, 'utf8');
 }
 
 function stableIntentHash(intent) {
-  return crypto
-    .createHash('sha1')
-    .update(JSON.stringify({
-      intent_summary: intent.intent_summary || '',
-      atomic_keywords: intent.atomic_keywords || [],
-      preferred_domain: intent.preferred_domain || '',
-      required_capability: intent.required_capability || '',
-      exclusions: intent.exclusions || []
-    }))
-    .digest('hex');
+  return crypto.createHash('sha1').update(intent || '').digest('hex');
+}
+
+function stableProfileHash(profile) {
+  return crypto.createHash('sha1').update(JSON.stringify({
+    intent_summary: profile.intent_summary || '',
+    atomic_keywords: profile.atomic_keywords || [],
+    preferred_domain: profile.preferred_domain || '',
+    required_capability: profile.required_capability || '',
+    exclusions: profile.exclusions || []
+  })).digest('hex');
 }
 
 function skillSearchScript() {
@@ -75,18 +81,23 @@ function resolveWorkspacePath(workspaceRoot, filePath) {
   return path.isAbsolute(filePath) ? filePath : path.join(workspaceRoot, filePath);
 }
 
-function loadWorkflowPlan(args, workspaceRoot, intentHash) {
+function loadWorkflowPlan(args, workspaceRoot) {
   const planPath = resolveWorkspacePath(workspaceRoot, args.workflowPlan);
   if (!planPath || !fs.existsSync(planPath)) return null;
   const plan = readJson(planPath, null);
   if (!plan || typeof plan !== 'object') return null;
-  const rawIntentHash = crypto.createHash('sha1').update(args.intent || '').digest('hex');
-  const matchesIntent = plan.intent_hash === intentHash || plan.intent_fingerprint === rawIntentHash;
   return {
     path: path.relative(workspaceRoot, planPath).replace(/\\/g, '/'),
     plan,
-    matches_intent: matchesIntent
+    matches_intent: plan.intent_hash === stableIntentHash(args.intent || '')
   };
+}
+
+function confidenceTier(confidence) {
+  if (confidence >= 0.8) return 'strong';
+  if (confidence >= 0.5) return 'medium';
+  if (confidence >= 0.35) return 'weak';
+  return 'fail';
 }
 
 function compactSkill(skill) {
@@ -101,147 +112,142 @@ function compactSkill(skill) {
   };
 }
 
-function compactNodeRoute(node, routed) {
-  const top = routed.results?.[0] || null;
+function fallbackCode(routed, route) {
+  if (routed.status !== 'success') return routed.fallback_code || 'ROUTER_ERROR';
+  const top = route?.selected_skill;
+  if (!top) return routed.fallback_code || 'NO_CANDIDATE';
+  if (!top.resolved_path || !fs.existsSync(top.resolved_path)) return 'INVALID_SKILL_PATH';
+  if (top.confidence_tier === 'fail') return routed.fallback_code || 'LOW_CONFIDENCE';
+  if (top.confidence_tier === 'weak') return routed.fallback_code || 'WEAK_CONFIDENCE';
+  return routed.fallback_code || null;
+}
+
+function buildRouteFromRouted(routed, extra = {}) {
+  const candidates = (routed.results || []).slice(0, 3).map(compactSkill);
+  const selected = candidates[0] || null;
   return {
-    node_id: node.node_id,
-    capability: node.required_capability || node.capability || node.label || node.node_id,
+    ...extra,
     status: routed.status,
-    top_skill: compactSkill(top),
-    candidates: (routed.results || []).slice(0, 3).map(compactSkill),
-    fallback_code: fallbackCode(routed, top),
+    selected_skill: selected,
+    alternatives: candidates.slice(1),
+    fallback_code: null,
     fallback_recommendation: routed.fallback_recommendation || null
   };
 }
 
-function routeWorkflowNodes(scriptPath, workspaceRoot, baseIntent, workflowPlan) {
-  if (!workflowPlan?.plan?.router_hints?.length || !workflowPlan.matches_intent) {
-    return { node_routes: [], missing_skill_suggestions: workflowPlan?.plan?.skill_growth_suggestions || [] };
-  }
-
-  const nodeRoutes = [];
-  const missing = [...(workflowPlan.plan.skill_growth_suggestions || [])];
-  for (const node of workflowPlan.plan.router_hints) {
-    const nodeIntent = {
-      intent_summary: `${node.node_id}: ${node.required_capability || node.capability || ''}`,
-      atomic_keywords: node.atomic_keywords || node.keywords || [],
-      preferred_domain: node.preferred_domain || baseIntent.preferred_domain || '',
-      required_capability: node.required_capability || node.capability || '',
-      exclusions: baseIntent.exclusions || [],
-      preferred_skill_ids: node.preferred_skill_ids || []
-    };
-    const raw = execFileSync(process.execPath, [scriptPath, JSON.stringify(nodeIntent)], {
-      cwd: workspaceRoot,
-      encoding: 'utf8'
-    });
-    const routed = JSON.parse(raw);
-    const route = compactNodeRoute(node, routed);
-    nodeRoutes.push(route);
-    if (!route.top_skill || ['fail', 'weak'].includes(route.top_skill.confidence_tier)) {
-      missing.push({
-        missing_capability: node.node_id,
-        suggested_skill_id: node.suggested_skill_id || `${node.node_id.replace(/_/g, '-')}-agent`,
-        reason: `No medium-confidence skill route for capability: ${route.capability}`,
-        recommended_action: 'suggest_create_skill',
-        priority: node.priority || 'medium'
-      });
+function validationForSingle(routed, route, intentHash) {
+  const checks = [
+    { name: 'source wrapper', status: 'pass', value: 'mosa_route.js' },
+    { name: 'intent hash present', status: intentHash ? 'pass' : 'fail' },
+    { name: 'not reconstructed', status: routed.status === 'reconstructed' ? 'fail' : 'pass' },
+    {
+      name: 'skill path exists',
+      status: route?.selected_skill?.resolved_path && fs.existsSync(route.selected_skill.resolved_path) ? 'pass' : 'fail',
+      value: route?.selected_skill?.resolved_path || null
     }
-  }
-  return { node_routes: nodeRoutes, missing_skill_suggestions: missing };
+  ];
+  return { checks, passed: checks.every(check => check.status === 'pass') };
 }
 
-function confidenceTier(confidence) {
-  if (confidence >= 0.8) return 'strong';
-  if (confidence >= 0.5) return 'medium';
-  if (confidence >= 0.35) return 'weak';
-  return 'fail';
+function validationForDag(routes, intentHash, workflowPlan) {
+  const checks = [
+    { name: 'source wrapper', status: 'pass', value: 'mosa_route.js' },
+    { name: 'intent hash present', status: intentHash ? 'pass' : 'fail' },
+    { name: 'workflow plan valid', status: workflowPlan?.matches_intent ? 'pass' : 'fail', value: workflowPlan?.path || null },
+    {
+      name: 'selected skill paths exist',
+      status: routes.every(route => !route.selected_skill || fs.existsSync(route.selected_skill.resolved_path)) ? 'pass' : 'fail'
+    }
+  ];
+  return { checks, passed: checks.every(check => check.status === 'pass') };
 }
 
-function fallbackCode(routed, topSkill) {
-  if (routed.status !== 'success') return routed.fallback_code || 'ROUTER_ERROR';
-  if (!topSkill) return routed.fallback_code || 'NO_CANDIDATE';
-  if (!topSkill.resolved_path || !fs.existsSync(topSkill.resolved_path)) return 'INVALID_SKILL_PATH';
-  const tier = confidenceTier(topSkill.confidence || 0);
-  if (tier === 'fail') return routed.fallback_code || 'LOW_CONFIDENCE';
-  if (tier === 'weak') return routed.fallback_code || 'WEAK_CONFIDENCE';
-  return routed.fallback_code || null;
-}
-
-function validationFor(routed, topSkill, intentHash) {
-  const checks = [];
-  checks.push({ name: 'source wrapper', status: 'pass', value: 'mosa_route.js' });
-  checks.push({ name: 'intent hash present', status: intentHash ? 'pass' : 'fail' });
-  checks.push({ name: 'not reconstructed', status: routed.status === 'reconstructed' ? 'fail' : 'pass' });
-  checks.push({
-    name: 'skill path exists',
-    status: topSkill?.resolved_path && fs.existsSync(topSkill.resolved_path) ? 'pass' : 'fail',
-    value: topSkill?.resolved_path || null
-  });
-  return {
-    checks,
-    passed: checks.every(check => check.status === 'pass')
-  };
-}
-
-function main() {
-  const args = parseArgs(process.argv.slice(2));
-  const workspaceRoot = findWorkspaceRoot(process.cwd());
-  const contextPath = path.join(workspaceRoot, '01_Work', 'context_bus.json');
-  const contextBus = readJson(contextPath, {});
-  const intent = buildIntent(args, contextBus);
-  const scriptPath = skillSearchScript();
-
-  if (!fs.existsSync(scriptPath)) {
-    throw new Error(`Router script not found: ${scriptPath}`);
-  }
-
+function runSearch(scriptPath, workspaceRoot, intent) {
   const raw = execFileSync(process.execPath, [scriptPath, JSON.stringify(intent)], {
     cwd: workspaceRoot,
     encoding: 'utf8'
   });
-  const routed = JSON.parse(raw);
-  const intentHash = stableIntentHash(intent);
-  const workflowPlan = loadWorkflowPlan(args, workspaceRoot, intentHash);
-  const workflowRoutes = routeWorkflowNodes(scriptPath, workspaceRoot, intent, workflowPlan);
-  const top = routed.results?.[0] || null;
-  const routedCandidates = (routed.results || []).slice(0, 3).map(compactSkill);
-  const effectiveTop = workflowRoutes.node_routes[0]?.top_skill || compactSkill(top);
-  const effectiveCandidates = workflowRoutes.node_routes[0]?.candidates?.length
-    ? workflowRoutes.node_routes[0].candidates
-    : routedCandidates;
-  const code = workflowRoutes.node_routes.length ? workflowRoutes.node_routes[0].fallback_code : fallbackCode(routed, top);
+  return JSON.parse(raw);
+}
+
+function routeDag(scriptPath, workspaceRoot, baseIntent, workflowPlan) {
+  if (!workflowPlan?.matches_intent || !Array.isArray(workflowPlan.plan.router_hints)) return [];
+  return workflowPlan.plan.router_hints.map(hint => {
+    const nodeIntent = {
+      intent_summary: `${hint.node_id}: ${hint.required_capability || ''}`,
+      atomic_keywords: hint.atomic_keywords || [],
+      preferred_domain: baseIntent.preferred_domain || '',
+      required_capability: hint.required_capability || '',
+      exclusions: baseIntent.exclusions || [],
+      preferred_skill_ids: hint.preferred_skill_ids || []
+    };
+    const routed = runSearch(scriptPath, workspaceRoot, nodeIntent);
+    const route = buildRouteFromRouted(routed, {
+      node_id: hint.node_id,
+      capability: hint.required_capability || hint.node_id
+    });
+    route.fallback_code = fallbackCode(routed, route);
+    return route;
+  });
+}
+
+function missingSkillSuggestions(workflowPlan, routes) {
+  const planMissing = workflowPlan?.matches_intent ? workflowPlan.plan.missing_skills || [] : [];
+  const routeMissing = routes
+    .filter(route => !route.selected_skill || ['fail', 'weak'].includes(route.selected_skill.confidence_tier))
+    .map(route => ({
+      node_id: route.node_id,
+      missing_capability: route.capability,
+      suggested_skill_id: `${String(route.node_id || 'missing').replace(/_/g, '-')}-agent`,
+      recommended_action: 'suggest_create_skill',
+      priority: 'medium'
+    }));
+  return [...planMissing, ...routeMissing];
+}
+
+function main() {
+  const args = parseArgs(process.argv.slice(2));
+  const workspaceRoot = findWorkspaceRoot();
+  const contextBus = readJson(path.join(workspaceRoot, '01_Work/context_bus.json'), {});
+  const intent = buildIntent(args, contextBus);
+  const intentHash = stableProfileHash(intent);
+  const scriptPath = skillSearchScript();
+
+  if (!fs.existsSync(scriptPath)) throw new Error(`Router script not found: ${scriptPath}`);
+
+  const routed = runSearch(scriptPath, workspaceRoot, intent);
+  const workflowPlan = loadWorkflowPlan(args, workspaceRoot);
+  const dagRoutes = routeDag(scriptPath, workspaceRoot, intent, workflowPlan);
+  const hasDag = dagRoutes.length > 0;
+  const singleRoute = hasDag ? null : buildRouteFromRouted(routed);
+  if (singleRoute) singleRoute.fallback_code = fallbackCode(routed, singleRoute);
+
   const compact = {
-    schema_version: 'mosa.routing_result.v1',
+    schema_version: 'mosa.routing_result.v2',
     status: routed.status,
     created_at: new Date().toISOString(),
-    generated_at: new Date().toISOString(),
     source: 'mosa_route.js',
     engine_source: routed.source,
     intent_hash: intentHash,
     input: intent,
-    active_modes: routed.active_modes || [],
-    workflow_plan_id: workflowPlan?.plan?.plan_id || null,
-    workflow_plan_path: workflowPlan?.path || null,
-    workflow_plan_valid: workflowPlan ? workflowPlan.matches_intent : null,
-    top_skill: effectiveTop,
-    candidates: effectiveCandidates,
-    flat_candidates: routedCandidates,
-    node_routes: workflowRoutes.node_routes,
-    collaboration_order: workflowPlan?.matches_intent ? workflowPlan.plan.collaboration_order || [] : [],
-    missing_skill_suggestions: workflowRoutes.missing_skill_suggestions,
-    fallback_code: code,
+    route_type: hasDag ? 'dag' : 'single',
+    fallback_code: hasDag ? dagRoutes.find(route => route.fallback_code)?.fallback_code || null : singleRoute.fallback_code,
     fallback_recommendation: routed.fallback_recommendation || null,
-    validation: validationFor(routed, effectiveTop, intentHash),
-    next_agent_action: routed.fallback_recommendation
-      ? 'run Registry Distiller or ask user for clarification'
-      : confidenceTier(top?.confidence || 0) === 'strong'
-      ? 'load selected skill only if execution requires full SOP'
-      : 'require Orchestrator review before dispatch'
+    validation: hasDag
+      ? validationForDag(dagRoutes, intentHash, workflowPlan)
+      : validationForSingle(routed, singleRoute, intentHash)
   };
-  if (args.verbose) compact.raw_results = routed.results || [];
 
-  const outputPath = path.join(workspaceRoot, '01_Work', 'routing_result.json');
-  writeJson(outputPath, compact);
+  if (hasDag) {
+    compact.workflow_plan = { path: workflowPlan.path, valid: workflowPlan.matches_intent };
+    compact.dag_routes = dagRoutes;
+    compact.missing_skills = missingSkillSuggestions(workflowPlan, dagRoutes);
+  } else {
+    compact.single_route = singleRoute;
+  }
+  if (args.verbose) compact.raw_result_count = (routed.results || []).length;
+
+  writeJson(path.join(workspaceRoot, '01_Work/routing_result.json'), compact);
   console.log(JSON.stringify(compact, null, 2));
 }
 

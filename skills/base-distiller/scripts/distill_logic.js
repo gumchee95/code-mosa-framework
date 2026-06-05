@@ -404,7 +404,7 @@ function buildStartupManifest(paths, report, activeIndex, routingLight, referenc
             'Router confidence < 0.35',
             'User requests registry audit',
             'missing_files/collisions/orphans > 0',
-            'mosa-harmonizer maintenance mode'
+            'mosa_cli.js maintain'
         ],
         token_budget_limits_bytes: {
             'graphify-out/GRAPH_REPORT.md': 3072,
@@ -412,7 +412,8 @@ function buildStartupManifest(paths, report, activeIndex, routingLight, referenc
             '02_Output/routing_index_light.json': 20480,
             '02_Output/reference_map_light.json': 5120,
             '02_Output/active_skill_index.json': 51200,
-            '01_Work/context_bus.json': 8192
+            '01_Work/context_bus.json': 8192,
+            '01_Work/workflow_plan.json': 12288
         }
     };
 }
