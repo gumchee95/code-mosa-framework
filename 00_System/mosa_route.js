@@ -123,7 +123,7 @@ function routeWorkflowNodes(scriptPath, workspaceRoot, baseIntent, workflowPlan)
   const missing = [...(workflowPlan.plan.skill_growth_suggestions || [])];
   for (const node of workflowPlan.plan.router_hints) {
     const nodeIntent = {
-      intent_summary: `${baseIntent.intent_summary} :: ${node.node_id}`,
+      intent_summary: `${node.node_id}: ${node.required_capability || node.capability || ''}`,
       atomic_keywords: node.atomic_keywords || node.keywords || [],
       preferred_domain: node.preferred_domain || baseIntent.preferred_domain || '',
       required_capability: node.required_capability || node.capability || '',
