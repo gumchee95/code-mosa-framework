@@ -1,0 +1,53 @@
+﻿{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "mosa.workflow_dag.v1",
+  "title": "MOSA Light Workflow Plan",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "goal",
+    "intent_hash",
+    "nodes",
+    "edges",
+    "parallel_groups",
+    "router_hints",
+    "missing_skills"
+  ],
+  "properties": {
+    "schema_version": { "const": "mosa.workflow_dag.v1" },
+    "goal": { "type": "string" },
+    "intent_hash": { "type": "string" },
+    "nodes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "label", "capability", "candidate_agents", "sequence"],
+        "properties": {
+          "id": { "type": "string" },
+          "label": { "type": "string" },
+          "capability": { "type": "string" },
+          "candidate_agents": { "type": "array" },
+          "sequence": { "type": "number" }
+        }
+      }
+    },
+    "edges": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["from", "to"],
+        "properties": {
+          "from": { "type": "string" },
+          "to": { "type": "string" }
+        }
+      }
+    },
+    "parallel_groups": {
+      "type": "array",
+      "items": { "type": "array", "items": { "type": "string" } }
+    },
+    "router_hints": { "type": "array" },
+    "missing_skills": { "type": "array" }
+  }
+}
