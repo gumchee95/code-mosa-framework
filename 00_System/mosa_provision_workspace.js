@@ -5,6 +5,7 @@ const path = require('path');
 const { execFileSync } = require('child_process');
 
 const TOOL_FILES = [
+  'mosa_cli.js',
   'mosa_startup.js',
   'mosa_route.js',
   'mosa_promotion.js',

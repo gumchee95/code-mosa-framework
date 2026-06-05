@@ -84,3 +84,13 @@
 - Graph Builder primary outputs were reduced.
 - Harmonizer now checks Lean Mode alignment.
 - Audit: `02_Output/mosa_lean_mode_simplification_audit.md`.
+
+## 2026-06-05 Dynamic Capability DAG
+
+- Added `node 00_System/mosa_cli.js plan --intent "<intent>" --write`.
+- Planner writes `01_Work/workflow_plan.json` and `01_Work/workflow_plan.md`.
+- DAG nodes are inferred from capability taxonomy, not rigid workflow templates.
+- `mosa_route.js --workflow-plan 01_Work/workflow_plan.json` returns `node_routes`, `collaboration_order`, and `missing_skill_suggestions`.
+- `mosa_search.js` supports `preferred_skill_ids` as a routing boost.
+- Missing capabilities become skill-growth suggestions; skills are not auto-created.
+- P2 hook passed: `02_Output/mosa_hook_result.json`.

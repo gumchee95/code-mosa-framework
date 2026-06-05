@@ -1,12 +1,124 @@
 #!/usr/bin/env node
 const fs = require('fs');
 const path = require('path');
+const crypto = require('crypto');
 const { spawnSync } = require('child_process');
 
 const STOP_WORDS = new Set([
   'a', 'an', 'and', 'app', 'build', 'builder', 'for', 'in', 'of', 'on',
   'project', 'skill', 'system', 'the', 'to', 'tool', 'web', 'with'
 ]);
+
+const CAPABILITY_TAXONOMY = [
+  {
+    id: 'planning',
+    label: 'Planning',
+    triggers: ['plan', 'prepare', 'organize', 'scope', 'goal', 'requirement', '活动', '准备', '规划', '计划', '需求'],
+    required_capability: 'Clarify goal, scope, constraints, success criteria, and execution sequence',
+    deliverables: ['scope summary', 'success criteria', 'task sequence'],
+    preferred_skill_ids: ['ORCHESTRATOR_AGENT', 'PROJECT_PLANNER', 'PROJECT_MANAGEMENT_CORE'],
+    suggested_skill_id: 'planning-clarifier-agent'
+  },
+  {
+    id: 'research',
+    label: 'Research',
+    triggers: ['research', 'market', 'competitor', 'benchmark', 'investigate', 'study', '资料', '调研', '市场', '竞品'],
+    required_capability: 'Gather source-backed context and synthesize findings',
+    deliverables: ['research notes', 'source summary'],
+    preferred_skill_ids: ['MARKET_AGENT', 'BRAINSTORMING_AGENT', 'THOUGHT_DISTILLER', 'KYC_DATA_FETCHER'],
+    suggested_skill_id: 'research-synthesis-agent'
+  },
+  {
+    id: 'design',
+    label: 'Design',
+    triggers: ['design', 'ui', 'ux', 'visual', 'brand', 'poster', 'asset', 'webpage', 'website', 'chart', 'visualization', 'dashboard', '网页', '设计', '海报', '视觉', '图表', '看板'],
+    required_capability: 'Create visual direction, layout, interaction, or production assets',
+    deliverables: ['design direction', 'visual assets or UI plan'],
+    preferred_skill_ids: ['DESIGN_AGENT', 'FRONTEND_DESIGN', 'UI_SUITE', 'THEME_FACTORY', 'CANVAS_DESIGN'],
+    suggested_skill_id: 'visual-production-agent'
+  },
+  {
+    id: 'coding',
+    label: 'Coding',
+    triggers: ['code', 'build', 'implement', 'app', 'frontend', 'backend', 'api', '网页', '网站', '实现', '开发', '修复'],
+    required_capability: 'Implement or modify software safely with local project patterns',
+    deliverables: ['code changes', 'implementation notes'],
+    preferred_skill_ids: ['CODER_AGENT', 'API_EXPERT', 'WEB_ARTIFACTS_BUILDER', 'GAS_WEBAPP_ARCHITECT', 'MCP_BUILDER'],
+    suggested_skill_id: 'implementation-agent'
+  },
+  {
+    id: 'data',
+    label: 'Data',
+    triggers: ['data', 'dashboard', 'analytics', 'metric', 'csv', 'excel', 'sheet', 'reporting', '数据', '看板', '指标', '分析'],
+    required_capability: 'Clean, analyze, model, visualize, or validate data',
+    deliverables: ['cleaned data', 'analysis', 'charts or dashboard'],
+    preferred_skill_ids: ['DATA_ANALYTICS_CORE', 'XLSX', 'AUTOMATED_DATA_CLEANER', 'KPI_DASHBOARD_DESIGN'],
+    suggested_skill_id: 'metric-contract-agent'
+  },
+  {
+    id: 'document',
+    label: 'Document',
+    triggers: ['document', 'doc', 'memo', 'report', 'proposal', 'ppt', 'slides', 'readme', '文档', '报告', '简报', '提案'],
+    required_capability: 'Produce structured written output, deck, report, or documentation',
+    deliverables: ['document draft', 'structured report'],
+    preferred_skill_ids: ['REPORT_GENERATOR', 'DOC_COAUTHORING', 'DOCX', 'PPTX', 'PDF'],
+    suggested_skill_id: 'document-production-agent'
+  },
+  {
+    id: 'communication',
+    label: 'Communication',
+    triggers: ['email', 'announce', 'invite', 'message', 'newsletter', 'follow-up', 'marketing', '邀请', '通知', '宣传', '跟进', '邮件'],
+    required_capability: 'Prepare announcements, invitations, follow-up, or stakeholder communication',
+    deliverables: ['communication copy', 'recipient/action plan'],
+    preferred_skill_ids: ['INTERNAL_COMMS', 'MARKETING_IDEAS', 'MARKETING_PSYCHOLOGY', 'PRODUCT_MARKETING_CONTEXT'],
+    suggested_skill_id: 'communication-sequence-agent'
+  },
+  {
+    id: 'calendar',
+    label: 'Calendar',
+    triggers: ['calendar', 'schedule', 'meeting', 'invite', 'rsvp', 'registration', 'event', '活动', '日历', '报名', '出席'],
+    required_capability: 'Coordinate time, invites, attendance, RSVP, and scheduling artifacts',
+    deliverables: ['calendar plan', 'registration or attendance tracker'],
+    preferred_skill_ids: ['GOOGLE_AGENT', 'ADMIN_AGENT', 'XLSX', 'PROJECT_MANAGEMENT_CORE'],
+    suggested_skill_id: 'rsvp-registration-agent'
+  },
+  {
+    id: 'automation',
+    label: 'Automation',
+    triggers: ['automation', 'workflow', 'script', 'bot', 'integrate', 'pipeline', '自动化', '流程', '脚本', '机器人'],
+    required_capability: 'Automate repeated workflow steps or connect tools',
+    deliverables: ['automation design', 'script or integration plan'],
+    preferred_skill_ids: ['MCP_BUILDER', 'GAS_WEBAPP_ARCHITECT', 'DOC_PIPELINE', 'DATABASE_SUITE', 'AZURE_SUITE'],
+    suggested_skill_id: 'workflow-automation-agent'
+  },
+  {
+    id: 'compliance',
+    label: 'Compliance',
+    triggers: ['compliance', 'risk', 'security', 'privacy', 'audit', 'regulated', '合规', '风险', '隐私', '安全'],
+    required_capability: 'Check policy, security, privacy, compliance, and risk constraints',
+    deliverables: ['risk checklist', 'compliance notes'],
+    preferred_skill_ids: ['AUDIT_AGENT', 'COMPLIANCE_FRAMEWORK', 'CODE_REVIEW'],
+    suggested_skill_id: 'risk-policy-agent'
+  },
+  {
+    id: 'review',
+    label: 'Review',
+    triggers: ['review', 'test', 'verify', 'qa', 'validate', 'audit', '检查', '测试', '验证', '复盘'],
+    required_capability: 'Verify output quality, correctness, regressions, and completion',
+    deliverables: ['verification result', 'open issues'],
+    preferred_skill_ids: ['AUDIT_AGENT', 'CODE_REVIEW', 'WEBAPP_TESTING', 'PLAYWRIGHT'],
+    suggested_skill_id: 'delivery-qa-agent'
+  },
+  {
+    id: 'deployment',
+    label: 'Deployment',
+    triggers: ['deploy', 'release', 'publish', 'github', 'site', '上线', '发布', '部署'],
+    required_capability: 'Prepare release, publishing, deployment, or handoff steps',
+    deliverables: ['release checklist', 'deployment notes'],
+    preferred_skill_ids: ['CODER_AGENT', 'DEPLOYMENT_PIPELINE_DESIGN', 'PROJECT_LAUNCH'],
+    suggested_skill_id: 'deployment-release-agent'
+  }
+];
 
 function findWorkspaceRoot(startDir = process.cwd()) {
   let current = path.resolve(startDir);
@@ -199,7 +311,8 @@ function route(root, intent, options = {}) {
     const skillWords = new Set(tokenize(haystack));
     const matched = [...words].filter(word => skillWords.has(word));
     const tagScore = matched.length * 10;
-    const exactScore = String(intent).toUpperCase().includes(skill.skill_id) ? 50 : 0;
+    const skillIdTokens = tokenize(skill.skill_id);
+    const exactScore = skillIdTokens.length && String(intent).toUpperCase().includes(skill.skill_id) ? 50 : 0;
     const boost = modeBoosts[skill.skill_id] || 0;
     const score = tagScore + exactScore + boost;
     return {
@@ -253,6 +366,202 @@ function route(root, intent, options = {}) {
     fs.writeFileSync(path.join(root, '02_Output/last_route_decision.md'), `${lines.join('\n')}\n`);
   }
   return output;
+}
+
+function stableIntentHashForPlan(intent, args = {}) {
+  return crypto
+    .createHash('sha1')
+    .update(JSON.stringify({
+      intent_summary: intent || '',
+      atomic_keywords: args.keywords ? String(args.keywords).split(',').map(item => item.trim()).filter(Boolean) : [],
+      preferred_domain: args.domain || '',
+      required_capability: args.capability || 'route to the most relevant skill with compact JSON output',
+      exclusions: []
+    }))
+    .digest('hex');
+}
+
+function capabilityScore(capability, intentText, intentWords) {
+  return capability.triggers.reduce((sum, trigger) => {
+    const value = String(trigger).toLowerCase();
+    const hit = value.includes(' ')
+      ? intentText.includes(value)
+      : intentWords.has(value) || intentText.includes(value);
+    return hit ? sum + 1 : sum;
+  }, 0);
+}
+
+function inferCapabilities(intent) {
+  const text = String(intent || '').toLowerCase();
+  const intentWords = new Set(tokenize(text));
+  const scored = CAPABILITY_TAXONOMY
+    .map(capability => ({ ...capability, score: capabilityScore(capability, text, intentWords) }))
+    .filter(capability => capability.score > 0);
+
+  const selected = new Map(scored.sort((a, b) => b.score - a.score).map(item => [item.id, item]));
+  if (!selected.has('planning')) selected.set('planning', CAPABILITY_TAXONOMY.find(item => item.id === 'planning'));
+  if (selected.has('data') && /dashboard|chart|visualization|图表|看板/.test(text) && !selected.has('design')) {
+    selected.set('design', CAPABILITY_TAXONOMY.find(item => item.id === 'design'));
+  }
+  if (selected.has('automation') && /email|message|邮件|通知/.test(text) && !selected.has('communication')) {
+    selected.set('communication', CAPABILITY_TAXONOMY.find(item => item.id === 'communication'));
+  }
+  if ((selected.has('coding') || selected.has('design') || selected.has('data') || selected.has('document') || selected.has('automation')) && !selected.has('review')) {
+    selected.set('review', CAPABILITY_TAXONOMY.find(item => item.id === 'review'));
+  }
+  if (selected.has('calendar') && !selected.has('communication')) selected.set('communication', CAPABILITY_TAXONOMY.find(item => item.id === 'communication'));
+  if (selected.has('deployment') && !selected.has('review')) selected.set('review', CAPABILITY_TAXONOMY.find(item => item.id === 'review'));
+
+  const order = ['planning', 'research', 'data', 'design', 'document', 'communication', 'calendar', 'automation', 'coding', 'compliance', 'review', 'deployment'];
+  return order.map(id => selected.get(id)).filter(Boolean);
+}
+
+function skillById(skills) {
+  return new Map((skills || []).map(skill => [String(skill.skill_id || '').toUpperCase(), skill]));
+}
+
+function availableCandidates(capability, skills) {
+  const byId = skillById(skills);
+  return capability.preferred_skill_ids.map(skillId => {
+    const skill = byId.get(skillId);
+    if (!skill) return { skill_id: skillId, status: 'missing', reason: 'preferred skill is not in active routing index' };
+    return {
+      skill_id: skill.skill_id,
+      status: 'available',
+      category: skill.category || null,
+      filepath: skill.filepath || null,
+      reason: 'preferred capability match'
+    };
+  });
+}
+
+function buildCapabilityNodes(capabilities, skills) {
+  return capabilities.map((capability, index) => {
+    const candidates = availableCandidates(capability, skills);
+    const available = candidates.filter(candidate => candidate.status === 'available');
+    return {
+      node_id: capability.id,
+      label: capability.label,
+      required_capability: capability.required_capability,
+      deliverables: capability.deliverables,
+      candidate_agents: candidates.slice(0, 5),
+      missing: available.length === 0,
+      suggested_skill_id: capability.suggested_skill_id,
+      sequence: index + 1
+    };
+  });
+}
+
+function buildEdges(nodes) {
+  const ids = nodes.map(node => node.node_id);
+  const edges = [];
+  const planning = ids.includes('planning') ? 'planning' : ids[0];
+  for (const id of ids) {
+    if (id !== planning && id !== 'review' && id !== 'deployment') edges.push([planning, id]);
+  }
+  const reviewDeps = ids.filter(id => !['planning', 'review', 'deployment', 'compliance'].includes(id));
+  if (ids.includes('review')) {
+    for (const id of reviewDeps) edges.push([id, 'review']);
+  }
+  if (ids.includes('compliance')) edges.push([planning, 'compliance']);
+  if (ids.includes('deployment')) edges.push([ids.includes('review') ? 'review' : planning, 'deployment']);
+  return edges;
+}
+
+function buildParallelGroups(nodes) {
+  const parallel = nodes
+    .map(node => node.node_id)
+    .filter(id => !['planning', 'review', 'deployment', 'compliance'].includes(id));
+  return parallel.length > 1 ? [parallel] : [];
+}
+
+function buildWorkflowPlan(root, intent, args = {}) {
+  const index = loadSkillIndex(root);
+  const skills = index.skills || [];
+  const capabilities = inferCapabilities(intent);
+  const nodes = buildCapabilityNodes(capabilities, skills);
+  const edges = buildEdges(nodes);
+  const missing = nodes
+    .filter(node => node.missing)
+    .map(node => ({
+      missing_capability: node.node_id,
+      suggested_skill_id: node.suggested_skill_id,
+      reason: `No active skill in the lightweight index covers ${node.label}.`,
+      recommended_action: 'suggest_create_skill',
+      priority: node.node_id === 'planning' ? 'high' : 'medium'
+    }));
+
+  return {
+    schema_version: 'mosa.workflow_dag.v1',
+    plan_id: crypto.createHash('sha1').update(`${intent}:${Date.now()}`).digest('hex').slice(0, 12),
+    created_at: new Date().toISOString(),
+    source: 'mosa_cli.js plan',
+    intent_hash: stableIntentHashForPlan(intent, args),
+    intent_fingerprint: crypto.createHash('sha1').update(intent || '').digest('hex'),
+    goal: intent,
+    deliverables: [...new Set(nodes.flatMap(node => node.deliverables))],
+    capability_nodes: nodes,
+    edges,
+    parallel_groups: buildParallelGroups(nodes),
+    router_hints: nodes.map(node => ({
+      node_id: node.node_id,
+      required_capability: node.required_capability,
+      atomic_keywords: tokenize(`${node.label} ${node.required_capability} ${node.deliverables.join(' ')}`).slice(0, 12),
+      preferred_skill_ids: node.candidate_agents.map(candidate => candidate.skill_id),
+      suggested_skill_id: node.suggested_skill_id
+    })),
+    collaboration_order: nodes.map(node => node.node_id),
+    missing_capabilities: missing.map(item => item.missing_capability),
+    skill_growth_suggestions: missing,
+    token_policy: {
+      model_reads: ['01_Work/workflow_plan.json summary fields', '01_Work/routing_result.json'],
+      node_reads: ['02_Output/routing_index_light.json', '02_Output/active_skill_index.json'],
+      full_skill_files: 'load only after Router selects execution skill'
+    },
+    index_source: index.source
+  };
+}
+
+function renderWorkflowMarkdown(plan) {
+  const lines = [
+    '# MOSA Workflow Capability DAG',
+    '',
+    `- Intent: ${plan.goal}`,
+    `- Plan ID: ${plan.plan_id}`,
+    `- Source: ${plan.source}`,
+    '',
+    '## Capability Nodes'
+  ];
+  for (const node of plan.capability_nodes) {
+    const available = node.candidate_agents.filter(candidate => candidate.status === 'available').map(candidate => candidate.skill_id);
+    lines.push(`- ${node.sequence}. ${node.node_id}: ${node.required_capability}`);
+    lines.push(`  - candidates: ${available.length ? available.join(', ') : 'none'}`);
+    if (node.missing) lines.push(`  - missing suggestion: ${node.suggested_skill_id}`);
+  }
+  lines.push('', '## Edges');
+  for (const edge of plan.edges) lines.push(`- ${edge[0]} -> ${edge[1]}`);
+  lines.push('', '## Skill Growth Suggestions');
+  if (!plan.skill_growth_suggestions.length) lines.push('- none');
+  for (const item of plan.skill_growth_suggestions) {
+    lines.push(`- ${item.suggested_skill_id}: ${item.reason}`);
+  }
+  return `${lines.join('\n')}\n`;
+}
+
+function runPlan(root, args = {}) {
+  const intent = args.intent || args._.slice(1).join(' ');
+  if (!intent) return { status: 'fail', message: 'Missing --intent for workflow plan.' };
+  const plan = buildWorkflowPlan(root, intent, args);
+  if (args.write) {
+    writeJsonAtomic(path.join(root, '01_Work/workflow_plan.json'), plan);
+    fs.writeFileSync(path.join(root, '01_Work/workflow_plan.md'), renderWorkflowMarkdown(plan), 'utf8');
+  }
+  return {
+    status: 'ok',
+    workflow_plan: args.write ? '01_Work/workflow_plan.json' : null,
+    workflow_summary: args.write ? '01_Work/workflow_plan.md' : null,
+    plan
+  };
 }
 
 function runTests(root) {
@@ -511,6 +820,7 @@ function main() {
   if (command === 'check') print(validate(root));
   else if (command === 'start') print(safeStart(root, args));
   else if (command === 'route') print(route(root, args.intent || args._.slice(1).join(' '), { write: args.write, top: args.top }));
+  else if (command === 'plan') print(runPlan(root, args));
   else if (command === 'test') print(runTests(root));
   else if (command === 'dag') print(runDag(root, args));
   else if (command === 'maintain') print(runMaintain(root, args));
@@ -520,6 +830,7 @@ function main() {
       usage: [
         'node 00_System/mosa_cli.js check',
         'node 00_System/mosa_cli.js start --mode ask --intent "..."',
+        'node 00_System/mosa_cli.js plan --intent "..." --write',
         'node 00_System/mosa_cli.js route --intent "..." --write',
         'node 00_System/mosa_cli.js test',
         'node 00_System/mosa_cli.js dag',

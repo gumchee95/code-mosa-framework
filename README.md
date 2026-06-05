@@ -36,7 +36,8 @@ graph LR
   M -->|"cold-repair"| P["Provision workspace"]
   P --> S
   S --> O["Orchestrator intent profile"]
-  O --> R["Router proof"]
+  O --> W["Dynamic Capability DAG"]
+  W --> R["Router proof + node routes"]
   R --> H["Pre-dispatch hook gate"]
   H --> E["Selected execution skill"]
   E --> T["Task result pointers"]
@@ -56,11 +57,13 @@ graph LR
 | `00_System/routing_cache.json` | High-confidence route cache |
 | `00_System/mosa_startup.js` | Writes compact startup proof |
 | `00_System/mosa_route.js` | Official Router proof wrapper |
+| `00_System/mosa_cli.js` | Compatibility CLI, health checks, Dynamic Capability DAG planner |
 | `00_System/mosa_provision_workspace.js` | Cold-repair provisioner |
 | `00_System/mosa_hooks.js` | Event-triggered trust gates |
 | `01_Work/context_bus.json` | Current-task compact handoff |
 | `01_Work/startup_result.json` | Startup proof |
 | `01_Work/routing_result.json` | Router proof |
+| `01_Work/workflow_plan.json` | Dynamic Capability DAG for cross-skill work |
 | `01_Work/task.md` | Standard/cold task plan |
 | `01_Work/task_results.md` | Result pointers |
 | `02_Output/startup_manifest.json` | Startup pointer manifest |
@@ -162,6 +165,38 @@ Required proof fields:
 - `validation`
 
 `skills/router-agent/mosa_search.js` is the internal search engine or emergency fallback. It is not the official proof wrapper by itself.
+
+## Dynamic Capability DAG
+
+For cross-skill work, MOSA can generate a dynamic capability graph before Router dispatch:
+
+```bash
+node 00_System/mosa_cli.js plan --intent "<user intent>" --write
+```
+
+This writes:
+
+```text
+01_Work/workflow_plan.json
+01_Work/workflow_plan.md
+```
+
+The planner infers capabilities from the goal instead of using rigid workflow templates. A task such as building a website, preparing an event, creating a dashboard, writing a report, or automating a process produces a different DAG based on needed capabilities.
+
+Router can consume the DAG:
+
+```bash
+node 00_System/mosa_route.js --intent "<user intent>" --workflow-plan "01_Work/workflow_plan.json"
+```
+
+When a workflow plan is supplied, `routing_result.json` also includes:
+
+- `workflow_plan_id`
+- `node_routes`
+- `collaboration_order`
+- `missing_skill_suggestions`
+
+Missing capabilities become skill-growth suggestions. MOSA does not auto-create new skills unless the user explicitly approves that action.
 
 ## Confidence Tiers
 
@@ -280,6 +315,7 @@ Useful commands:
 ```bash
 node 00_System/mosa_cli.js check
 node 00_System/mosa_cli.js start --mode ask --intent "<user intent>"
+node 00_System/mosa_cli.js plan --intent "<user intent>" --write
 node 00_System/mosa_cli.js route --intent "<user intent>" --write
 node 00_System/mosa_cli.js test
 node 00_System/mosa_cli.js dag

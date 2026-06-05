@@ -22,11 +22,13 @@
   "startup_order": [
     "AGENTS.md",
     "00_System/mosa_startup.js",
+    "00_System/mosa_cli.js",
     "02_Output/startup_manifest.json",
     "graphify-out/GRAPH_REPORT.md",
     "00_System/prompt_stack.md",
     "01_Work/task.md",
     "01_Work/context_bus.json",
+    "01_Work/workflow_plan.json",
     "02_Output/routing_index_light.json"
   ],
   "routing_read_order": [
@@ -55,6 +57,7 @@
     "02_Output/routing_index_light.json": 20480,
     "02_Output/reference_map_light.json": 5120,
     "02_Output/active_skill_index.json": 51200,
-    "01_Work/context_bus.json": 8192
+    "01_Work/context_bus.json": 8192,
+    "01_Work/workflow_plan.json": 12288
   }
 }

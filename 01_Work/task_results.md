@@ -105,3 +105,8 @@
 [Data: Reduced MOSA over-orchestration with Lean/Standard/Cold-repair modes; files: C:/Users/USER/.codex/AGENTS.md; C:/Users/USER/.codex/skills/orchestrator-agent/SKILL.md; C:/Users/USER/.codex/skills/mosa-harmonizer/SKILL.md; C:/Users/USER/.codex/skills/mosa-graph-builder/SKILL.md; audit: 02_Output/mosa_lean_mode_simplification_audit.md; P2 hook pass: 02_Output/mosa_hook_result.json]
 [Next_Step: Use Lean Mode for simple tasks; use Standard only when proof/routing/persistence adds value]
 [Action: Trigger GC]
+
+[Status: Success]
+[Data: Implemented Dynamic Capability DAG routing; files: 00_System/mosa_cli.js; 00_System/mosa_route.js; 00_System/mosa_provision_workspace.js; AGENTS.md; skills/orchestrator-agent/SKILL.md; skills/router-agent/SKILL.md; skills/router-agent/mosa_search.js; skills/mosa-harmonizer/SKILL.md; skills/mosa-graph-builder/SKILL.md]
+[Next_Step: For cross-skill work, run `node 00_System/mosa_cli.js plan --intent "<intent>" --write`, then route with `--workflow-plan 01_Work/workflow_plan.json`]
+[Action: Trigger GC]

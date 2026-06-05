@@ -53,14 +53,55 @@ Standard execution order:
 4. Ensure `00_System/state.json` exists with `{"turn_count": 0, "drift_threshold": 20}` when newly created.
 5. Run workspace startup evidence.
 6. Run Orchestrator intent atomization.
-7. Run Router skill retrieval.
-8. Validate Router proof against the current Intent Profile.
-9. Run the pre-dispatch Hook Gate for triggered events.
-10. Load only the selected execution skill.
-11. Trigger audit only when conditions require it.
-12. Finish with result pointers and GC handling.
+7. For cross-skill work, generate a Dynamic Capability DAG.
+8. Run Router skill retrieval, optionally with DAG hints.
+9. Validate Router proof against the current Intent Profile.
+10. Run the pre-dispatch Hook Gate for triggered events.
+11. Load only the selected execution skill.
+12. Trigger audit only when conditions require it.
+13. Finish with result pointers and GC handling.
 
 Steps 1-2 are naked-session setup. Steps 5-10 are the standard task loop. Lean tasks may skip steps 5-12 and answer directly.
+
+## 2.5 Dynamic Capability DAG
+
+For multi-step or cross-skill work, Orchestrator may generate a Dynamic Capability DAG before Router dispatch:
+
+```bash
+node 00_System/mosa_cli.js plan --intent "<task intent>" --write
+```
+
+The planner must infer capability nodes dynamically from the user's goal. It must not use rigid workflow templates as authority.
+
+The DAG output is:
+
+- `01_Work/workflow_plan.json`
+- `01_Work/workflow_plan.md`
+
+`workflow_plan.json` contains:
+
+- `goal`
+- `deliverables`
+- `capability_nodes`
+- `edges`
+- `parallel_groups`
+- `router_hints`
+- `missing_capabilities`
+- `skill_growth_suggestions`
+
+Router may consume DAG hints with:
+
+```bash
+node 00_System/mosa_route.js --intent "<task intent>" --workflow-plan "01_Work/workflow_plan.json"
+```
+
+Rules:
+
+- The DAG is a routing aid, not an execution agent.
+- Router remains a selector; it does not decompose the user request.
+- Orchestrator owns intent atomization and DAG generation.
+- Missing capabilities become skill-growth suggestions, not automatic skill creation.
+- Full `SKILL.md` files still load only after Router selects execution skills.
 
 ## 3. Active Skill Source
 
@@ -315,6 +356,7 @@ Completion rule:
 | `context_bus.json` | Compact startup context | Node startup tool |
 | `startup_result.json` | Startup proof | Node startup tool |
 | `routing_result.json` | Router proof | Router wrapper |
+| `workflow_plan.json` | Dynamic capability DAG | Orchestrator / CLI planner |
 | `prompt_stack.md` | Long-term workspace memory | Harmonizer |
 
 ## 13. Workspace Isolation

@@ -59,9 +59,12 @@ Router receives this JSON shape:
   "atomic_keywords": ["keyword one", "keyword two"],
   "preferred_domain": "workflow|tech|design|admin|financial|core|utility",
   "required_capability": "specific capability needed",
-  "exclusions": []
+  "exclusions": [],
+  "preferred_skill_ids": []
 }
 ```
+
+`preferred_skill_ids` is optional and may be supplied by a Dynamic Capability DAG node. It is a routing boost only; it is not execution authority.
 
 If `Atomic Keywords` or `Intent Profile` is missing, return:
 
@@ -85,6 +88,12 @@ Primary command:
 
 ```bash
 node 00_System/mosa_route.js --domain "<domain>" --capability "<capability>" --keywords "<comma keywords>" --intent "<intent>"
+```
+
+For cross-skill work, Orchestrator may provide a Dynamic Capability DAG:
+
+```bash
+node 00_System/mosa_route.js --intent "<intent>" --workflow-plan "01_Work/workflow_plan.json"
 ```
 
 Required output:
@@ -126,6 +135,8 @@ Return compact routing evidence only:
 
 - top skill
 - 1 to 3 candidates
+- per-node route candidates when a workflow plan is supplied
+- missing skill suggestions when no medium-confidence route exists
 - confidence
 - confidence tier
 - match reasons
@@ -159,6 +170,7 @@ Search strategy:
 - skeleton heading match
 - required capability match
 - optional cache hit
+- optional Dynamic Capability DAG preferred skill boost
 
 Apply exclusions before ranking. Remove candidates that match excluded:
 
@@ -245,6 +257,7 @@ Failure:
 ## Prohibitions
 
 - Do not decompose user requirements.
+- Do not generate Dynamic Capability DAGs; Orchestrator owns planning.
 - Do not execute business tasks.
 - Do not mutate registries.
 - Do not trigger experience recording.

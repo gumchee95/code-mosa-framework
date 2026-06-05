@@ -33,7 +33,9 @@ function parseInput(argv) {
             atomic_keywords: parsed.atomic_keywords || parsed.atomicKeywords || [],
             preferred_domain: parsed.preferred_domain || parsed.preferredDomain || '',
             required_capability: parsed.required_capability || parsed.requiredCapability || '',
-            exclusions: parsed.exclusions || []
+            exclusions: parsed.exclusions || [],
+            preferred_skill_ids: parsed.preferred_skill_ids || parsed.preferredSkillIds || [],
+            workflow_node_id: parsed.workflow_node_id || parsed.workflowNodeId || ''
         };
     } catch (_) {
         return {
@@ -42,7 +44,9 @@ function parseInput(argv) {
             atomic_keywords: raw.split(/\s+/).filter(Boolean),
             preferred_domain: '',
             required_capability: '',
-            exclusions: []
+            exclusions: [],
+            preferred_skill_ids: [],
+            workflow_node_id: ''
         };
     }
 }
@@ -149,6 +153,8 @@ function loadCache(intent) {
             summary: intent.intent_summary,
             capability: intent.required_capability,
             exclusions: intent.exclusions || [],
+            preferred_skill_ids: intent.preferred_skill_ids || [],
+            workflow_node_id: intent.workflow_node_id || '',
             routing_version: routingVersion()
         }))
         .digest('hex');
@@ -356,6 +362,12 @@ function scoreSkill(skill, intent, modeProfiles = { profiles: {} }) {
     if (capabilityHits.length) {
         score += capabilityHits.length * 6;
         reasons.push(`capability:${capabilityHits.join(',')}`);
+    }
+
+    const preferredSkillIds = new Set((intent.preferred_skill_ids || []).map(value => String(value).toUpperCase()));
+    if (preferredSkillIds.has(String(skill.skill_id || '').toUpperCase())) {
+        score += 55;
+        reasons.push('workflow-preferred-skill');
     }
 
     const dependencyText = JSON.stringify(skill.dependencies || {}).toLowerCase();

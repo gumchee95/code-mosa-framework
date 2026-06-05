@@ -20,6 +20,7 @@ Primary outputs:
 Optional evidence pointers when startup or repair is required:
 
 - `01_Work/context_bus.json`
+- `01_Work/workflow_plan.json`
 - `01_Work/startup_result.json`
 - `01_Work/routing_result.json`
 - `01_Work/provision_result.json`
@@ -80,9 +81,10 @@ When graph context already exists, read in this order:
 2. `01_Work/session_state.json`
 3. `01_Work/startup_result.json`
 4. `01_Work/routing_result.json`
-5. `02_Output/startup_manifest.json` only when policy confirmation is needed
-6. `02_Output/routing_index_light.json` only when routing is needed
-7. Full Skill files only when confidence is low or exact SOP details are required
+5. `01_Work/workflow_plan.json` when cross-skill DAG routing is active
+6. `02_Output/startup_manifest.json` only when policy confirmation is needed
+7. `02_Output/routing_index_light.json` only when routing is needed
+8. Full Skill files only when confidence is low or exact SOP details are required
 
 Never read `02_Output/registry_distiller_report.json` during startup; it is cold diagnostic data only.
 
@@ -101,6 +103,7 @@ God Node detection:
 
 - Always include `00_System`, `01_Work`, `02_Output` when present.
 - Include `01_Work/context_bus.json` as the current-task cross-agent handoff layer when present.
+- Include `01_Work/workflow_plan.json` as the Dynamic Capability DAG pointer when present.
 - Include major source entrypoints such as `src/`, `app/`, `Code.gs`, `Index.html`, `package.json`, `appsscript.json`.
 - Include MOSA routing assets:
   - `00_System/routing_cache.json`
@@ -125,6 +128,7 @@ The Mermaid diagram should use `graph LR` by default and show:
 - Router
 - routing cache
 - router support index
+- Dynamic Capability DAG
 - selected Skill SOP
 - Sub-Agent
 - task results

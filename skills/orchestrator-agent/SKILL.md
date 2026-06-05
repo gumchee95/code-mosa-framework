@@ -36,6 +36,7 @@ Use Cold-Repair Mode when MOSA evidence is missing, stale, or untrusted.
 - Apply auto-skill Meta-Logic.
 - Extract Atomic Keywords.
 - Create the Intent Profile.
+- Generate a Dynamic Capability DAG for cross-skill work.
 - Call Router through the official evidence chain.
 - Dispatch the selected execution skill.
 - Track failures and trigger audit when needed.
@@ -160,6 +161,26 @@ Write `01_Work/task.md` with:
 - Do not increment `turn_count` manually; the startup tool owns that write.
 - If `turn_count >= drift_threshold`, dispatch `@mosa-harmonizer --maintenance`.
 
+## Step 5.5: Dynamic Capability DAG
+
+For multi-step or cross-skill work, generate a compact workflow DAG before Router retrieval:
+
+```bash
+node 00_System/mosa_cli.js plan --intent "<user intent>" --write
+```
+
+Read only the compact pointer:
+
+- `01_Work/workflow_plan.json`
+
+Rules:
+
+- The DAG is dynamic and capability-based; do not force a rigid template.
+- Orchestrator owns DAG generation.
+- Router consumes `router_hints`; Router must not decompose the request.
+- Missing capabilities become `skill_growth_suggestions`.
+- Do not auto-create missing skills without explicit user approval.
+
 ## Step 6: Router Invocation Normalization
 
 Canonical Router skill name:
@@ -188,6 +209,12 @@ Prefer the workspace Router wrapper:
 node 00_System/mosa_route.js --domain "<domain>" --capability "<capability>" --keywords "<comma keywords>" --intent "<intent>"
 ```
 
+If `01_Work/workflow_plan.json` exists for the current intent, include it:
+
+```bash
+node 00_System/mosa_route.js --domain "<domain>" --capability "<capability>" --keywords "<comma keywords>" --intent "<intent>" --workflow-plan "01_Work/workflow_plan.json"
+```
+
 Then read:
 
 - `01_Work/routing_result.json`
@@ -211,6 +238,8 @@ The fallback is valid only when written to:
 Router returns:
 
 - top candidates
+- workflow node routes when a workflow plan is supplied
+- missing skill suggestions when a capability has no medium-confidence route
 - confidence
 - confidence tier
 - match reasons
