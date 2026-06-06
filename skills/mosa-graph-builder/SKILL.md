@@ -17,7 +17,7 @@ Primary outputs:
 - `01_Work/context_bus.json` under `_meta.graph_context`
 - `01_Work/task_results.md` pointer summary when the workflow requires it
 
-Graph Builder is discovery-only. It does not own mode policy, hook policy, cold repair, Router proof doctrine, or skill dispatch.
+Graph Builder is discovery-only. It never chooses runtime mode and does not own hook policy, cold repair, Router proof doctrine, or skill dispatch.
 
 ## When To Use
 
@@ -27,8 +27,7 @@ Use this skill when:
 - A workspace is large or unfamiliar.
 - MOSA needs God Nodes or architecture pointers before routing or implementation.
 - `graphify-out/GRAPH_REPORT.md` is missing or stale.
-
-Skip it for lean Q&A and tiny edits.
+- Architecture discovery would otherwise require broad file exploration.
 
 ## Graph Construction Rules
 
@@ -61,7 +60,7 @@ God Nodes should include present high-signal locations such as:
 The Mermaid diagram should show:
 
 - user intent
-- lean / standard / cold-repair choice
+- standard / cold-repair evidence
 - startup proof
 - context bus
 - optional Dynamic Capability DAG

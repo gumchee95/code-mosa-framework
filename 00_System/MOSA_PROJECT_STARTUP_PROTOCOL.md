@@ -19,9 +19,7 @@ This file is a compact project bootstrap reference. `AGENTS.md` remains the cano
 
 ## Startup
 
-Lean work should answer directly and skip MOSA artifacts.
-
-For standard work:
+For normal MOSA work:
 
 ```bash
 node 00_System/mosa_cli.js start --mode standard --intent "<user intent>" --write
@@ -38,13 +36,12 @@ Read:
 
 Runtime modes:
 
-- `lean`
 - `standard`
 - `cold-repair`
 
 Legacy inputs:
 
-- `micro` -> `lean`
+- `micro` -> `standard`
 - `full` -> `standard`
 - `maintenance` -> `standard`
 
@@ -102,7 +99,7 @@ Use hooks only for triggered trust events:
 node 00_System/mosa_cli.js hook --event router-proof
 ```
 
-Routine lean work does not run hooks.
+Routine normal work does not run hooks unless a trust event is triggered.
 
 ## Cold Diagnostics
 

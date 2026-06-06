@@ -21,7 +21,7 @@
 ## 2026-06-04 Event-Triggered Hook Token Shield
 
 - Default hook level: `auto`.
-- Routine lean tasks do not run hooks.
+- Routine normal tasks do not run hooks unless a trust event is triggered.
 - Protocol updates trigger P1.
 - Registry updates trigger P1.
 - Framework trust updates trigger P2.

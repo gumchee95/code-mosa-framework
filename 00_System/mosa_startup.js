@@ -181,9 +181,14 @@ function buildStartupResult(root, args) {
     drift_threshold: state.drift_threshold,
     evidence,
     hot_artifacts: hotArtifacts,
-    estimated_hot_tokens: Object.values(hotArtifacts)
+    available_hot_artifact_token_estimate: Object.values(hotArtifacts)
       .filter(item => item.exists)
       .reduce((sum, item) => sum + estimateTokens(item.bytes), 0),
+    expected_startup_read_tokens: {
+      normal: '800-1500',
+      with_graph_pointer: '1200-2200',
+      note: 'Hot artifact estimate is availability, not required context read.'
+    },
     pointers: {
       startup_result: '01_Work/startup_result.json',
       context_bus: '01_Work/context_bus.json',

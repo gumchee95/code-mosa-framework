@@ -183,7 +183,8 @@ function compactRunResult(run) {
       workspace_root: output.workspace_root,
       startup_result: '01_Work/startup_result.json',
       context_bus: '01_Work/context_bus.json',
-      estimated_hot_tokens: output.estimated_hot_tokens,
+      available_hot_artifact_token_estimate: output.available_hot_artifact_token_estimate || null,
+      expected_startup_read_tokens: output.expected_startup_read_tokens || null,
       drift_check: output.drift_check
     };
   }
