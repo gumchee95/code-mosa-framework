@@ -20,6 +20,7 @@ Harmonizer repairs MOSA protocol drift. It does not execute ordinary business ta
 - Verify Router proof uses `single_route` or `dag_routes`.
 - Verify hooks are exposed through `mosa_cli.js hook` or `mosa_cli.js maintain`.
 - Keep registry diagnostics as cold reads.
+- Produce an alignment report when framework drift is suspected.
 
 ## Activation
 
@@ -42,6 +43,29 @@ Use this skill when:
 - `workflow_plan.json` top-level fields are only `schema_version`, `goal`, `intent_hash`, `nodes`, `edges`, `parallel_groups`, `router_hints`, and `missing_skills`.
 - `routing_result.json` does not contain `top_skill`, `candidates`, `flat_candidates`, `effectiveTop`, or `node_routes`.
 - Graph Builder owns only graph report and graph context.
+
+## Alignment Report
+
+Prefer the CLI report when available:
+
+```bash
+node 00_System/mosa_cli.js align --write
+```
+
+Expected output:
+
+- `02_Output/mosa_alignment_report.json`
+
+The report should include:
+
+- runtime mode checks.
+- legacy mode map checks.
+- stale protocol term checks.
+- startup proof and Router proof field checks.
+- active skill mirror checks for core MOSA skills.
+- DAG schema top-level field checks.
+
+Read the compact JSON first. Open detailed files only when the report fails.
 
 ## Hooks
 

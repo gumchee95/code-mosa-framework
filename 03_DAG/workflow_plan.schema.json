@@ -27,6 +27,7 @@
           "id": { "type": "string" },
           "label": { "type": "string" },
           "capability": { "type": "string" },
+          "deliverable": { "type": "string" },
           "candidate_agents": { "type": "array" },
           "sequence": { "type": "number" }
         }

@@ -48,17 +48,17 @@ const DOMAIN_RULES = [
       'What tone should invitations and follow-up messages use?'
     ],
     capabilities: [
-      ['clarification', 'Orchestrator Clarification', 'Clarify missing event assumptions before routing execution work', ['ORCHESTRATOR_AGENT', 'PROJECT_PLANNER'], 'planning-clarifier-agent'],
-      ['goal_scope', 'Goal And Scope', 'Define event objective, attendee persona, constraints, success criteria, and decision owner', ['ORCHESTRATOR_AGENT', 'PROJECT_PLANNER', 'PROJECT_MANAGEMENT_CORE'], 'event-strategy-agent'],
-      ['budget_model', 'Budget Model', 'Estimate venue, food, deposits, ticketing, sponsorship, contingency, and approval thresholds', ['ADMIN_AGENT', 'PROJECT_MANAGEMENT_CORE', 'STRATEGIC_FINANCE'], 'event-budget-agent'],
-      ['venue_catering', 'Venue And Catering', 'Shortlist venue/catering requirements, dietary constraints, location fit, and booking dependencies', ['ADMIN_AGENT', 'PROJECT_MANAGEMENT_CORE'], 'venue-catering-agent'],
-      ['registration_rsvp', 'Registration And RSVP', 'Design RSVP capture, attendee list, reminders, capacity tracking, and check-in source of truth', ['GOOGLE_AGENT', 'XLSX', 'ADMIN_AGENT'], 'rsvp-registration-agent'],
-      ['promotion_invitation', 'Promotion And Invitation', 'Prepare invitation copy, alumni outreach, reminders, and announcement cadence', ['INTERNAL_COMMS', 'DESIGN_AGENT', 'GOOGLE_AGENT'], 'alumni-outreach-agent'],
-      ['agenda_program', 'Agenda And Program', 'Create dinner agenda, host script, welcome remarks, seating logic, and networking moments', ['PROJECT_PLANNER', 'INTERNAL_COMMS', 'ADMIN_AGENT'], 'event-program-agent'],
-      ['onsite_operations', 'Onsite Operations', 'Plan run-of-show, check-in, signage, payment handling, vendor timing, and escalation ownership', ['ADMIN_AGENT', 'PROJECT_MANAGEMENT_CORE'], 'onsite-ops-agent'],
-      ['risk_control', 'Risk And Compliance', 'Check cancellation risk, deposits, safety, dietary/allergy handling, privacy, and payment records', ['AUDIT_AGENT', 'COMPLIANCE_FRAMEWORK', 'ADMIN_AGENT'], 'event-risk-agent'],
-      ['follow_up', 'Follow Up And Retention', 'Prepare thank-you notes, photos/recap, feedback form, finance reconciliation, and next-event leads', ['INTERNAL_COMMS', 'GOOGLE_AGENT', 'REPORT_GENERATOR'], 'event-follow-up-agent'],
-      ['review', 'Delivery Review', 'Verify deliverables, unresolved assumptions, missing skills, and final handoff readiness', ['AUDIT_AGENT', 'PROJECT_MANAGEMENT_CORE'], 'delivery-qa-agent']
+      ['clarification', 'Orchestrator Clarification', 'Clarify missing event assumptions before routing execution work', ['ORCHESTRATOR_AGENT', 'PROJECT_PLANNER'], 'planning-clarifier-agent', 'Clarifying questions and assumption list'],
+      ['goal_scope', 'Goal And Scope', 'Define event objective, attendee persona, constraints, success criteria, and decision owner', ['ORCHESTRATOR_AGENT', 'PROJECT_PLANNER', 'PROJECT_MANAGEMENT_CORE'], 'event-strategy-agent', 'Event objective, scope, constraints, and success criteria'],
+      ['budget_model', 'Budget Model', 'Estimate venue, food, deposits, ticketing, sponsorship, contingency, and approval thresholds', ['ADMIN_AGENT', 'PROJECT_MANAGEMENT_CORE', 'STRATEGIC_FINANCE'], 'event-budget-agent', 'Budget model and approval thresholds'],
+      ['venue_catering', 'Venue And Catering', 'Shortlist venue/catering requirements, dietary constraints, location fit, and booking dependencies', ['ADMIN_AGENT', 'PROJECT_MANAGEMENT_CORE'], 'venue-catering-agent', 'Venue and catering shortlist criteria'],
+      ['registration_rsvp', 'Registration And RSVP', 'Design RSVP capture, attendee list, reminders, capacity tracking, and check-in source of truth', ['GOOGLE_AGENT', 'XLSX', 'ADMIN_AGENT'], 'rsvp-registration-agent', 'RSVP tracker and reminder plan'],
+      ['promotion_invitation', 'Promotion And Invitation', 'Prepare invitation copy, alumni outreach, reminders, and announcement cadence', ['INTERNAL_COMMS', 'DESIGN_AGENT', 'GOOGLE_AGENT'], 'alumni-outreach-agent', 'Invitation copy and outreach cadence'],
+      ['agenda_program', 'Agenda And Program', 'Create dinner agenda, host script, welcome remarks, seating logic, and networking moments', ['PROJECT_PLANNER', 'INTERNAL_COMMS', 'ADMIN_AGENT'], 'event-program-agent', 'Dinner agenda and host script outline'],
+      ['onsite_operations', 'Onsite Operations', 'Plan run-of-show, check-in, signage, payment handling, vendor timing, and escalation ownership', ['ADMIN_AGENT', 'PROJECT_MANAGEMENT_CORE'], 'onsite-ops-agent', 'Run-of-show and onsite operations checklist'],
+      ['risk_control', 'Risk And Compliance', 'Check cancellation risk, deposits, safety, dietary/allergy handling, privacy, and payment records', ['AUDIT_AGENT', 'COMPLIANCE_FRAMEWORK', 'ADMIN_AGENT'], 'event-risk-agent', 'Risk and compliance checklist'],
+      ['follow_up', 'Follow Up And Retention', 'Prepare thank-you notes, photos/recap, feedback form, finance reconciliation, and next-event leads', ['INTERNAL_COMMS', 'GOOGLE_AGENT', 'REPORT_GENERATOR'], 'event-follow-up-agent', 'Follow-up message, recap, and feedback plan'],
+      ['review', 'Delivery Review', 'Verify deliverables, unresolved assumptions, missing skills, and final handoff readiness', ['AUDIT_AGENT', 'PROJECT_MANAGEMENT_CORE'], 'delivery-qa-agent', 'Final readiness review']
     ],
     edges: [
       ['clarification', 'goal_scope'],
@@ -272,13 +272,14 @@ function detectDomain(intent) {
 }
 
 function buildDomainCapabilities(domainRule) {
-  return domainRule.capabilities.map(([id, label, requiredCapability, preferredSkillIds, suggestedSkillId]) => ({
+  return domainRule.capabilities.map(([id, label, requiredCapability, preferredSkillIds, suggestedSkillId, deliverable]) => ({
     id,
     label,
     triggers: [],
     required_capability: requiredCapability,
     preferred_skill_ids: preferredSkillIds,
     suggested_skill_id: suggestedSkillId,
+    deliverable,
     domain: domainRule.id
   }));
 }
@@ -299,12 +300,32 @@ function buildNodes(capabilities, skills) {
       id: capability.id,
       label: capability.label,
       capability: capability.required_capability,
+      deliverable: capability.deliverable || compactDeliverable(capability),
       candidate_agents: candidates,
       sequence: index + 1,
       ...(capability.domain ? { domain: capability.domain } : {}),
       ...(capability.questions ? { questions: capability.questions } : {})
     };
   });
+}
+
+function compactDeliverable(capability) {
+  const id = String(capability.id || '');
+  const map = {
+    planning: 'Clarified scope and execution sequence',
+    research: 'Source-backed findings summary',
+    design: 'Design direction or visual asset brief',
+    coding: 'Implemented code change or build artifact',
+    data: 'Clean data, metrics, or analysis output',
+    document: 'Structured document, report, or deck',
+    communication: 'Message, announcement, or follow-up draft',
+    calendar: 'Schedule, invite, RSVP, or attendance artifact',
+    automation: 'Reusable workflow or script plan',
+    compliance: 'Risk, policy, or compliance note',
+    review: 'Verification notes and handoff readiness',
+    deployment: 'Release, publishing, or deployment handoff'
+  };
+  return map[id] || `${capability.label || id} output`;
 }
 
 function buildEdges(nodes) {
@@ -365,6 +386,7 @@ function renderWorkflowMarkdown(plan) {
   const lines = ['# MOSA Workflow Capability DAG', '', `- Intent: ${plan.goal}`, '', '## Nodes'];
   for (const node of plan.nodes) {
     lines.push(`- ${node.sequence}. ${node.id}: ${node.capability}`);
+    lines.push(`  - deliverable: ${node.deliverable || 'compact output pointer'}`);
     lines.push(`  - candidates: ${node.candidate_agents.map(item => item.skill_id).join(', ') || 'none'}`);
     if (Array.isArray(node.questions) && node.questions.length) {
       lines.push(`  - orchestrator questions: ${node.questions.join(' | ')}`);
@@ -425,6 +447,9 @@ function runTests(root) {
     assert(!Object.prototype.hasOwnProperty.call(routeResult, forbidden), `routing_result should not include ${forbidden}`, issues);
   }
 
+  const alignResult = runAlign(root, {});
+  assert(alignResult.status === 'ok', 'align should pass compact MOSA drift checks', issues);
+
   return { status: issues.length ? 'fail' : 'ok', issues };
 }
 
@@ -437,6 +462,35 @@ function runMaintain(root, args = {}) {
   };
   report.status = report.check.status === 'ok' && report.tests.status === 'ok' ? 'ok' : 'fail';
   if (args.write) writeJsonAtomic(path.join(root, '02_Output/maintenance_report.json'), report);
+  return report;
+}
+
+function runAlign(root, args = {}) {
+  const checks = [];
+  const add = (name, passed, value = null) => checks.push({ name, status: passed ? 'pass' : 'fail', value });
+  const agents = readText(path.join(root, 'AGENTS.md'));
+  const startup = readText(path.join(root, '00_System/mosa_startup.js'));
+  const cli = readText(path.join(root, '00_System/mosa_cli.js'));
+  const graphSkill = readText(path.join(root, 'skills/mosa-graph-builder/SKILL.md'));
+  const schema = readJson(path.join(root, '03_DAG/workflow_plan.schema.json'), {});
+
+  add('runtime modes are standard/cold-repair only', startup.includes("new Set(['standard', 'cold-repair'])") && cli.includes("new Set(['standard', 'cold-repair'])"));
+  add('legacy micro maps to standard', startup.includes("micro: 'standard'") && cli.includes("micro: 'standard'"));
+  add('no stale removed-mode protocol term', !/\blean\b/.test(`${agents}\n${startup}\n${graphSkill}`));
+  add('startup proof path documented', agents.includes('01_Work/startup_result.json'));
+  add('router proof authority documented', agents.includes('single_route') && agents.includes('dag_routes'));
+  add('graph builder discovery-only', graphSkill.includes('discovery-only') && graphSkill.includes('never chooses runtime mode'));
+  add('workflow plan top-level schema compact', schema.additionalProperties === false && Array.isArray(schema.required) && schema.required.length === 8);
+  add('workflow node deliverable supported', Boolean(schema.properties?.nodes?.items?.properties?.deliverable));
+
+  const report = {
+    schema_version: 'mosa.alignment_report.v1',
+    generated_at: new Date().toISOString(),
+    status: checks.every(check => check.status === 'pass') ? 'ok' : 'fail',
+    checks,
+    output: args.write ? '02_Output/mosa_alignment_report.json' : null
+  };
+  if (args.write) writeJsonAtomic(path.join(root, '02_Output/mosa_alignment_report.json'), report);
   return report;
 }
 
@@ -464,6 +518,7 @@ function main() {
   else if (command === 'route') print(route(root, args.intent || args._.slice(1).join(' '), { workflowPlan: args['workflow-plan'] || args.workflowPlan }));
   else if (command === 'plan') print(runPlan(root, args));
   else if (command === 'hook') print(runHook(root, args));
+  else if (command === 'align') print(runAlign(root, args));
   else if (command === 'test') print(runTests(root));
   else if (command === 'maintain') print(runMaintain(root, args));
   else if (command === 'context') print(updateContext(root, args));
@@ -474,6 +529,7 @@ function main() {
         'node 00_System/mosa_cli.js start --mode standard --intent "..." --write',
         'node 00_System/mosa_cli.js plan --intent "..." --write',
         'node 00_System/mosa_cli.js route --intent "..." --workflow-plan 01_Work/workflow_plan.json',
+        'node 00_System/mosa_cli.js align --write',
         'node 00_System/mosa_cli.js hook --event router-proof',
         'node 00_System/mosa_cli.js maintain --write',
         'node 00_System/mosa_cli.js test'

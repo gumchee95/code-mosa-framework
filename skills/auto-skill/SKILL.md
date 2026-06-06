@@ -42,11 +42,70 @@ When another skill was used in the current task:
 
 Use experience files to capture repeatable gotchas, parameters, file paths, and successful workflows. Do not store one-off facts with no reuse value.
 
+Minimum index shape:
+
+```json
+{
+  "schema_version": "mosa.auto_skill.experience_index.v1",
+  "entries": [
+    {
+      "skill_id": "ROUTER_AGENT",
+      "path": "experience/skill-router-agent.md",
+      "summary": "Reusable routing gotcha or workflow.",
+      "updated_at": "<iso timestamp>"
+    }
+  ]
+}
+```
+
 ## Knowledge Lookup
 
 Use `knowledge-base/_index.json` when the task depends on reusable user preferences, domain playbooks, or previous process decisions.
 
 Read only matching categories. If nothing matches, continue without forcing a knowledge read.
+
+Minimum index shape:
+
+```json
+{
+  "schema_version": "mosa.auto_skill.knowledge_index.v1",
+  "categories": [
+    {
+      "id": "routing",
+      "path": "knowledge-base/routing.md",
+      "summary": "Reusable user preference or playbook."
+    }
+  ]
+}
+```
+
+## Missing Capability Memory
+
+Use `missing-capabilities.json` to count repeated gaps from DAG planning or Router proof.
+
+Rules:
+
+- First occurrence: record only.
+- Second occurrence: suggest improving an existing adjacent skill if possible.
+- Third occurrence: emit a promotion candidate for user approval.
+- Never auto-create a skill.
+
+Minimum shape:
+
+```json
+{
+  "schema_version": "mosa.auto_skill.missing_capabilities.v1",
+  "items": [
+    {
+      "capability": "registration_tracking",
+      "count": 1,
+      "last_intent_hash": "...",
+      "suggested_existing_skill": "XLSX",
+      "candidate_skill_id": "rsvp-registration-agent"
+    }
+  ]
+}
+```
 
 ## Standard Flow Handoff
 
