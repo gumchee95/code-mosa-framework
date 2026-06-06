@@ -7,7 +7,7 @@ MOSA Light keeps AI coding sessions recoverable without making the framework the
 Runtime modes are only:
 
 - `lean`: direct answer, one-off check, or tiny obvious edit. No startup loop, Router, hooks, or task artifacts.
-- `standard`: startup proof, optional Dynamic Capability DAG, Router proof, selected skill, and result pointers.
+- `standard`: startup proof, Orchestrator clarification, compact Auto-Skill memory check when useful, Dynamic Capability DAG, Router proof, selected skill, and result pointers.
 - `cold-repair`: provision or repair missing startup/router evidence, then continue with standard proof.
 
 Legacy input mapping:
@@ -42,6 +42,16 @@ node 00_System/mosa_cli.js start --mode standard --intent "<task intent>" --writ
 
 Lean tasks should answer directly and avoid writing `task.md`, `workflow_plan.json`, or `routing_result.json`.
 
+## Auto Mode Doctrine
+
+Auto mode should maximize Codex judgment instead of replacing it with trigger-word routing.
+
+- Do not add broad keyword classifiers as execution authority.
+- Use key notes only as explainable reasons, never as hard triggers.
+- Let Orchestrator ask clarifying questions and atomize the task before DAG or Router.
+- Use Auto-Skill as a compact memory and promotion layer, not as mandatory startup context.
+- Once a task enters `standard`, DAG and Router are required downstream proof stages.
+
 ## Context State
 
 Use one hot handoff file:
@@ -65,7 +75,7 @@ Graph context belongs under:
 
 ## Dynamic Capability DAG
 
-For multi-step or cross-skill work, Orchestrator may generate a Dynamic Capability DAG:
+For `standard` work, Orchestrator generates a Dynamic Capability DAG after clarification and any relevant Auto-Skill memory check:
 
 ```bash
 node 00_System/mosa_cli.js plan --intent "<task intent>" --write
@@ -83,6 +93,12 @@ node 00_System/mosa_cli.js plan --intent "<task intent>" --write
 - `missing_skills`
 
 The DAG is a routing aid. It is not an execution agent, and it must not be a rigid workflow template.
+
+The standard handoff is:
+
+```text
+Orchestrator clarification -> Auto-Skill key notes when useful -> workflow_plan.json -> routing_result.json
+```
 
 ## Router Proof
 
@@ -102,6 +118,8 @@ Routing result authority:
 Do not emit competing top-level route authorities such as `top_skill`, `candidates`, `flat_candidates`, `effectiveTop`, or `node_routes`.
 
 Router must return resolved skill paths only. Full `SKILL.md` bodies are loaded only after Router proof selects an execution skill.
+
+For `standard` work, Router proof is mandatory after DAG generation. Router consumes the clarified DAG hints; it does not decide the task shape by itself.
 
 ## Hooks
 

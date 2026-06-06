@@ -14,7 +14,7 @@ Orchestrator coordinates MOSA workflows. Router selects skills only; Router does
 Use the lightest mode that preserves correctness:
 
 - `lean`: simple Q&A, one-off check, or tiny obvious edit. No startup loop, Router, hooks, or task artifacts.
-- `standard`: multi-step work, file changes, cross-skill work, MOSA changes, audit-sensitive work, or durable state.
+- `standard`: multi-step work, file changes, cross-skill work, MOSA changes, audit-sensitive work, or durable state. Once selected, DAG and Router are downstream proof stages.
 - `cold-repair`: missing `00_System`, missing startup/router tools, missing proof JSON, or stale/untrusted evidence.
 
 Legacy inputs map as:
@@ -48,13 +48,15 @@ node 00_System/mosa_cli.js start --mode standard --intent "<user intent>" --writ
 - If the user asks for planning help and details are missing, include a `clarification` DAG node instead of forcing Router to guess.
 - Router must receive the clarified Intent Profile or the generated DAG hints. Router must not perform this analysis itself.
 
-6. For cross-skill work, generate a Dynamic Capability DAG:
+6. Consult Auto-Skill only as a compact memory layer when prior experience, reusable preferences, or missing capability history would improve the plan. Do not load full experience files by default.
+
+7. Generate a Dynamic Capability DAG for standard work:
 
 ```bash
 node 00_System/mosa_cli.js plan --intent "<user intent>" --write
 ```
 
-7. Route:
+8. Route with the clarified DAG:
 
 ```bash
 node 00_System/mosa_cli.js route --intent "<user intent>"
@@ -66,9 +68,10 @@ or:
 node 00_System/mosa_cli.js route --intent "<user intent>" --workflow-plan 01_Work/workflow_plan.json
 ```
 
-8. Validate `01_Work/routing_result.json`.
-9. Load only the selected execution skill.
-10. Write compact result pointers to `01_Work/task_results.md`.
+9. Validate `01_Work/routing_result.json`.
+10. Load only the selected execution skill.
+11. Write compact result pointers to `01_Work/task_results.md`.
+12. At task completion, run the Auto-Skill promotion check when the result may be reusable. Invoke `skill-creator` only after user approval.
 
 ## Cold Repair
 
@@ -116,6 +119,8 @@ If `graphify-out/GRAPH_REPORT.md` exists, read it before broad architecture expl
 The DAG is a routing aid. It must not be a rigid workflow template.
 
 For complex domains, the first DAG node may be `clarification`. This node belongs to Orchestrator and may contain concise questions. It exists to prevent premature skill selection when the task needs missing constraints, not to make Router ask questions.
+
+In standard mode, DAG generation and Router proof are mandatory after clarification. Lean mode skips both.
 
 ## Router Proof Guard
 
