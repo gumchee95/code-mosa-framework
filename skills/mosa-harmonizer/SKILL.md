@@ -12,8 +12,8 @@ Harmonizer repairs MOSA protocol drift. It does not execute ordinary business ta
 ## Responsibilities
 
 - Align `AGENTS.md`, `README.md`, core skills, and Node tools.
-- Verify runtime modes are only `lean`, `standard`, and `cold-repair`.
-- Verify legacy inputs map `micro -> lean`, `full -> standard`, and `maintenance -> standard`.
+- Verify runtime modes are only `standard` and `cold-repair`.
+- Verify legacy inputs map `micro -> standard`, `full -> standard`, and `maintenance -> standard`.
 - Verify startup proof is `01_Work/startup_result.json`.
 - Verify graph context is `01_Work/context_bus.json._meta.graph_context`.
 - Verify Dynamic Capability DAG schema is simplified.
@@ -52,7 +52,7 @@ node 00_System/mosa_cli.js hook --event router-proof
 node 00_System/mosa_cli.js maintain --write
 ```
 
-Do not run hooks for lean mode or routine normal tasks.
+Do not run hooks for routine normal tasks unless a trust event is triggered.
 
 ## Output
 

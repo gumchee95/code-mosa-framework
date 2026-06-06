@@ -4,9 +4,9 @@ const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
 
-const RUNTIME_MODES = new Set(['lean', 'standard', 'cold-repair']);
+const RUNTIME_MODES = new Set(['standard', 'cold-repair']);
 const LEGACY_MODE_MAP = {
-  micro: 'lean',
+  micro: 'standard',
   full: 'standard',
   maintenance: 'standard',
   maintain: 'standard'
@@ -82,16 +82,8 @@ function evidenceStatus(root) {
 function recommendMode(intent, root) {
   const evidence = evidenceStatus(root);
   if (evidence.missing.some(item => item.startsWith('00_System/'))) return 'cold-repair';
-
-  const text = String(intent || '').toLowerCase();
-  const simple = /\b(explain|question|quick|small|tiny|status|where|what|why|how)\b/.test(text);
-  const complex = /\b(build|implement|refactor|framework|router|dag|skill|workflow|audit|registry|hook|release|deploy|multi)\b/.test(text);
-  const touchesMosa = /\b(mosa|agents\.md|skill|router|startup|hook|registry|graph)\b/.test(text);
-
   if (!evidence.trusted) return 'cold-repair';
-  if (complex || touchesMosa) return 'standard';
-  if (simple) return 'lean';
-  return 'lean';
+  return 'standard';
 }
 
 function normalizeMode(inputMode, intent, root) {
@@ -197,9 +189,7 @@ function buildStartupResult(root, args) {
       context_bus: '01_Work/context_bus.json',
       routing_result: '01_Work/routing_result.json'
     },
-    next_agent_action: modeDecision.mode === 'lean'
-      ? 'answer directly; do not create task artifacts unless the user asks'
-      : 'read startup_result and context_bus, then continue with Orchestrator/Router as needed'
+    next_agent_action: 'read startup_result and context_bus, then continue with Orchestrator/Auto-Skill/DAG/Router as needed'
   };
 }
 

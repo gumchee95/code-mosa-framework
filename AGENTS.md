@@ -6,13 +6,12 @@ MOSA Light keeps AI coding sessions recoverable without making the framework the
 
 Runtime modes are only:
 
-- `lean`: direct answer, one-off check, or tiny obvious edit. No startup loop, Router, hooks, or task artifacts.
 - `standard`: startup proof, Orchestrator clarification, compact Auto-Skill memory check when useful, Dynamic Capability DAG, Router proof, selected skill, and result pointers.
 - `cold-repair`: provision or repair missing startup/router evidence, then continue with standard proof.
 
 Legacy input mapping:
 
-- `micro` -> `lean`
+- `micro` -> `standard`
 - `full` -> `standard`
 - `maintenance` -> `standard`
 
@@ -34,13 +33,13 @@ Startup may also write:
 
 `02_Output/startup_packet.json` is deprecated and must not be used as proof.
 
-Run startup only for standard or cold-repair tasks:
+Run startup for normal MOSA work:
 
 ```bash
 node 00_System/mosa_cli.js start --mode standard --intent "<task intent>" --write
 ```
 
-Lean tasks should answer directly and avoid writing `task.md`, `workflow_plan.json`, or `routing_result.json`.
+Standard stays token-light by reading compact startup/context evidence, lightweight routing indexes, and selected skill files only after Router proof.
 
 ## Auto Mode Doctrine
 
@@ -50,7 +49,7 @@ Auto mode should maximize Codex judgment instead of replacing it with trigger-wo
 - Use key notes only as explainable reasons, never as hard triggers.
 - Let Orchestrator ask clarifying questions and atomize the task before DAG or Router.
 - Use Auto-Skill as a compact memory and promotion layer, not as mandatory startup context.
-- Once a task enters `standard`, DAG and Router are required downstream proof stages.
+- DAG and Router are required downstream proof stages in `standard`.
 
 ## Context State
 
@@ -132,7 +131,7 @@ node 00_System/mosa_cli.js hook --event router-proof
 node 00_System/mosa_cli.js maintain --write
 ```
 
-Do not run hooks for lean mode or routine normal tasks.
+Do not run hooks for routine normal tasks unless a trust event is triggered.
 
 ## Graph Token Shield
 

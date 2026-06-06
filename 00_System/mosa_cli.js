@@ -10,8 +10,8 @@ const STOP_WORDS = new Set([
   'project', 'skill', 'system', 'the', 'to', 'tool', 'web', 'with'
 ]);
 
-const RUNTIME_MODES = new Set(['lean', 'standard', 'cold-repair']);
-const LEGACY_MODE_MAP = { micro: 'lean', full: 'standard', maintenance: 'standard' };
+const RUNTIME_MODES = new Set(['standard', 'cold-repair']);
+const LEGACY_MODE_MAP = { micro: 'standard', full: 'standard', maintenance: 'standard' };
 
 const CAPABILITY_TAXONOMY = [
   ['planning', 'Planning', ['plan', 'prepare', 'organize', 'scope', 'goal', 'requirement'], 'Clarify goal, scope, constraints, success criteria, and execution sequence', ['ORCHESTRATOR_AGENT', 'PROJECT_PLANNER', 'PROJECT_MANAGEMENT_CORE'], 'planning-clarifier-agent'],
@@ -199,7 +199,7 @@ function safeStart(root, args) {
   if (args.write) childArgs.push('--write');
   const result = spawnSync(process.execPath, childArgs, { cwd: root, encoding: 'utf8' });
   if (result.status !== 0) {
-    return { status: 'fallback', mode: 'lean', reason: 'startup script failed', stderr: result.stderr };
+    return { status: 'fallback', mode: 'standard', reason: 'startup script failed', stderr: result.stderr };
   }
   return JSON.parse(result.stdout);
 }
@@ -408,19 +408,9 @@ function runTests(root) {
   const routingPath = path.join(root, '01_Work/routing_result.json');
   const planPath = path.join(root, '01_Work/workflow_plan.json');
   const taskPath = path.join(root, '01_Work/task.md');
-  const taskBefore = fs.existsSync(taskPath) ? fs.statSync(taskPath).mtimeMs : null;
-  const routeBefore = fs.existsSync(routingPath) ? fs.statSync(routingPath).mtimeMs : null;
-  const planBefore = fs.existsSync(planPath) ? fs.statSync(planPath).mtimeMs : null;
-
-  const lean = safeStart(root, { mode: 'micro', intent: 'quick status', write: true });
-  assert(lean.mode === 'lean', 'legacy micro should map to lean', issues);
+  const standard = safeStart(root, { mode: 'micro', intent: 'quick status', write: true });
+  assert(standard.mode === 'standard', 'legacy micro should map to standard', issues);
   assert(fs.existsSync(startupPath), 'start --write should create 01_Work/startup_result.json', issues);
-  const taskAfter = fs.existsSync(taskPath) ? fs.statSync(taskPath).mtimeMs : null;
-  const routeAfter = fs.existsSync(routingPath) ? fs.statSync(routingPath).mtimeMs : null;
-  const planAfter = fs.existsSync(planPath) ? fs.statSync(planPath).mtimeMs : null;
-  assert(taskBefore === taskAfter, 'lean start should not write task.md', issues);
-  assert(routeBefore === routeAfter, 'lean start should not write routing_result.json', issues);
-  assert(planBefore === planAfter, 'lean start should not write workflow_plan.json', issues);
 
   const planResult = runPlan(root, { intent: 'build a data dashboard', write: true });
   assert(planResult.status === 'ok' && fs.existsSync(planPath), 'plan --write should create workflow_plan.json', issues);
@@ -481,7 +471,7 @@ function main() {
     print({
       usage: [
         'node 00_System/mosa_cli.js check',
-        'node 00_System/mosa_cli.js start --mode lean --intent "..." --write',
+        'node 00_System/mosa_cli.js start --mode standard --intent "..." --write',
         'node 00_System/mosa_cli.js plan --intent "..." --write',
         'node 00_System/mosa_cli.js route --intent "..." --workflow-plan 01_Work/workflow_plan.json',
         'node 00_System/mosa_cli.js hook --event router-proof',

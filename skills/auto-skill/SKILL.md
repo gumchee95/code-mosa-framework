@@ -18,7 +18,7 @@ Use this skill when:
 - The user asks about auto-skills, reusable memory, promotion scoring, or skill growth.
 - MOSA detects a repeated missing capability from workflow planning or routing.
 
-Do not use this skill as mandatory startup context for every turn. Lean tasks should skip it unless the user asks for learning, memory, or skill promotion.
+Do not use this skill as mandatory full-context startup material for every turn. In standard mode, keep Auto-Skill to compact key notes unless the user asks for learning, memory, or skill promotion.
 
 In MOSA `standard` mode, Auto-Skill may provide compact key notes after Orchestrator clarification and before DAG routing when prior experience, reusable user preferences, or repeated missing capabilities are relevant. These notes feed Orchestrator and DAG hints; they do not replace Router and they are not hard trigger rules.
 

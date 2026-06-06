@@ -13,13 +13,12 @@ Orchestrator coordinates MOSA workflows. Router selects skills only; Router does
 
 Use the lightest mode that preserves correctness:
 
-- `lean`: simple Q&A, one-off check, or tiny obvious edit. No startup loop, Router, hooks, or task artifacts.
-- `standard`: multi-step work, file changes, cross-skill work, MOSA changes, audit-sensitive work, or durable state. Once selected, DAG and Router are downstream proof stages.
+- `standard`: normal MOSA work. Startup proof, Orchestrator clarification, compact Auto-Skill memory notes when useful, DAG, Router proof, selected execution skill, and result pointers.
 - `cold-repair`: missing `00_System`, missing startup/router tools, missing proof JSON, or stale/untrusted evidence.
 
 Legacy inputs map as:
 
-- `micro` -> `lean`
+- `micro` -> `standard`
 - `full` -> `standard`
 - `maintenance` -> `standard`
 
@@ -120,7 +119,7 @@ The DAG is a routing aid. It must not be a rigid workflow template.
 
 For complex domains, the first DAG node may be `clarification`. This node belongs to Orchestrator and may contain concise questions. It exists to prevent premature skill selection when the task needs missing constraints, not to make Router ask questions.
 
-In standard mode, DAG generation and Router proof are mandatory after clarification. Lean mode skips both.
+In standard mode, DAG generation and Router proof are mandatory after clarification.
 
 ## Router Proof Guard
 
@@ -150,7 +149,7 @@ node 00_System/mosa_cli.js hook --event router-proof
 node 00_System/mosa_cli.js maintain --write
 ```
 
-Do not run hooks for lean mode or routine normal tasks.
+Do not run hooks for routine normal tasks unless a trust event is triggered.
 
 ## Audit Triggers
 
@@ -174,7 +173,7 @@ Use compact pointer protocol:
 
 ## Prohibitions
 
-- Do not orchestrate lean work.
+- Do not create large task artifacts when compact pointers are enough.
 - Do not trust manual Router text as formal proof.
 - Do not read full registry reports during normal startup.
 - Do not load full skill files before Router proof.
